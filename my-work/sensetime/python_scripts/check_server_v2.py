@@ -49,7 +49,6 @@ def check_server_usage():
 
 def check_node_state():
     count = 0
-    # print("\n1. 检查k8s node状态".ljust(84, '*'))
     print("\n1. 检查k8s node状态")
     recode = os.system('kubectl get nodes | sed 1d >/dev/null 2>&1')
     if recode == 0:
@@ -75,7 +74,6 @@ def check_node_state():
 
 def check_pods_state():
     count = 0
-    # print("\n2. 检查k8s所有pod服务状态".ljust(88, '*'))
     print("\n2. 检查k8s所有pod服务状态")
     recode = os.system('kubectl get pods --all-namespaces | grep -v Running >/dev/null 2>&1')
     if recode == 0:
@@ -95,7 +93,6 @@ def check_pods_state():
 
 
 def check_license_state():
-    # print("\n3. 检查加密狗状态".ljust(87, '*'))
     print("\n3. 检查加密狗状态")
     recode = os.system('%s status >/dev/null 2>&1' % license_bin)
     if recode == 0:
@@ -113,7 +110,6 @@ def check_license_state():
 
 def check_topic_state():
     count = 0
-    # print("\n4. 检查topic状态".ljust(84, '*'))
     print("\n4. 检查topic状态")
     recode = os.system(
         "kubectl exec -it -n component kafka-default-0 -- kafka-topics.sh --list --zookeeper zookeeper-default:2181/kafka | grep -v 'consumer_offsets' >/dev/null 2>&1")
@@ -141,7 +137,6 @@ def check_topic_state():
 
 
 def check_bucket_state():
-    # print("\n5. 检查bucket状态".ljust(84, '*'))
     print("\n5. 检查bucket状态")
     url1 = "http://" + local_host_ip + ':' + ingress_http_port + "/components/osg-default/v1"
     # print(url1)
@@ -152,9 +147,7 @@ def check_bucket_state():
     if 'buckets' in req_value1:
         url_bucket = []
         for k1 in json.loads(req_value1)["buckets"]:
-            # print(k1)
             if 'name' in k1:
-                # print(k1['name'])
                 url_bucket.append(k1['name'])  # 拿到所有存在的bucket名字
                 # print(url_bucket)
             # else:
@@ -181,7 +174,6 @@ def check_bucket_state():
 
 
 def check_es_state():
-    # print("\n6. 检查elasticsearch状态".ljust(84, '*'))
     print("\n6. 检查elasticsearch状态")
     # url2='http://'+ip+':'+es_nodeport+'/_cat/health?pretty'
     recode = os.system(
@@ -203,11 +195,10 @@ def check_es_state():
                     print("elasticsearch 状态正常")
                 elif state2 == "yellow":
                     print("Warning : elasticsearch 状态不稳，请查看")
-                    print("当前状态为yellow : %s " % state2)
+                    print("当前状态为 : %s " % state2)
                 else:
                     print("Error : elasticsearch 状态异常，请及时处理")
-                    print("当前状态为else : %s" % state2)
-                    # time.sleep(3)
+                    print("当前状态为 : %s" % state2)
             else:
                 print("Error : elasticsearch 状态异常，请及时处理")
     else:
@@ -217,7 +208,6 @@ def check_es_state():
 
 
 def check_mysql_state():
-    # print("\n7. 检查mysql状态".ljust(84, '*'))
     print("\n7. 检查mysql状态")
     # recode = os.system("ls /usr/bin/mysql 2>/dev/null || cp ./package/mysql /usr/bin/mysql && echo 'copy mysql to /usr/bin/mysql' >> /root/check_server.log")
     if os.path.exists("/usr/bin/mysql"):
