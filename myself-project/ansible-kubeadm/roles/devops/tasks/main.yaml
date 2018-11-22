@@ -12,11 +12,23 @@
   with_items: "{{ devops_charts }}"
   when: inventory_hostname == groups['kube-master']|first
 
-- name: devops | helm install devops packages
-  shell: "helm upgrade -i {{ item.name }}-{{ item.namespace }} --namespace={{ item.namespace }} -f {{ devopsChartPath }}/{{ item.name }}.values.yaml {{ chartmuseum }}/charts/{{ item.name }}-{{ item.version }}.tgz"
-  environment:
-    PATH: "{{ bin_dir }}:{{ ansible_env.PATH }}"
-    TILLER_NAMESPACE: helm
-  with_items: "{{ devops_charts }}"
-  delegate_to: "{{ groups['kube-master']|first }}"
-  run_once: true
+# - name: devops | helm install devops packages
+#   shell: "helm upgrade -i {{ item.name }}-{{ item.namespace }} --namespace={{ item.namespace }} -f {{ devopsChartPath }}/{{ item.name }}.values.yaml {{ chartmuseum }}/charts/{{ item.name }}-{{ item.version }}.tgz"
+#   environment:
+#     PATH: "{{ bin_dir }}:{{ ansible_env.PATH }}"
+#     TILLER_NAMESPACE: helm
+#   with_items: "{{ devops_charts }}"
+#   delegate_to: "{{ groups['kube-master']|first }}"
+#   run_once: true
+
+- name: "devops | copy devops charts package"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ devopsChartPath }}/"
+  with_items:
+    - jaeger-operator-1.10.0-master-d096d64.tgz
+    - prometheus-operator-2.0.0-master-95af25b.tgz
+    - 
+
+- name: "devops | helm install devops packages"
+
