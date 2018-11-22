@@ -22,13 +22,15 @@
 #   run_once: true
 
 - name: "devops | copy devops charts package"
-  copy:
-    src: "{{ item }}"
+  unarchive:
+    src: "{{ item.name }}-{{ item.version }}.tgz"
     dest: "{{ devopsChartPath }}/"
   with_items:
-    - jaeger-operator-1.10.0-master-d096d64.tgz
-    - prometheus-operator-2.0.0-master-95af25b.tgz
-    - 
+    - "{{ devops_charts }}"
 
 - name: "devops | helm install devops packages"
+  shell: "helm upgrade -i {{ item.name }}-{{ item.namespace }} --namespace={{ item.namespace }} -f {{ devopsChartPath }}/{{ item.name }}.values.yaml {{ item.name }}/values.yaml"
+  with_items:
+    - "{{ devops_charts }}"
+  when: inventory_hostname == grous['kube-master']|first
 

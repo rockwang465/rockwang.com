@@ -1,5 +1,5 @@
 在写：
-rockwang.com/myself-project/ansible-kubeadm/roles/kubernetes/tasks/helm.yaml
+rockwang.com/myself-project/ansible-kubeadm/roles/devops/
 
 问题：
 1. kubeadm init 的config文件有点麻烦，缺少defaults/main.yaml 中的vars定义。
