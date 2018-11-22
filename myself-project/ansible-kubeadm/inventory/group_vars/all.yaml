@@ -181,3 +181,5 @@ devops_charts:
 
 
 
+deploy_mode: standalone   # standalone or distributed
+

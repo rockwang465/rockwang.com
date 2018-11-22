@@ -29,8 +29,8 @@
     - "{{ devops_charts }}"
 
 - name: "devops | helm install devops packages"
-  shell: "helm upgrade -i {{ item.name }}-{{ item.namespace }} --namespace={{ item.namespace }} -f {{ devopsChartPath }}/{{ item.name }}.values.yaml {{ item.name }}/values.yaml"
+  shell: "cd {{ devopsChartPath }}/{{ item.name }} && helm upgrade -i {{ item.name }}-{{ item.namespace }} --namespace={{ item.namespace }} -f values.yaml ."
   with_items:
     - "{{ devops_charts }}"
-  when: inventory_hostname == grous['kube-master']|first
+  when: inventory_hostname == groups['kube-master']|first
 
