@@ -20,6 +20,7 @@ rockwang.com/myself-project/ansible-kubeadm/roles/devops/
 7. 另外： helm init 要加 --stable-repo-url 改为离线或者其他地址，否则会加载谷歌的地址。 helm repo list中.
    helm init --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.5.1 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
 
+8. local-volume 一定要加了，不然 prometheus有问题
 
 
 额外部分，待审查:
