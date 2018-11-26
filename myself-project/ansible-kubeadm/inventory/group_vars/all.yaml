@@ -172,7 +172,8 @@ iface: eth0
 dashboard_nodeport: 30000
 
 addons_charts:
-  - name: local-volume-provisioner
+  #- name: local-volume-provisioner
+  - name: provisioner
     version: 2.3.0-master-1e4ec68
     namespace: kube-system
   # - name: kubernetes-dashboard
