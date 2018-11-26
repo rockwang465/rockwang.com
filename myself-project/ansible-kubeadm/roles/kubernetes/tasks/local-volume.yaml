@@ -13,7 +13,8 @@
   shell: "docker load -i {{ kube_config_dir }}/addons/local-volume-provisioner/docker-image-local-volume-provisioner.tgz"
 
 - name: "local-volume | helm install local volume"
-  shell: "helm upgrade -i {{ item.name }} --namespace={{item.namespace }} -f {{ kube_config_dir}}/addons/{{ item.name}}/values.yaml ."
+  #shell: "helm upgrade -i {{ item.name }} --namespace={{ item.namespace }} -f {{ kube_config_dir}}/addons/{{ item.name}}/values.yaml ."
+  shell: "cd {{ kube_config_dir}}/addons/{{ item.name}} && helm install -n {{ item.name }} --namespace={{ item.namespace }} -f values.yaml ." 
   with_items:
     - "{{ addons_charts }}"
   delegate_to: "{{ groups['kube-master']|first }}"
