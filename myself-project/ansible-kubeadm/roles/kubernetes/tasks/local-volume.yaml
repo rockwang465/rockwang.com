@@ -10,6 +10,11 @@
 #    src: local-volume-provisioner-values.yaml
 #    dest: "{{ kube_config_dir }}/addons/local-volume-provisioner/values.yaml"
 
+- name: "local-volume | copy local-volume image"
+  copy:
+    src: docker-image-local-volume-provisioner.tgz
+    dest: "{{ kube_config_dir }}/addons/" 
+
 - name: "local-volume | docker load -i local-volume image"
   shell: "docker load -i {{ kube_config_dir }}/addons/docker-image-local-volume-provisioner.tgz"
 
@@ -17,7 +22,7 @@
 #  shell: "docker tag 10.5.6.10/external_storage/local-volume-provisioner:v2.3.0 quay.io/external_storage/local-volume-provisioner:v2.3.0"
 
 - name: "local-volume | helm install local volume"
-  shell: "helm upgrade -i {{ item.name }} --namespace={{ item.namespace }} -f {{ kube_config_dir}}/addons/{{ item.name}}/values.yaml ."
+  shell: "cd {{ kube_config_dir}}/addons/{{ item.name}} && helm upgrade -i {{ item.name }} --namespace={{ item.namespace }} -f values.yaml ."
   #shell: "cd {{ kube_config_dir}}/addons/{{ item.name}} && helm install -n {{ item.name }} --namespace={{ item.namespace }} -f values.yaml ." 
   with_items:
     - "{{ addons_charts }}"

@@ -22,6 +22,7 @@ rockwang.com/myself-project/ansible-kubeadm/roles/devops/
 
 8. local-volume 一定要加了，不然 prometheus有问题
 9. helm客户端(二进制命令)为2.11.0  ， 而tiller可以用2.13.1版本，现在用的是2.11.0，等以后有时间，全部统一到2.13.1版本。
+10. /etc/fstab swap 问题依然存在.
 
 额外部分，待审查:
 A.  /etc/docker/daemon.json 中定义cgroup-driver: 为systemd ，是一个驱动，这个可能要做.否则服务器可能莫名其妙的重启。

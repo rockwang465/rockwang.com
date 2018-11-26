@@ -54,18 +54,29 @@ disk_parted_rules:
        - bdev: /dev/sdb1
          capacity:
            start: 1MB
-           end: 10000MB           # 10G
+           end: 5000MB           # 5G
          path: /mnt/locals/mysql/volume0
        - bdev: /dev/sdb2
          capacity:
-           start: 10000MB
-           end: 20000MB           # 10G
+           start: 5000MB
+           end: 10000MB           # 5G
          path: /mnt/locals/redis/volume0
        - bdev: /dev/sdb3
          capacity:
+           start: 10000MB
+           end: 20000MB           # 10G
+         path: /mnt/locals/prometheus/volume0
+       - bdev: /dev/sdb4
+         capacity:
            start: 20000MB
            end: 30000MB           # 10G
-         path: /mnt/locals/prometheus/volume0
+         path: /mnt/locals/alertmanager/volume0
+       - bdev: /dev/sdb5
+         capacity:
+           start: 30000MB
+           end: 40000MB           # 10G
+         path: /mnt/locals/elasticsearch/volume0
+
 
     #   - bdev: /dev/sdb1
     #     capacity:
