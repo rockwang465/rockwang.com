@@ -7,9 +7,9 @@
   #vars_files:
   #  - inventory/group_vars/all.yaml
   roles:
-  - { role: repos, tags: repos }
-  - { role: bootstrap, tags: bootstrap }
-  - { role: docker, tags: docker }
+  #- { role: repos, tags: repos }
+  #- { role: bootstrap, tags: bootstrap }
+  #- { role: docker, tags: docker }
   - { role: kubernetes, tags: kubernetes }
   - { role: devops, tags: devops }
   #- { role: test, tags: test }

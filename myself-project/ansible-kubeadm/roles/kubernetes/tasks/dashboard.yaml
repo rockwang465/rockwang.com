@@ -7,7 +7,7 @@
 - name: "dashboard | copy dashboard file"
   template: 
     src: kubernetes-dashboard.yaml.j2
-    dest: "{{ kube_config_dir }}/kubernetes-dashboard.yaml"
+    dest: "{{ kube_config_dir }}/addons/kubernetes-dashboard.yaml"
 
 - name: "dashboard | install dashboard"
   shell: "kubectl apply -f {{ kube_config_dir }}/kubernetes-dashboard.yaml"
