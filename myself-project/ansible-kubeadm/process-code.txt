@@ -1,6 +1,12 @@
 在写：
 rockwang.com/myself-project/ansible-kubeadm/roles/devops/
 
+当下硬件要求:
+  Resource           Requests          Limits        最低要求
+  --------           ------------      -----------   --------
+  cpu                1975m  (49%)      1225m  (30%)  至少3核CPU
+  memory             1484Mi (66%)      1484Mi (66%)  至少2G内存
+
 问题：
 1. kubeadm init 的config文件有点麻烦，缺少defaults/main.yaml 中的vars定义。
 2. keepalived 和 loadbalance 是否需现在就做？
