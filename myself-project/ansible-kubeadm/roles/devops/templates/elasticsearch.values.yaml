@@ -22,21 +22,30 @@ data:
     size: "100Gi"
   resources:
     limits:
-      cpu: "4"
-      memory: "10Gi"
+      #cpu: "4"
+      cpu: "2"
+      #memory: "10Gi"
+      memory: "2Gi"
     requests:
-      cpu: "4"
-      memory: "10Gi"
+      #cpu: "4"
+      cpu: "200m"
+      #memory: "10Gi"
+      memory: "500Mi"
 {% endif %}
 {% if deploy_mode == "distributed" %}
 data:
   persistence:
-    size: "100Gi"
+    #size: "100Gi"
+    size: "10Gi"
   resources:
     limits:
-      cpu: "4"
-      memory: "10Gi"
+      #cpu: "4"
+      cpu: "2"
+      #memory: "10Gi"
+      memory: "2Gi"
     requests:
-      cpu: "4"
-      memory: "10Gi"
+      #cpu: "4"
+      cpu: "200m"
+      #memory: "10Gi"
+      memory: "500Mi"
 {% endif %}
