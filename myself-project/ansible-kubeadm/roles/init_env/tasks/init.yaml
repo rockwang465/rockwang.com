@@ -64,3 +64,6 @@
 
 - name: "init | synchronous local time"
   command: "ntpdate {{ ntpserver }}"
+
+- name: "init | add synchronous time to crontab"
+  shell: "echo */5 * * * * /usr/sbin/ntpdate {{ ntpserver }} >> /var/spool/cron/`whoami`"
