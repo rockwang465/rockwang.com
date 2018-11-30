@@ -8,7 +8,11 @@
     group: root
 
 - name: "helm | helm init localhost"
-  shell: helm init --client-only 
+  command: "helm init --client-only"
+  delegate_to: "{{ groups['kube-master']|first }}"
+  environment:
+    PATH: "{{ bin_dir }}:{{ ansible_env.PATH }}"
+  run_once: true
   ignore_errors: true
 
 - name: "helm | copy bin file to /usr/bin"
