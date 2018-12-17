@@ -48,6 +48,11 @@
     state: restarted
     enabled: yes
 
+- name: "install | check if kubeadm has already run"
+  stat:
+    path: "/var/lib/kubelet/config.yaml"
+  register: kubeadm_already_run
+
 - name: "install | create {{ files_dir }} directory"
   file:
     path: "{{ files_dir }}" 
@@ -66,7 +71,7 @@
 
 - name: "install | execute k8s.sh"
   command: "/bin/sh {{ files_dir }}/k8s.sh"
-#  when: docker_images_num.stdout != 6 
+  when: not kubeadm_already_run.stat.exists 
   
 #- name: "install | debug info ----------------------"
 #  debug: "msg : {{ docker_images_num }}"
@@ -86,7 +91,9 @@
 - name: "install | kubeadm init first master"
   command: "kubeadm init --config={{ kube_config_dir }}/kubeadm-init.yaml"
   register: kubeadm_init
-  when: inventory_hostname == groups['kube-master']|first
+  when:
+    - inventory_hostname == groups['kube-master']|first
+    - not kubeadm_already_run.stat.exists
 
 #- name: "install | save the kubeadm join infomation"
 #  shell: "echo {{ kubeadm_init.stdout }} > ~/kubeadm_init_info.txt"
