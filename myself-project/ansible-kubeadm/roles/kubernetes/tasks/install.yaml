@@ -73,7 +73,7 @@
   command: "/bin/sh {{ files_dir }}/k8s.sh"
   when: not kubeadm_already_run.stat.exists 
   
-#- name: "install | debug info ----------------------"
+#- name: "install | debug info ---------------------"
 #  debug: "msg : {{ docker_images_num }}"
 #  when: inventory_hostname == groups['kube-master']|first
 
