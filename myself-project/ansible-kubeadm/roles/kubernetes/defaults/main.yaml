@@ -73,4 +73,4 @@ kube_apiserver_client_key: "{{kube_cert_dir}}/apiserver-kubelet-client.key"
 
 # docker image define
 helm_tiller_image: "gcr.io.kubernetes-helm.tiller:{{ k8s_version.tiller }}"
-dashboard_image: "k8s.gcr.io/kubernetes-dashboard-amd64:{{ k8s_version.kubernetes_dashboard_amd64 }}"
+dashboard_image: "k8s.gcr.io/kubernetes-dashboard-amd64:{{ k8s_version.kubernetes_dashboard_amd64 }}" 

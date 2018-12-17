@@ -115,7 +115,7 @@ spec:
       containers:
       - name: kubernetes-dashboard
         image: {{ dashboard_image }} 
-        #image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.2 #此处我用的v1.10.0版本，所以改了一下Image的地址。
+        #image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.2 #此处我用的v1.10.0版本，所以改了一下Image的地址。 
         #image: registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:v1.10.0
         ports:
         - containerPort: 8443
