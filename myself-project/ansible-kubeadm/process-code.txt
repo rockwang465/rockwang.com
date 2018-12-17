@@ -12,3 +12,4 @@ rockwang.com/myself-project/ansible-kubeadm/roles/kubernetes/tasks/helm.yaml
 4. 使用register 判断，如果kubectl get nodes | grep -i ready 有结果，
    则 kubeadm reset && kubeadm init 不执行。没有结果则执行。
    加一层判断更安全。
+5. 添加分区模块进来。 需要有local-volume charts
