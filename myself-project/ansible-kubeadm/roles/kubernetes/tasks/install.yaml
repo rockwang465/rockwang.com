@@ -83,10 +83,12 @@
     dest: "{{ kube_config_dir }}/kubeadm-init.yaml" 
   when: inventory_hostname == groups['kube-master']|first
 
-- name: "install | kubeadm reset"
-  command: kubeadm reset -f
-  ignore_errors: true
-  when: inventory_hostname == groups['kube-master']|first
+#- name: "install | kubeadm reset"
+#  command: kubeadm reset -f
+#  ignore_errors: true
+#  when: 
+#    - inventory_hostname == groups['kube-master']|first
+#    - not kubeadm_already_run.stat.exists  
 
 - name: "install | kubeadm init first master"
   command: "kubeadm init --config={{ kube_config_dir }}/kubeadm-init.yaml"
