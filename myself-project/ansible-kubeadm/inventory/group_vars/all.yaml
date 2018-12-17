@@ -63,10 +63,11 @@ k8s_version:
   pause: '3.1'
   
   flannel_amd64: 'v0.10.0-amd64'
-  traefik: '1.7.9'
   kubernetes_dashboard_amd64: 'v1.10.1'
   # tiller: v2.13.1  #这个是k8s v1.14.0版本的tiller，暂时没找到下载镜像地址，所以用下面旧地址.
   tiller: 'v2.11.0'
+
+  traefik: '1.7.9'
   metircs_server_adm64: 'v0.3.1'
   addon_resizer: '1.8.4'
 
