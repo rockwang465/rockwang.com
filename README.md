@@ -1,6 +1,5 @@
 ## Welcome to visit us
-![头像](https://github.com/rockwang465/rockwang.com/picture/lyf.jpg)
-
+![Image text](https://github.com/rockwang465/rockwang.com/blob/master/picture/lyf.jpg)
 
 
 
