@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+#***********************************************************# 
+#  Author        : RockWang                                 #
+#  Email         : wangyecheng_vendor@sensetime.com         #
+#  Create time   : 2019-03-05                               #
+#  Filename      : check_server.py                          #
+#  Description   : check server scripts                     #
+#***********************************************************#
+
 import subprocess,time,requests,json
 
 ip="10.5.6.66"
@@ -34,7 +42,7 @@ def check_pods_state():
   if state.stdout:
     check_pods_value=(str(state.stdout, encoding='utf-8'))
     print(check_pods_value)
-    print("Error : pod有报错，请解决")
+    print("Error : pod有异常，请解决")
     time.sleep(4)
   else:
     print("Pod正常")
