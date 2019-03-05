@@ -34,7 +34,7 @@ def check_pods_state():
   if state.stdout:
     check_pods_value=(str(state.stdout, encoding='utf-8'))
     print(check_pods_value)
-    print("Error : pods有问题")
+    print("Error : pod有报错，请解决")
     time.sleep(4)
   else:
     print("Pod正常")
@@ -49,7 +49,7 @@ def check_license_state():
 #  print(check_license_value)
   if 'alive' not in check_license_value.split():
     print(check_license_value)
-    print("Error : 加密狗 has error")
+    print("Error : 加密狗未激活，请解决")
     time.sleep(4)
   else: 
     print("加密狗正常")
@@ -58,7 +58,6 @@ def check_license_state():
 
 def check_topic_state():
   state=subprocess.run("kubectl exec -it -n component kafka-default-0 -- kafka-topics.sh --list --zookeeper zookeeper-default:2181/kafka | grep -v 'consumer_offsets'",stdout=subprocess.PIPE,stderr=subprocess.PIPE,shell=True)
-  ##state=subprocess.run("kubectl exec -it -n component kafka-default-0 -- kafka-topics.sh --list --zookeeper zookeeper-default:2181/kafka | egrep -v 'consumer_offsets|auto'",stdout=subprocess.PIPE,stderr=subprocess.PIPE,shell=True)
   check_topic_value=(str(state.stdout, encoding='utf-8'))
   print("\n4. 检查topic状态".ljust(80,'*'))
 #  print(check_topic_value)
