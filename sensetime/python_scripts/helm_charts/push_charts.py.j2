@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import os
+import shutil
+import time
+
+source_ip = "{{ repos.yum.ip }}"
+local_docker_address = "{{ repos.yum.ip }}:{{ repos.docker.port }}"
+local_helm_address = "{{ repos.yum.ip }}:{{ repos.helm.port }}"
+
+
+def deco_pack(name, version):
+    print("\n1. Decompression file")
+    recode = os.system("tar xf %s-%s.tgz" % (name, version))
+    if recode != 0:
+        print("Error : Not found %s-%s.tgz package" % (name, version))
+    #    time.sleep(1)
+    else:
+        print("%s-%s.tgz Decompression successfully" % (name, version))
+
+
+def change_tag():
+    print("\n2. change tag ip address")
+    os.system('grep -nR "%s" | cut -d ":" -f 1 | grep -v "Binary" | grep -v "\.py" | xargs sed  -i "s#%s#%s#g"' % (
+        source_ip, source_ip, local_docker_address))
+
+
+def push_pack(name, version):
+    print("\n3. create + push charts package")
+    pack_name = (name + "-" + version + ".tgz")
+    print(name, pack_name)
+    print("shangmian", os.getcwd())
+    if not os.path.exists(name):
+        print("\nError : Not found %s directory" % name)
+    #    time.sleep(1)
+    else:
+        print("dixia ", os.getcwd())
+        os.system("cd %s && helm package ./" % name)
+        recode = os.system("cd %s && curl --data-binary '@%s' http://%s/api/charts -kv" % (
+            name, pack_name, local_helm_address))
+        if recode != 0:
+            print("\nError : Push charts %s failure" % pack_name)
+        #    time.sleep(1)
+        else:
+            print("\nPush charts %s successfully " % pack_name)
+            shutil.rmtree(name)
+        # shutil.rmtree(name)
+        # os.remove("%s/%s" % (name, pack_name))
+        # time.sleep(1)
+
+
+def main():
+    f = open("charts_info.txt", "r")
+    data = f.readlines()
+    for line in data:
+        name = line.split()[0]
+        version = line.split()[1]
+        deco_pack(name, version)
+        change_tag()
+        push_pack(name, version)
+
+
+if __name__ == '__main__':
+    main()
+
+

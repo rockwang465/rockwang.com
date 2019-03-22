@@ -1,0 +1,67 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+import os
+import sys
+import re
+
+repo_name = "{{ repos.helm.name }}"
+repo_address = "http://{{ docker_registry }}:{{ repos.helm.port }}"
+charts_info_file = "charts_info.txt"
+
+
+# check the helm repo has 10.5.6.10 repo 
+def check_repo():
+    # print("\n1. check repo list")
+    recode = os.system("helm repo list | grep %s | grep %s" % (repo_address, repo_name))
+    if recode != 0:
+        print("Warning : Not found : helm repo list  %s or %s" % (repo_name, repo_address))
+        recode = os.system("helm repo add %s %s" % (repo_name,repo_address))
+        if recode != 0:
+            print("\nError : Add helm repo list failure")
+            sys.exit(1)
+        else:
+            print("Add helm repo list successfully")
+    else:
+        print("\nhelm repo is correct : %s %s\n\n" % (repo_name, repo_address))
+        return "correct"
+
+
+# helm fetch charts package
+def fetch_charts(name, version):
+    # print("\n3. fetch helm charts")
+    recode1 = os.system("helm fetch %s/%s --version %s" % (repo_name, name, version))
+    if recode1 != 0:
+        print("\nError : helm fetch %s/%s --version %s failure" % (repo_name, name, version))
+    else:
+        print("\nhelm fetch %s/%s --version %s successfully" % (repo_name, name, version))
+
+
+# get helm version by helm list
+def get_list():
+    # print("\n2. get helm list")
+    value = os.popen("helm list | awk '{print $9}'")
+    data = (value.read()).split()
+    f = open("charts_info.txt","w")
+    f2 = open("charts_list.txt","w")
+    for i in data:
+        chart_value = re.findall(r"(^\w.+?)-([0-9].+)", i)
+        value_name = chart_value[0][0]
+        value_version = chart_value[0][1]
+       # print(value_name, value_version)
+       # print(value_name, i)
+        value1 = value_name + "\t" + value_version
+        value2 = value_name + "\t" + i 
+
+        fetch_charts(value_name, value_version)
+
+        f.write(value1 + "\n")
+        f2.write(value2 + "\n")
+    f.close()
+    f2.close()
+
+
+
+repo_state = check_repo()
+get_list()
+
+
