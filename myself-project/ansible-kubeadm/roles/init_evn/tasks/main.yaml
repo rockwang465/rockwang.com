@@ -1,0 +1,5 @@
+---
+- name: "init env | permanent disable selinux"
+  service:
+    name: selinux
+    enable: no

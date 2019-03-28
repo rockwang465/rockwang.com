@@ -1,0 +1,11 @@
+---
+## This playbook deploys the whole application stack in this site.
+
+# master
+- hosts: kube-master
+  # remote_user: root
+  # vars_files:
+  #   - inventory/group_vars/all.yaml
+  roles:
+  - { role: init_env, tags: init_env }
+
