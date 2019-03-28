@@ -1,0 +1,21 @@
+---
+- name: "init | permanent disable selinux"
+  selinux:
+    state: disabled
+
+- name: "init | permanent stop firewalld"
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
+
+- name: "init | install server"
+  yum:
+    name: "{{ item }}"
+    state: persent
+  with_items:
+    - vim
+    - telnet
+    - wget
+    - tree
+    
