@@ -9,13 +9,13 @@
     state: stopped
     enabled: no
 
-- name: "init | install server"
+- name: "init | install software"
   yum:
     name: "{{ item }}"
-    state: persent
+    state: present
   with_items:
-    - vim
-    - telnet
-    - wget
-    - tree
+    - "{{ preinstall_packages }}"
+  ignore_errors: true
+
+
     

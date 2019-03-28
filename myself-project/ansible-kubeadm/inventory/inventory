@@ -1,4 +1,4 @@
-k8s-test-249 ansible_host=10.5.1.249 ansible_user=root ansible_ssh_pass='1234'
+k8s-test-249 ansible_host=10.5.1.249 ansible_ssh_user=root ansible_ssh_pass='1234'
 
 [kube-master]
 k8s-test-249

@@ -1,0 +1,24 @@
+---
+preinstall_packages:
+  - wget
+  - curl
+  - axel
+  - vim
+  - ntp
+  - firewalld
+  - jq
+  - gcc
+  - pciutils
+  - telnet
+  - nmap
+  - sysstat
+  - iftop
+  - iotop
+  - lsof
+  - ipmitool
+  - nc
+  - tmux
+  - parted
+  - nfs-utils
+  - ipvsadm
+  - bzip2
