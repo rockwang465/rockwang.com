@@ -1,0 +1,15 @@
+k8s-test-67 ansible_host=10.5.6.67 ansible_user=root ansible_ssh_pass='1234'
+
+[kube-master]
+k8s-test-67
+
+[kube-node]
+k8s-test-67
+
+[k8s-cluster:children]
+kube-master
+kube-node
+
+[kube-gpu:children]
+kube-master
+kube-node
