@@ -47,11 +47,17 @@
   hostname:
     name: "{{ inventory_hostname }}"
 
-- name: "init | set /etc/hosts"
+- name: "init | populate localhost ipv4 into file"
   lineinfile:
     path: /etc/hosts
     line: "127.0.0.1 localhost localhost.localdomain"
     regexp: '^127.0.0.1.*$'
     state: present
     backup: yes 
+
+- name: "init | set /etc/hosts"
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ ansible_host }}  {{ ansible_hostname }}"
+    state: present
 
