@@ -47,6 +47,7 @@
   hostname:
     name: "{{ inventory_hostname }}"
 
+# 以127.0.0.1开头的内容，替换成: 127.0.0.1 localhost localhost.localdomain
 - name: "init | populate localhost ipv4 into file"
   lineinfile:
     path: /etc/hosts
