@@ -1,9 +1,15 @@
 ---
-- name: "init | permanent disable selinux"
+- name: "init | temporary disable selinux"
   selinux:
     state: disabled
 
-- name: "init | permanent stop firewalld"
+- name: "init | permanent disable selinux"
+  lineinfile:
+    dest: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: 'SELINUX=disabled'
+
+- name: "init | permanent disable firewalld"
   service:
     name: firewalld
     state: stopped
@@ -17,5 +23,35 @@
     - "{{ preinstall_packages }}"
   ignore_errors: true
 
+- name: "init | add kernel parameter"
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_file: /etc/sysctl.d/tuning.conf
+  ignore_error: true
+  with_items: 
+    - "{{ kernel_tuning_params }}"
 
-    
+- name: "init | temporary disable swap"
+  shell: swapoff -a
+
+- name: "init | permanent disable swap"
+  lineinfile:
+    path: /etc/fstab
+    state: absent
+    regexp: 'swap'
+    backup: yes    
+
+- name: "init | set hostname now and permanent"
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: "init | set /etc/hosts"
+  lineinfile:
+    path: /etc/hosts
+    line: "127.0.0.1 localhost localhost.localdomain"
+    regexp: '^127.0.0.1.*$'
+    state: present
+    backup: yes 
+

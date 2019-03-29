@@ -1,24 +1,73 @@
 ---
+
+#kernel_version: 3.10.0-693.5.2.el7.x86_64
+
 preinstall_packages:
   - wget
   - curl
-  - axel
+  #- axel
   - vim
   - ntp
   - firewalld
-  - jq
+  #- jq
   - gcc
-  - pciutils
+  #- pciutils
   - telnet
   - nmap
   - sysstat
-  - iftop
-  - iotop
+  #- iftop
+  #- iotop
   - lsof
   - ipmitool
   - nc
-  - tmux
+  #- tmux
   - parted
   - nfs-utils
   - ipvsadm
   - bzip2
+
+kernel_tuning_params:
+  # - { name: kernel.sysrq, value: 1 }
+  # - { name: kernel.core_uses_pid, value: 1 }
+  # - { name: kernel.msgmnb, value: 65536}
+  # - { name: kernel.msgmax, value: 65536}
+  # - { name: kernel.shmmax, value: 68719476736 }
+  # - { name: kernel.shmall, value: 4294967296 }
+  # - { name: kernel.pid_max, value: 4194303 }
+  # - { name: kernel.core_pattern, value: /data/cores }
+  # - { name: vm.zone_reclaim_mode, value: 0 }
+  # - { name: vm.min_free_kbytes, value: 524288 }
+  # - { name: vm.vfs_cache_pressure, value: 200 }
+  - { name: vm.swappiness, value: 0 }
+  # - { name: net.ipv4.ip_forward, value: 1 }
+  # - { name: net.ipv4.conf.default.accept_source_route, value: 0 }
+  # - { name: net.ipv4.tcp_syncookies, value: 1 }
+  # - { name: net.ipv4.tcp_max_syn_backlog, value: 1024 }
+  # - { name: net.ipv4.ip_nonlocal_bind, value: 1 }
+  # - { name: net.core.netdev_max_backlog, value: 3000 }
+  # - { name: net.ipv6.conf.all.disable_ipv6, value: 1 }
+  # - { name: net.ipv6.conf.default.disable_ipv6, value: 1 }
+  # - { name: net.ipv4.conf.default.rp_filter, value: 2 }
+  # - { name: net.ipv4.conf.all.rp_filter, value: 2 }
+  # - { name: net.ipv4.conf.all.arp_announce, value: 2 }
+  - { name: net.bridge.bridge-nf-call-iptables, value: 1 }
+  - { name: net.bridge.bridge-nf-call-ip6tables, value: 1 }
+  - { name: net.bridge.bridge-nf-call-arptables, value: 1 }   #rock注释的
+  - { name: net.ipv4.tcp_keepalive_time, value: 200 }
+  - { name: net.ipv4.tcp_keepalive_probes, value: 9 }
+  - { name: net.ipv4.tcp_keepalive_intvl, value: 50 }
+  # - { name: fs.inotify.max_user_watches, value: 1048576 }
+  # - { name: kernel.hung_task_panic, value: 1 }
+
+ulimit_params:
+  - { name: 'nproc', param: '-SHu', value: 65536 } # max number of processes
+  - { name: 'nofile', param: '-SHn', value: 65536 } # max number of open file descriptors
+  - { name: 'fsize', param: '-SHf', value: 'unlimited' } # maximum filesize (KB)
+
+wait_reboot_delay: 10
+wait_reboot_timeout: 300
+
+#cuda_drivers_version: "367.48"
+#cuda_drivers_exclude: "xorg-x11-drv-nvidia-39* xorg-x11-drv-nvidia-38* xorg-x11-drv-nvidia-37*"
+
+timezone: /usr/share/zoneinfo/Asia/Shanghai

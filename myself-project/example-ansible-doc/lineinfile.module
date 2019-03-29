@@ -1,0 +1,284 @@
+https://www.cnblogs.com/jackchen001/p/6710233.html
+ansible 下lineinfile详细使用
+原文  http://zouqingyun.blog.51cto.com/782246/1882367
+
+ 
+
+一、简述
+
+这几天在看了ansible官网，收获蛮多。截取一个lineinfile模块作一个总结。如果批量修改配置文件某一行时，在写playbook时lineinfile避免不了的。
+
+根据官网说法：lineinfile - Ensure a particular line is in a file, or replace an existing line using a back-referenced regular expression.大意是说，针对文件特殊行，使用后端引用的正则表达式来替换
+
+二、实践
+
+playbook，我先定义前面common部分。
+
+---
+ - hosts: "{{host}}"
+   remote_user: "{{user}}"
+   gather_facts: false
+  
+   tasks:
+由于我已经定义标签tags，执行playbook中某个特定任务时，只需执行到对应TAGNAME便可
+
+ansible-playbook line1.yml --extra-vars "host=gitlab user=root" --tags "TAGNAME" -v
+
+1、正则匹配，更改某个关键参数值
+
+   - name: seline modify enforcing
+      lineinfile:
+         dest: /etc/selinux/config
+         regexp: '^SELINUX='
+         line: 'SELINUX=enforcing'
+验证
+
+[root@master test]# cat /etc/selinux/config
+
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=enforcing
+# SELINUXTYPE= can take one of these two values:
+#     targeted - Targeted processes are protected,
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+2、在匹配的内容前或后增加一行
+
+2.1 http.conf
+
+[root@master test]# cat http.conf 
+#Listen 12.34.56.78:80
+#Listen 80
+#Port
+2.2 insertbefore匹配内容在前面添加
+
+    - name: httpd.conf modify 8080
+      lineinfile:
+         dest: /opt/playbook/test/http.conf
+         regexp: '^Listen'
+         insertbefore: '^#Port'   
+         line: 'Listen 8080'
+      tags:
+       - http8080
+验证
+
+[root@master test]# cat http.conf 
+#Listen 12.34.56.78:80
+#Listen 80
+Listen 8080
+#Port
+2.3 insertafter匹配内容在后面添加
+
+- name: httpd.conf modify 8080
+      lineinfile:
+         dest: /opt/playbook/test/http.conf
+         regexp: '^Listen'
+         insertafter: '^#Port'   
+         line: 'Listen 8080'
+      tags:
+       - http8080
+验证
+
+[root@master test]# cat http.conf 
+#Listen 12.34.56.78:80
+#Listen 80
+#Port
+Listen 8080
+3.修改文件内容和权限
+
+3.1 原文件内容及权限
+
+[root@master test]# cat hosts
+127.0.0.1		localhost.localdomain localhost ::1		localhost6.localdomain6 localhost6
+192.168.1.2 foo.lab.net foo
+[root@master test]# ls -l hosts
+-rwxrwxr-x 1 root qingyun 111 12月 13 18:07 hosts
+3.2 剧本
+
+    - name: modify hosts
+      lineinfile:
+         dest: /opt/playbook/test/hosts
+         regexp: '^127\.0\.0\.1'
+         line: '127.0.0.1 localhosts'
+         owner: root
+         group: root
+         mode: 0644
+      tags:
+       - hosts
+3.3 执行验证
+
+[root@master test]# cat hosts
+127.0.0.1 localhosts
+192.168.1.2 foo.lab.net foo
+[root@master test]# ls -l hosts
+-rw-r--r-- 1 root root 49 12月 13 18:16 hosts
+4、删除某一行内容
+
+4.1 原文件
+
+[root@master test]# cat hosts
+127.0.0.1 localhosts
+192.168.1.2 foo.lab.net foo
+4.2 absent剧本
+
+- name: delete 192.168.1.1
+      lineinfile:
+         dest:  /opt/playbook/test/hosts
+         state: absent
+         regexp: '^192\.'
+      tags:
+       - delete192
+4.3 验证
+
+[root@master test]# cat hosts
+
+127.0.0.1 localhosts
+
+5、文件存在就添加一行
+
+5.1原文件
+
+[root@master test]# cat hosts
+127.0.0.1 localhosts
+5.2 剧本
+
+    - name: add a line
+      lineinfile:
+         dest:  /opt/playbook/test/hosts
+         line: '192.168.1.2 foo.lab.net foo'
+      tags:
+       - add_a_line
+5.3 验证
+
+[root@master test]# cat hosts
+127.0.0.1 localhosts
+192.168.1.2 foo.lab.net foo
+6、如果匹配到，引用line这一行作为替换。如果没有匹配到，则完全引用line这一行作为添加
+
+6.1 原文件
+
+[root@master test]# cat testfile
+# %wheel	ALL=(ALL)	ALL
+6.2 剧本
+
+    - name: Fully quoted a line
+      lineinfile:
+         dest: /opt/playbook/test/testfile
+         state: present
+         regexp: '^%wheel'
+         line: '%wheel  ALL=(ALL)       NOPASSWD: ALL'
+
+      tags:
+        - testfile
+6.3 验证
+
+[root@master test]# cat testfile
+# %wheel	ALL=(ALL)	ALL
+%wheel  ALL=(ALL)       NOPASSWD: ALL
+6.4 原文件
+
+[root@master test]# cat testfile
+# %wheel	ALL=(ALL)	ALL
+%wheel  1234  ALL =(all) NOPASSWD
+6.5 验证
+
+Using /etc/ansible/ansible.cfg as config file
+
+PLAY [gitlab] ******************************************************************
+
+TASK [Fully quoted a line] *****************************************************
+changed: [master] => {"backup": "", "changed": true, "msg": "line replaced"}
+
+PLAY RECAP *********************************************************************
+master                     : ok=1    changed=1    unreachable=0    failed=0   
+
+[root@master test]# cat testfile
+# %wheel	ALL=(ALL)	ALL
+%wheel  ALL=(ALL)       NOPASSWD: ALL
+7、关于参数backrefs，backup使用。
+
+backrefs为no时，如果没有匹配,则添加一行line。如果匹配了，则把匹配内容替被换为line内容。
+
+backrefs为yes时，如果没有匹配，则文件保持不变。如果匹配了，把匹配内容替被换为line内容。
+
+backup为no时，没有匹配，则添加。如果匹配了，则替换
+
+backup为yes时，没有匹配，添加，如果匹配了，则替换
+
+7.1 需要关心的,backrefs为yes时情景
+
+7.1.1 原文件
+
+[root@master test]# cat testfile
+# %wheel	ALL=(ALL)	ALL
+%wheel  ALL=(ALL)       NOPASSWD: ALL
+#?bar
+7.1.2 剧本
+
+    - name: test backrefs
+      lineinfile:
+#          backup: yes
+          state: present
+          dest: /opt/playbook/test/testfile
+          regexp: '^#\?bar'
+          backrefs: yes
+          line: 'bar'
+      tags:
+        - test_backrefs
+7.1.3 验证
+
+[root@master test]# cat testfile
+# %wheel	ALL=(ALL)	ALL
+%wheel  ALL=(ALL)       NOPASSWD: ALL
+bar
+7.1.3 没有匹配
+
+[root@master test]# cat testfile
+# %wheel	ALL=(ALL)	ALL
+%wheel  ALL=(ALL)       NOPASSWD: ALL
+7.1.4 验证
+
+Using /etc/ansible/ansible.cfg as config file
+
+PLAY [gitlab] ******************************************************************
+
+TASK [test backrefs] ***********************************************************
+ok: [master] => {"backup": "", "changed": false, "msg": ""}
+
+PLAY RECAP *********************************************************************
+master                     : ok=1    changed=0    unreachable=0    failed=0
+文件保持不变
+
+8、使用valiate参数，在保存sudoers文件前，验证语法，如果有错，执行时，会报出来，重新编辑playbook
+
+8.1 剧本
+
+- name: test validate
+      lineinfile:
+          dest: /etc/sudoers
+          state: present
+          regexp: '^%ADMIN ALL='
+          line: '%ADMIN ALL=(ALL)'
+          validate: 'visudo -cf %s'
+      tags:
+        - testsudo
+8.2 执行验证就说语法不过关
+
+Using /etc/ansible/ansible.cfg as config file
+
+PLAY [gitlab] ******************************************************************
+
+TASK [test validate] ***********************************************************
+fatal: [master]: FAILED! => {"changed": false, "failed": true, "msg": "failed to validate: rc:1 error:visudo：>>> /tmp/tmpgQjHYM：syntax error 在行 114 附近<<<\n"}
+	to retry, use: --limit @/opt/playbook/test/line1.retry
+
+PLAY RECAP *********************************************************************
+master                     : ok=0    changed=0    unreachable=0    failed=1
+三、总结
+
+具体模块使用，ansible-doc可以查看详细用法。
+
+在尝试学习新的语言之前先理解这门语言的设计原理能够让你在探索这门新语言时保持一个清醒而且开发的状态。
