@@ -1,0 +1,8 @@
+---
+kube_master_noschedule: false
+etcd_access_addresses: ''
+kube_cert_dir: '{{ kube_config_dir }}/pki'
+etcd_cert_dir: '{{ kube_cert_dir }}/etcd'
+dns_domain: cluster.local
+kube_service_subnet: 10.96.0.0/16
+kube_pod_subnet: 10.244.0.0/16

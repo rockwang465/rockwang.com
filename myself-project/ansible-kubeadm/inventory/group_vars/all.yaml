@@ -6,6 +6,7 @@
 #################################### init environment #################################
 ntpserver: 'ntp.api.bz'
 IP: "{{ ansible_eth0['ipv4']['address'] }}"
+# IP: {{ ansible_default_ipv4.address }}
 
 bin_dir: /usr/bin
 
@@ -47,4 +48,20 @@ docker_insecure_registry:
 #docker_default_runtime: 'nvidia'
 #docker_daemon_graph: '/var/lib/docker'
 
+kube_version: 'v1.13.2'
+coredns_version: '1.2.6'
+etcd_version: '3.2.24'
+pause_version: '3.1'
+
+kube_config_dir: /etc/kubernetes
+
+
+
 #kube_config_dir: /etc/kubernetes
+
+
+
+
+
+
+

@@ -34,6 +34,22 @@
     state: restarted
     enabled: yes
 
+- name: "docker | pause 10 seconds for docker"
+  pause:
+    seconds: 10
+    prompt: "Wait 10 seconds for docker"
+
+- name: "docker | ensure docker service"
+  shell: "/usr/bin/docker images"
+  register: docker_result
+  until: docker_result.rc == 0
+  retries: 10
+  delay: 4 
+
+#- name: "docker | print stdout info" 
+#  debug:
+#    msg: "{{ docker_result.rc }}"
+
 - name: "Docker | docker login repository "
   shell: "docker login {{ docker_registry_ip }} -u {{ docker_registry_user }} -p {{ docker_registry_passwd }}"
   ignore_errors: true

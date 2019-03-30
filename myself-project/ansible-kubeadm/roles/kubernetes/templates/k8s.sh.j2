@@ -1,0 +1,23 @@
+docker pull mirrorgooglecontainers/kube-apiserver:{{ kube_version }}
+docker pull mirrorgooglecontainers/kube-controller-manager:{{ kube_version }}
+docker pull mirrorgooglecontainers/kube-scheduler:{{ kube_version }}
+docker pull mirrorgooglecontainers/kube-proxy:{{ kube_version }}
+docker pull mirrorgooglecontainers/pause:{{ pause_version }}
+docker pull mirrorgooglecontainers/etcd:{{ etcd_version }}
+docker pull coredns/coredns:{{ coredns_version }}
+
+docker tag mirrorgooglecontainers/kube-proxy:{{ kube_version }}  k8s.gcr.io/kube-proxy:{{ kube_version }}
+docker tag mirrorgooglecontainers/kube-scheduler:{{ kube_version }} k8s.gcr.io/kube-scheduler:{{ kube_version }}
+docker tag mirrorgooglecontainers/kube-apiserver:{{ kube_version }} k8s.gcr.io/kube-apiserver:{{ kube_version }}
+docker tag mirrorgooglecontainers/kube-controller-manager:{{ kube_version }} k8s.gcr.io/kube-controller-manager:{{ kube_version }}
+docker tag mirrorgooglecontainers/etcd:{{ etcd_version }}  k8s.gcr.io/etcd:{{ etcd_version }}
+docker tag coredns/coredns:{{ coredns_version }} k8s.gcr.io/coredns:{{ coredns_version }}
+docker tag mirrorgooglecontainers/pause:{{ pause_version }}  k8s.gcr.io/pause:{{ pause_version }}
+
+docker rmi mirrorgooglecontainers/kube-apiserver:{{ kube_version }}
+docker rmi mirrorgooglecontainers/kube-controller-manager:{{ kube_version }}
+docker rmi mirrorgooglecontainers/kube-scheduler:{{ kube_version }}
+docker rmi mirrorgooglecontainers/kube-proxy:{{ kube_version }}
+docker rmi mirrorgooglecontainers/pause:{{ pause_version }}
+docker rmi mirrorgooglecontainers/etcd:{{ etcd_version }}
+docker rmi coredns/coredns:{{ coredns_version }}

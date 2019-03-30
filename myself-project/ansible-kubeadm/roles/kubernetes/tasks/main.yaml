@@ -1,7 +1,64 @@
 ---
-- name: "kubernetes | add k8s repo file"
-  copy:
-    src: kubernetes.repo
-    dest: /etc/yum.repos.d/
-  when: repos.local == 'disable'
-  
+####- name: "kubernetes | copy k8s yum repo file"
+####  copy:
+####    src: kubernetes.repo
+####    dest: /etc/yum.repos.d/
+####  when: repos.local == 'disable'
+####
+####- name: "kubernetes | yum install kubelet kubeadm kubectl"
+####  yum:
+####    name: "{{ item }}"
+####    state: present
+####  with_items:
+####    - kubelet
+####    - kubeadm
+####    - kubectl
+####    - ipvsadm
+####  retries: 10
+####  delay: 4
+####
+####- name: "kubernetes | ignore swap error" 
+####  lineinfile:
+####    path: /etc/sysconfig/kubelet
+####    regexp: "^KUBELET_EXTRA_ARGS"
+####    line: "KUBELET_EXTRA_ARGS=--fail-swap-on=false"
+####    
+####- name: "kubernetes | reload systemd"
+####  command: systemctl daemon-reload
+####
+####- name: "kubernetes | start service kubelet and add self-start"
+####  service:
+####    name: kubelet
+####    state: restarted
+####    enabled: yes
+####
+####- name: "kubernetes | copy k8s.sh scripts to /tmp/"
+####  template:
+####    src: k8s.sh.j2
+####    dest: /tmp/k8s.sh
+####    mode: 754
+####
+#####- name: "kubernetes | ensure docker images number"
+#####  command: /usr/bin/docker images | grep k8s.gcr.io | wc -l
+#####  register: docker_images_num
+#####  when: inventory_hostname == groups['kube-master']|first
+####
+####- name: "kubernetes | execute k8s.sh"
+####  command: /bin/sh /tmp/k8s.sh
+#####  when: docker_images_num.stdout != 6 
+####  
+#####- name: "kubernetes | debug info ----------------------"
+#####  debug: "msg : {{ docker_images_num }}"
+#####  when: inventory_hostname == groups['kube-master']|first
+
+- name: "kubernetes | copy kubeadm init config file"
+  template:
+    src: kubeadm-init.yaml.j2
+    dest: "{{ kube_config_dir }}/kubeadm-init.yaml" 
+  when: inventory_hostname == groups['kube-master']|first
+
+#- name: "kubernetes | kubeadm init first master"
+#  command: "kubeadm init --config={{ kube_config_dir }}/kubeadm-init.yaml"
+#  # register: kubeadm_init
+#  when: inventory_hostname == groups['kube-master']|first
+
