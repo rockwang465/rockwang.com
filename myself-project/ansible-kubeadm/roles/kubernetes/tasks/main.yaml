@@ -1,0 +1,7 @@
+---
+- name: "kubernetes | add k8s repo file"
+  copy:
+    src: kubernetes.repo
+    dest: /etc/yum.repos.d/
+  when: repos.local == 'disable'
+  

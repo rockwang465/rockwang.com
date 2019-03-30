@@ -8,4 +8,5 @@
   #  - inventory/group_vars/all.yaml
   roles:
   - { role: docker, tags: docker }
+  - { role: kubernetes, tags: kubernetes }
 
