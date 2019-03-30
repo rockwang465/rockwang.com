@@ -1,0 +1,29 @@
+{
+    "exec-opts": ["native.cgroupdriver={{ docker_cgroup_driver }}"],
+    "log-driver": "json-file",
+    "log-opts": {
+      "max-size": "100m",
+      "max-file": "5"
+    },
+    "storage-driver": "overlay2",
+    "storage-opts": [
+      "overlay2.override_kernel_check=true"
+    ],
+    "insecure-registries": [
+    {%- for item in docker_insecure_registry -%}
+        "{{ item }}"
+        {%- if not loop.last %},{% endif -%}
+    {%- endfor -%} ],
+    "graph": "{{ docker_daemon_graph }}",
+    {% if docker_default_runtime == "nvidia" and inventory_hostname in groups['kube-gpu'] %}
+    "default-runtime": "nvidia",
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    }
+    {% else %}
+    "default-runtime": "runc"
+    {% endif %}
+}

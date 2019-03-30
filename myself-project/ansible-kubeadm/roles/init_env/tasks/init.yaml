@@ -29,7 +29,7 @@
     value: "{{ item.value }}"
     state: present
     sysctl_file: /etc/sysctl.d/tuning.conf
-  ignore_error: true
+  ignore_errors: true
   with_items: 
     - "{{ kernel_tuning_params }}"
 
@@ -62,3 +62,5 @@
     line: "{{ ansible_host }}  {{ ansible_hostname }}"
     state: present
 
+- name: "init | synchronous local time"
+  command: "ntpdate {{ ntpserver }}"

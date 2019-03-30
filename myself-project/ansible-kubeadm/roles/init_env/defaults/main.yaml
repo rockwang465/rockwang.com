@@ -8,6 +8,7 @@ preinstall_packages:
   #- axel
   - vim
   - ntp
+  - ntpdate
   - firewalld
   #- jq
   - gcc

@@ -1,0 +1,40 @@
+---
+- name: "docker | yum install docker tools"
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ docker_tools }}"
+
+- name: "docker | get aliyun docker repo"
+  shell: "wget {{ docker_repo }} -O /etc/yum.repos.d/docker.repo"
+  when:  repos.local == "disable"
+
+- name: "docker | yum makecache"
+  command: yum makecache fast
+
+- name: "docker | yum install {{ docker_ce_version}}"
+  yum:
+    name: "{{ docker_ce_version }}"
+    state: present
+  register: docker_ce_result
+  until: docker_ce_result is succeeded
+  retries: 10
+  delay: 4
+
+- name: "docker | copy daemon.json"
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    mode: 644
+
+- name: "docker | startup docker and add self-start"
+  service:
+    name: docker
+    state: restarted
+    enabled: yes
+
+- name: "Docker | docker login repository "
+  shell: "docker login {{ docker_registry_ip }} -u {{ docker_registry_user }} -p {{ docker_registry_passwd }}"
+  ignore_errors: true
+  when: repos.local == "enable"

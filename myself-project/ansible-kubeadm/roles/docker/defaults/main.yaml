@@ -1,0 +1,8 @@
+---
+docker_tools:
+  - yum-utils
+  - device-mapper-persistent-data
+  - lvm2
+
+docker_repo: 'https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo'
+

@@ -1,0 +1,17 @@
+{
+    "exec-opts": ["native.cgroupdriver={{ docker_cgroup_driver }}"],
+    "log-driver": "json-file",
+    "log-opts": {
+      "max-size": "100m",
+      "max-file": "5"
+    },
+    "storage-driver": "overlay2",
+    "storage-opts": [
+      "overlay2.override_kernel_check=true"
+    ],
+    "insecure-registries": [
+    {%- for item in docker_insecure_registry -%}
+        "{{ item }}"
+        {%- if not loop.last %},{% endif -%}
+    {%- endfor -%} ]
+}
