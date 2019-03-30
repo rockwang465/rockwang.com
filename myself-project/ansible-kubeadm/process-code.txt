@@ -1,0 +1,8 @@
+在写：
+rockwang.com/myself-project/ansible-kubeadm/roles/kubernetes/tasks/main.yaml
+
+问题：
+1. kubeadm init 的config文件有点麻烦，缺少defaults/main.yaml 中的vars定义。
+2. keepalived 和 loadbalance 是否需现在就做？
+
+
