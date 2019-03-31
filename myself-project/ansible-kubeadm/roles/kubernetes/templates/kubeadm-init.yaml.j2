@@ -30,7 +30,7 @@ networking:
   dnsDomain: {{ dns_domain }}
   serviceSubnet: {{ kube_service_subnet }}
   podSubnet: {{ kube_pod_subnet }}
-kubernetesVersion: "{{ kube_version }}"
+kubernetesVersion: "{{ k8s_version.kube }}"
 {% if kube_api_loadbalancer is defined %}
 controlPlaneEndpoint: {{ kube_api_loadbalancer.domain }}:6443
 {% else %}

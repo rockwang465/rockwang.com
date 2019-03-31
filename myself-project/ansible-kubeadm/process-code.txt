@@ -5,4 +5,8 @@ rockwang.com/myself-project/ansible-kubeadm/roles/kubernetes/tasks/main.yaml
 1. kubeadm init 的config文件有点麻烦，缺少defaults/main.yaml 中的vars定义。
 2. keepalived 和 loadbalance 是否需现在就做？
 
+需要优化：
+1. k8s.sh： 需要优化，否则每次都要全部重新拉取一次镜像。
+            可以做成判断，有k8s.gcr.io/kube-proxy:v1.14.0 这种镜像，则不拉取。
 
+2. kubernetes/tasks/ 可以分解一下 install.yaml， 缺少prepare.yaml（infra-ansible）部分的准备.

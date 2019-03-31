@@ -22,6 +22,11 @@
   retries: 10
   delay: 4
 
+- name: "docker | create /etc/docker directory"
+  file:
+    path: /etc/docker
+    state: directory
+
 - name: "docker | copy daemon.json"
   template:
     src: daemon.json.j2

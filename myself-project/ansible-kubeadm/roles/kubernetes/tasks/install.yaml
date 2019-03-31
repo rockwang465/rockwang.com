@@ -1,0 +1,131 @@
+---
+- name: "kubernetes | copy k8s yum repo file"
+  copy:
+    src: kubernetes.repo
+    dest: /etc/yum.repos.d/
+  when: repos.local == 'disable'
+
+- name: "kubernetes | yum makecache"
+  command: yum makecache -y
+  ignore_errors: true
+
+- name: "kubernetes | yum install kubelet kubeadm kubectl"
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "kubelet-{{ kube_tools_version }}"
+    - "kubeadm-{{ kube_tools_version }}"
+    - "kubectl-{{ kube_tools_version }}"
+    - ipvsadm
+  retries: 10
+  delay: 4
+
+- name: "kubernetes | ignore swap error" 
+  lineinfile:
+    path: /etc/sysconfig/kubelet
+    regexp: "^KUBELET_EXTRA_ARGS"
+    line: "KUBELET_EXTRA_ARGS=--fail-swap-on=false"
+
+- name: "kubernetes | load ip_vs kernel modules"
+  modprobe:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ip_vs
+    - ip_vs_rr
+    - ip_vs_wrr
+    - ip_vs_sh
+    - nf_conntrack_ipv4
+  when: kube_proxy_mode == 'ipvs'
+    
+- name: "kubernetes | reload systemd"
+  command: systemctl daemon-reload
+
+- name: "kubernetes | start service kubelet and add self-start"
+  service:
+    name: kubelet
+    state: restarted
+    enabled: yes
+
+- name: "kubernetes | create ~/k8s/ directory"
+  file:
+    path: ~/k8s
+    state: directory
+
+- name: "kubernetes | copy k8s.sh scripts to ~/k8s/"
+  template:
+    src: k8s.sh.j2
+    dest: ~/k8s/k8s.sh
+    mode: 754
+
+#- name: "kubernetes | ensure docker images number"
+#  command: /usr/bin/docker images | grep k8s.gcr.io | wc -l
+#  register: docker_images_num
+#  when: inventory_hostname == groups['kube-master']|first
+
+- name: "kubernetes | execute k8s.sh"
+  command: /bin/sh ~/k8s/k8s.sh
+#  when: docker_images_num.stdout != 6 
+  
+#- name: "kubernetes | debug info ----------------------"
+#  debug: "msg : {{ docker_images_num }}"
+#  when: inventory_hostname == groups['kube-master']|first
+
+- name: "kubernetes | copy kubeadm init config file"
+  template:
+    src: kubeadm-init.yaml.j2
+    dest: "{{ kube_config_dir }}/kubeadm-init.yaml" 
+  when: inventory_hostname == groups['kube-master']|first
+
+- name: "kubernetes | kubeadm reset"
+  command: kubeadm reset -f
+  ignore_errors: true
+  when: inventory_hostname == groups['kube-master']|first
+
+- name: "kubernetes | kubeadm init first master"
+  command: "kubeadm init --config={{ kube_config_dir }}/kubeadm-init.yaml"
+  register: kubeadm_init
+  when: inventory_hostname == groups['kube-master']|first
+
+#- name: "kubernetes | save the kubeadm join infomation"
+#  shell: "echo {{ kubeadm_init.stdout }} > ~/kubeadm_init_info.txt"
+
+- name: "kubernetes | create kube dir"
+  command: mkdir -p $HOME/.kube
+  when: inventory_hostname == groups['kube-master']|first
+
+- name: "kubernetes | copy kube config"
+  command: cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  when: inventory_hostname == groups['kube-master']|first
+
+- name: "kubernetes | chown kube config"
+  shell: "user=`whoami` && chown $user:$user $HOME/.kube/config"
+  when: inventory_hostname == groups['kube-master']|first
+
+- name: "kubernetes | copy flannel config file to ~/k8s/"
+  template:
+    src: kube-flannel.yaml.j2 
+    dest: ~/k8s/kube-flannel.yaml
+  when: 
+    - repos.local == 'disable'
+    - inventory_hostname == groups['kube-master']|first
+
+- name: "kubernetes | install flannel addons"
+  shell: cd ~/k8s/ && kubectl apply -f kube-flannel.yaml
+  
+- name: "kubernetes | wait 20 seconds for install flannel"
+  pause:
+    seconds: 20
+    prompt: "Wait 20 senconds for install flannel" 
+
+- name: "kubernetes | delete master taint"
+  command: kubectl taint nodes {{ inventory_hostname }}  node-role.kubernetes.io/master-
+  when: inventory_hostname == groups['kube-master']|first
+
+- name: "kubernetes | ensure kubernetes is running"
+  shell: kubectl get pods -n kube-system | grep -v running | wc -l
+  register: kube_status
+  until: kube_status.stdout == "1"
+  retries: 5
+  delay: 10

@@ -1,8 +1,74 @@
 ---
+cluster_name: k8s-cluster  #nebula-cluster
+bin_dir: /usr/bin
+kube_config_dir: /etc/kubernetes
+kube_cert_dir: "{{ kube_config_dir }}/pki"
+etcd_cert_dir: "{{ kube_cert_dir }}/etcd"
+
+kube_image_repo: k8s.gcr.io  #在线安装
+#kube_image_repo: "{{ repos.docker.ip }}:{{ repos.docker.port }}/kubernetes"  #离线安装,打了tag，类似10.5.6.xx:5000/kubernetes
+
+#kube_packages:
+#  - kubeadm-1.13.2
+#  - kubelet-1.13.2
+#  - kubectl-1.13.2
+#  - ipvsadm
+
 kube_master_noschedule: false
-etcd_access_addresses: ''
-kube_cert_dir: '{{ kube_config_dir }}/pki'
-etcd_cert_dir: '{{ kube_cert_dir }}/etcd'
+
+#kube_keepalived:
+#  vip: 10.5.6.100
+#  virtual_router_id: 66
+#  auth_pass: Nebu1a
+#  interface: eth0
+
+#kube_api_loadbalancer:
+#  domain: kube-api-lb.cluster.local
+#  ip: "{{ kube_keepalived.vip }}"
+
 dns_domain: cluster.local
 kube_service_subnet: 10.96.0.0/16
 kube_pod_subnet: 10.244.0.0/16
+kube_network_type: host-gw
+
+# kube_proxy_mode: ipvs
+
+# The minimum interval of how often the iptables or ipvs rules can be refreshed as
+# endpoints and services change (e.g. '5s', '1m', '2h22m').
+kube_proxy_min_sync_period: 0s
+
+# The maximum interval of how often iptables or ipvs rules are refreshed (e.g. '5s', '1m', '2h22m').
+# Must be greater than 0.
+kube_proxy_sync_period: 30s
+
+# A comma-separated list of CIDR's which the ipvs proxier should not touch when cleaning up IPVS rules.
+kube_proxy_exclude_cidrs:
+  - '10.5.6.100/24'
+
+# The ipvs scheduler type when proxy mode is ipvs
+# rr: round-robin
+# lc: least connection
+# dh: destination hashing
+# sh: source hashing
+# sed: shortest expected delay
+# nq: never queue
+kube_proxy_scheduler: rr
+
+# etcd
+etcd_access_addresses: ''
+
+# namespaces
+kube_namespaces:
+  - logging
+  - monitoring
+  - component
+  - helm
+  #- nebula
+
+helm_tiller_image: "{{ docker_registry }}/kubernetes/tiller:{{ k8s_version.tiller }}"
+
+# define request apiserver
+#kube_apiserver_endpoint: "{{ansible_default_ipv4.address}}:6443"
+kube_apiserver_endpoint: "{{ groups['kube-master']|first }}:6443"
+kube_apiserver_client_cert: "{{kube_cert_dir}}/apiserver-kubelet-client.crt"
+kube_apiserver_client_key: "{{kube_cert_dir}}/apiserver-kubelet-client.key"

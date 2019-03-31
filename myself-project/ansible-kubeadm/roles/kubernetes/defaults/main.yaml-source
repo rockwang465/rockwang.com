@@ -1,0 +1,39 @@
+---
+kube_master_noschedule: false
+
+etcd_access_addresses: ''
+
+kube_cert_dir: '{{ kube_config_dir }}/pki'
+
+etcd_cert_dir: '{{ kube_cert_dir }}/etcd'
+
+dns_domain: cluster.local
+
+kube_service_subnet: 10.96.0.0/16
+
+kube_pod_subnet: 10.244.0.0/16
+
+cluster_name: k8s-cluster  #nebula-cluster
+
+kube_proxy_exclude_cidrs:
+  - '10.5.6.100/24'
+
+kube_image_repo: k8s.gcr.io  #在线安装
+#kube_image_repo: "{{ repos.docker.ip }}:{{ repos.docker.port }}/kubernetes"  #离线安装,打了tag，类似10.5.6.xx:5000/kubernetes
+
+# The minimum interval of how often the iptables or ipvs rules can be refreshed as
+# endpoints and services change (e.g. '5s', '1m', '2h22m').
+kube_proxy_min_sync_period: 0s
+
+# The ipvs scheduler type when proxy mode is ipvs                             
+# rr: round-robin                                                             
+# lc: least connection                                                        
+# dh: destination hashing
+# sh: source hashing
+# sed: shortest expected delay
+# nq: never queue
+kube_proxy_scheduler: rr
+
+# The maximum interval of how often iptables or ipvs rules are refreshed (e.g. '5s', '1m', '2h22m').
+# Must be greater than 0.
+kube_proxy_sync_period: 30s
