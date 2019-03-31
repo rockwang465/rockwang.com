@@ -1,0 +1,29 @@
+---
+- name: "helm | copy helm binary file to master node"
+  copy:
+    src: helm
+    dest: "{{ bin_dir }}/"
+    mode: 0755
+
+- name: "helm | copy helm_init.sh"
+  template:
+    src: helm_init.sh.j2
+    dest: "{{ files_dir }}/helm_init.sh"
+    mode: 0755
+
+- name: "helm | copy tiller-service.yaml to master node"
+  template:
+    src: tiller-service.yaml
+    dest: "{{ files_dir }}/"
+    mode: 0755
+
+- name: "helm | execute helm init script"
+  shell: "/bin/sh {{ files_dir}}/helm_init.sh"
+  when: inventory_hostname == groups['kube-master']|first
+  ignore_errors: true
+
+- name: "helm | set helm bash completion"
+  lineinfile:                                                                                   
+    path: ~/.bashrc 
+    state: present                                                                              
+    line: "source <(helm completion bash)"                                                      

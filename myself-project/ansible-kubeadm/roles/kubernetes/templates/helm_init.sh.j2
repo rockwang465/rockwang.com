@@ -1,0 +1,8 @@
+#!/bin/bash
+
+export TILLER_NAMESPACE=helm
+kubectl create namespace helm
+kubectl create serviceaccount --namespace helm tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=helm:tiller
+kubectl apply -f {{ files_dir }}/tiller-service.yaml
+helm init -i {{ helm_tiller_image }} --service-account=tiller

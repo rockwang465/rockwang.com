@@ -65,7 +65,7 @@ kube_namespaces:
   - helm
   #- nebula
 
-helm_tiller_image: "{{ docker_registry }}/kubernetes/tiller:{{ k8s_version.tiller }}"
+helm_tiller_image: "gcr.io.kubernetes-helm.tiller:{{ k8s_version.tiller }}"
 
 # define request apiserver
 #kube_apiserver_endpoint: "{{ansible_default_ipv4.address}}:6443"

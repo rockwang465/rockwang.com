@@ -1,0 +1,37 @@
+---
+#- name: "test | ensure kubernetes is running"
+#  shell: kubectl get pods -n kube-system | grep -vi Running | wc -l
+#  register: kube_status
+#  until: kube_status.stdout == "1"
+#  retries: 5
+#  delay: 10
+#
+#- name: "test | check kube_status.stdout"
+#  debug: msg="{{ kube_status.stdout }}"
+
+#- name: "kubernetes | check master taint"
+#  shell: "kubectl describe nodes | grep -i 'node-role.kubernetes.io' | wc -l"
+#  register: taint_status
+#
+#- name: "test | check taint_status.stdout"
+#  debug: msg="{{ taint_status.stdout }}"
+#
+#- name: "kubernetes | delete master taint"
+#  command: "kubectl taint nodes {{ inventory_hostname }}  node-role.kubernetes.io/master-"
+#  ignore_errors: true
+#  when:
+#    - inventory_hostname == groups['kube-master']|first
+#    - taint_status != "0"
+
+- name: "kubernetes | yum install bash-completion"
+  yum:
+    name: bash-completion
+    state: present
+
+- name: "kubernetes | add kubectl completion bash to ~/.bashrc"
+  lineinfile:
+    path: ~/.bashrc
+    line: "source <(kubectl completion bash)"
+
+- name: "kubernetes | set kubectl completion bash"
+  shell: source /usr/share/bash-completion/bash_completion && source <(kubectl completion bash)

@@ -1,15 +1,15 @@
 ---
-- name: "kubernetes | copy k8s yum repo file"
+- name: "install | copy k8s yum repo file"
   copy:
     src: kubernetes.repo
     dest: /etc/yum.repos.d/
   when: repos.local == 'disable'
 
-- name: "kubernetes | yum makecache"
+- name: "install | yum makecache"
   command: yum makecache -y
   ignore_errors: true
 
-- name: "kubernetes | yum install kubelet kubeadm kubectl"
+- name: "install | yum install kubelet kubeadm kubectl"
   yum:
     name: "{{ item }}"
     state: present
@@ -21,13 +21,13 @@
   retries: 10
   delay: 4
 
-- name: "kubernetes | ignore swap error" 
+- name: "install | ignore swap error" 
   lineinfile:
     path: /etc/sysconfig/kubelet
     regexp: "^KUBELET_EXTRA_ARGS"
     line: "KUBELET_EXTRA_ARGS=--fail-swap-on=false"
 
-- name: "kubernetes | load ip_vs kernel modules"
+- name: "install | load ip_vs kernel modules"
   modprobe:
     name: "{{ item }}"
     state: present
@@ -39,93 +39,114 @@
     - nf_conntrack_ipv4
   when: kube_proxy_mode == 'ipvs'
     
-- name: "kubernetes | reload systemd"
+- name: "install | reload systemd"
   command: systemctl daemon-reload
 
-- name: "kubernetes | start service kubelet and add self-start"
+- name: "install | start service kubelet and add self-start"
   service:
     name: kubelet
     state: restarted
     enabled: yes
 
-- name: "kubernetes | create ~/k8s/ directory"
+- name: "install | create {{ files_dir }} directory"
   file:
-    path: ~/k8s
+    path: "{{ files_dir }}" 
     state: directory
 
-- name: "kubernetes | copy k8s.sh scripts to ~/k8s/"
+- name: "install | copy k8s.sh scripts to {{ files_dir }}"
   template:
     src: k8s.sh.j2
-    dest: ~/k8s/k8s.sh
-    mode: 754
+    dest: "{{ files_dir }}/k8s.sh"
+    mode: 0754
 
-#- name: "kubernetes | ensure docker images number"
+#- name: "install | ensure docker images number"
 #  command: /usr/bin/docker images | grep k8s.gcr.io | wc -l
 #  register: docker_images_num
 #  when: inventory_hostname == groups['kube-master']|first
 
-- name: "kubernetes | execute k8s.sh"
-  command: /bin/sh ~/k8s/k8s.sh
+- name: "install | execute k8s.sh"
+  command: "/bin/sh {{ files_dir }}/k8s.sh"
 #  when: docker_images_num.stdout != 6 
   
-#- name: "kubernetes | debug info ----------------------"
+#- name: "install | debug info ----------------------"
 #  debug: "msg : {{ docker_images_num }}"
 #  when: inventory_hostname == groups['kube-master']|first
 
-- name: "kubernetes | copy kubeadm init config file"
+- name: "install | copy kubeadm init config file"
   template:
     src: kubeadm-init.yaml.j2
     dest: "{{ kube_config_dir }}/kubeadm-init.yaml" 
   when: inventory_hostname == groups['kube-master']|first
 
-- name: "kubernetes | kubeadm reset"
+- name: "install | kubeadm reset"
   command: kubeadm reset -f
   ignore_errors: true
   when: inventory_hostname == groups['kube-master']|first
 
-- name: "kubernetes | kubeadm init first master"
+- name: "install | kubeadm init first master"
   command: "kubeadm init --config={{ kube_config_dir }}/kubeadm-init.yaml"
   register: kubeadm_init
   when: inventory_hostname == groups['kube-master']|first
 
-#- name: "kubernetes | save the kubeadm join infomation"
+#- name: "install | save the kubeadm join infomation"
 #  shell: "echo {{ kubeadm_init.stdout }} > ~/kubeadm_init_info.txt"
 
-- name: "kubernetes | create kube dir"
+- name: "install | create kube dir"
   command: mkdir -p $HOME/.kube
   when: inventory_hostname == groups['kube-master']|first
 
-- name: "kubernetes | copy kube config"
+- name: "install | copy kube config"
   command: cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   when: inventory_hostname == groups['kube-master']|first
 
-- name: "kubernetes | chown kube config"
+- name: "install | chown kube config"
   shell: "user=`whoami` && chown $user:$user $HOME/.kube/config"
   when: inventory_hostname == groups['kube-master']|first
 
-- name: "kubernetes | copy flannel config file to ~/k8s/"
+- name: "install | copy flannel config file to {{ files_dir }}"
   template:
     src: kube-flannel.yaml.j2 
-    dest: ~/k8s/kube-flannel.yaml
+    dest: "{{ files_dir }}/kube-flannel.yaml"
   when: 
     - repos.local == 'disable'
     - inventory_hostname == groups['kube-master']|first
 
-- name: "kubernetes | install flannel addons"
-  shell: cd ~/k8s/ && kubectl apply -f kube-flannel.yaml
+- name: "install | install flannel addons"
+  shell: "cd {{ files_dir }} && kubectl apply -f kube-flannel.yaml"
   
-- name: "kubernetes | wait 20 seconds for install flannel"
+- name: "install | wait 20 seconds for install flannel"
   pause:
     seconds: 20
     prompt: "Wait 20 senconds for install flannel" 
 
-- name: "kubernetes | delete master taint"
-  command: kubectl taint nodes {{ inventory_hostname }}  node-role.kubernetes.io/master-
-  when: inventory_hostname == groups['kube-master']|first
+- name: "install | check master taint"
+  shell: "kubectl describe nodes | grep -i 'node-role.kubernetes.io' | wc -l"
+  register: taint_status
 
-- name: "kubernetes | ensure kubernetes is running"
-  shell: kubectl get pods -n kube-system | grep -v running | wc -l
+- name: "install | delete master taint"
+  command: "kubectl taint nodes {{ inventory_hostname }}  node-role.kubernetes.io/master-"
+  ignore_errors: true
+  when:
+    - inventory_hostname == groups['kube-master']|first
+    - taint_status != "0"
+
+- name: "install | ensure kubernetes is running"
+  shell: kubectl get pods -n kube-system | grep -vi Running | wc -l
   register: kube_status
   until: kube_status.stdout == "1"
   retries: 5
-  delay: 10
+  delay: 20
+
+- name: "install | yum install bash-completion"
+  yum:
+    name: bash-completion
+    state: present
+
+- name: "install | add kubectl completion bash to ~/.bashrc"
+  lineinfile:
+    path: ~/.bashrc
+    line: "source <(kubectl completion bash)"
+
+#此命令执行会报错，所以就不执行此任务了。可以新开一个窗口，就可以使用tab命令补全了命令了。
+#- name: "install | set kubectl completion bash" 
+#  shell: source /usr/share/bash-completion/bash_completion && source <(kubectl completion bash)

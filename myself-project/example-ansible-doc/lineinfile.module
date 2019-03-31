@@ -45,6 +45,21 @@ SELINUX=enforcing
 #     targeted - Targeted processes are protected,
 #     mls - Multi Level Security protection.
 SELINUXTYPE=targeted
+
+
+1.5 Rock 添加的
+确保指定的”一行文本”存在于文件中，如果指定的文本本来就存在于文件中，则不做任何操作;
+如果不存在，默认在文件的末尾插入这行文本.
+如下命令表示确保 “test lineinfile” 这行文本存在于 /testdir/test 文件中。
+[root@ansible-manager ~]# ansible ansible-demo3 -m lineinfile -a 'path=/testdir/test line="test lineinfile" '
+ansible-demo3 | SUCCESS => {    "backup": "",     "changed": true,     "msg": "line added"}
+--------------------- 
+原文：https://blog.csdn.net/dylloveyou/article/details/80698531 
+
+
+
+
+
 2、在匹配的内容前或后增加一行
 
 2.1 http.conf
