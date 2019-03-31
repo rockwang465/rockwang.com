@@ -9,3 +9,6 @@ rockwang.com/myself-project/ansible-kubeadm/roles/kubernetes/tasks/helm.yaml
 1. k8s.sh： 需要优化，得确认所有镜像都拉取了，没有拉取成功的要直接报错。
 2. kubernetes/tasks/ 可以分解一下 install.yaml， 缺少prepare.yaml（infra-ansible）部分的准备。
 3. tiller版本用的还是旧的2.11.0，新版本还不知道下载地址，得找找。
+4. 使用register 判断，如果kubectl get nodes | grep -i ready 有结果，
+   则 kubeadm reset && kubeadm init 不执行。没有结果则执行。
+   加一层判断更安全。
