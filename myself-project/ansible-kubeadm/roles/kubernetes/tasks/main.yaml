@@ -2,3 +2,5 @@
 - import_tasks: install.yaml
 
 - import_tasks: helm.yaml 
+
+- import_tasks: dashboard.yaml

@@ -42,6 +42,91 @@ docker_registry: 10.5.6.10
 
 #kernel_update_version: 3.10.0-693.5.2.el7.x86_64
 
+
+#################################### bootstrap       ####################################
+disk_parted_rules:
+  nebula_disks:
+    - name: /dev/mapper/centos-root 
+      wipe: false
+      parts:
+       - bdev: /dev/mapper/centos-root1 
+         capacity:
+           start: 1MB
+           end: 10000MB           # 10G
+         path: /mnt/locals/mysql/volume0
+       - bdev: /dev/mapper/centos-root2
+         capacity:
+           start: 10000MB
+           end: 20000MB           # 10G
+         path: /mnt/locals/redis/volume0
+
+    #   - bdev: /dev/sdb1
+    #     capacity:
+    #       start: 1MB
+    #       end: 10000MB           # 10G
+    #     path: /mnt/locals/engine/volume0
+    #   - bdev: /dev/sdb2
+    #     capacity:
+    #       start: 10000MB
+    #       end: 20000MB           # 10G
+    #     path: /mnt/locals/engine/volume1
+    #   - bdev: /dev/sdb3
+    #     capacity:
+    #       start: 20000MB
+    #       end: 110000MB           # 90G
+    #     path: /mnt/locals/cassandras/volume0
+    #   - bdev: /dev/sdb4
+    #     capacity:
+    #       start: 110000MB
+    #       end: 200000MB           # 90G
+    #     path: /mnt/locals/cassandras/volume1
+    #   - bdev: /dev/sdb5
+    #     capacity:
+    #       start: 200000MB
+    #       end: 230000MB           # 30G
+    #     path: /mnt/locals/kafkas/volume0
+    #   - bdev: /dev/sdb6
+    #     capacity:
+    #       start: 230000MB
+    #       end: 238000MB           # 8G
+    #     path: /mnt/locals/seeweedfsmaster/volume0
+    #- name: /dev/sdc
+    #  wipe: false
+    #  parts:
+    #   - bdev: /dev/sdc1
+    #     capacity:
+    #       start: 1MB
+    #       end: 50000MB           # 50G
+    #     path: /mnt/locals/zookeepers/volume0
+    #   - bdev: /dev/sdc2
+    #     capacity:
+    #       start: 50000MB
+    #       end: 550000MB           # 500G
+    #     path: /mnt/locals/mysql/volume0
+    #   - bdev: /dev/sdc3
+    #     capacity:
+    #       start: 550000MB
+    #       end: 600000MB           # 50G
+    #     path: /mnt/locals/alertmanager/volume0
+    #   - bdev: /dev/sdc4
+    #     capacity:
+    #       start: 600000MB
+    #       end: 800000MB           # 200G
+    #     path: /mnt/locals/prometheus/volume0
+    #   - bdev: /dev/sdc5
+    #     capacity:
+    #       start: 800000MB
+    #       end: 5800000MB           # 5T
+    #     path: /mnt/locals/elasticsearch/volume0
+    #   - bdev: /dev/sdc6
+    #     capacity:
+    #       start: 5800000MB
+    #       end: 12000000MB           # 6T
+    #     path: /mnt/locals/seeweedfsvolume/volume0
+
+disk_parted_rule: nebula_disks
+
+
 #################################### kubernetes vars ####################################
 # docker_ce_version: 'docker-ce-18.06.1.ce-3.el7'
 docker_ce_version: 'docker-ce-18.09.4-3.el7'
@@ -77,7 +162,7 @@ kube_config_dir: /etc/kubernetes
 
 iface: eth0
 
-
+dashboard_nodeport: 30000
 
 
 

@@ -1,0 +1,6 @@
+---
+- import_tasks: disk.yaml
+  when:
+    - disk_parted_rules is defined
+    - disk_parted_rule is defined and disk_parted_rules.get(disk_parted_rule)
+

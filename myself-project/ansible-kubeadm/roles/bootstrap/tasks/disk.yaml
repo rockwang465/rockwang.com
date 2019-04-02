@@ -1,0 +1,34 @@
+---
+- name: "Disk | copy jq rpm"
+  copy:
+    src: "{{ item }}"
+    dest: "{{ files_dir }}"
+  with_items:
+   - oniguruma-5.9.5-3.el7.x86_64.rpm
+   - jq-1.5-1.el7.x86_64.rpm
+
+- name: "Disk | rpm install jq"
+  shell: "rpm -ivh {{ files_dir}}/{{ item }}"
+  with_items: 
+   - oniguruma-5.9.5-3.el7.x86_64.rpm
+   - jq-1.5-1.el7.x86_64.rpm
+  ignore_errors: true
+
+
+- name: "Disk | Set_fact parted_disks"
+  set_fact:
+    parted_disks: "{{ disk_parted_rules.get(disk_parted_rule) }}"
+  when:
+    - disk_parted_rules is defined
+    - disk_parted_rule is defined and disk_parted_rules.get(disk_parted_rule)
+
+# - name: "Disk | Install parted"
+#   package:
+#     name: parted
+#     state: present
+#   when: parted_disks
+
+- name: "Disk | Parted each disk within rules"
+  include: disks_parted.yaml disk={{ item }}
+  with_items: '{{ parted_disks }}'
+  when: parted_disks is defined
