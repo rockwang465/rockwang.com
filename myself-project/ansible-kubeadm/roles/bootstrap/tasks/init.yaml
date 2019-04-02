@@ -1,0 +1,6 @@
+---
+- name: "install | create {{ files_dir }} directory"
+  file:
+    path: "{{ files_dir }}"
+    state: directory
+

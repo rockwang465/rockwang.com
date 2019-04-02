@@ -1,4 +1,6 @@
 ---
+- import_tasks: init.yaml
+
 - import_tasks: disk.yaml
   when:
     - disk_parted_rules is defined

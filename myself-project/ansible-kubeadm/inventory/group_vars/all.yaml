@@ -46,15 +46,15 @@ docker_registry: 10.5.6.10
 #################################### bootstrap       ####################################
 disk_parted_rules:
   nebula_disks:
-    - name: /dev/mapper/centos-root 
+    - name: /dev/sdb
       wipe: false
       parts:
-       - bdev: /dev/mapper/centos-root1 
+       - bdev: /dev/sdb1
          capacity:
            start: 1MB
            end: 10000MB           # 10G
          path: /mnt/locals/mysql/volume0
-       - bdev: /dev/mapper/centos-root2
+       - bdev: /dev/sdb2
          capacity:
            start: 10000MB
            end: 20000MB           # 10G
