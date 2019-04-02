@@ -14,3 +14,6 @@ rockwang.com/myself-project/ansible-kubeadm/roles/kubernetes/tasks/helm.yaml
    加一层判断更安全。
    ------------- 完成，通过判断/var/lib/kubernetes/config.yaml 文件存在来进行判断的。
 5. 添加分区模块进来。 需要有local-volume charts
+
+6. helm 命令执行失败，应该缺少export，要看下
+   然后就弄 pv python环境
