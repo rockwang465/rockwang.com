@@ -19,3 +19,14 @@ rockwang.com/myself-project/ansible-kubeadm/roles/kubernetes/tasks/helm.yaml
    然后就弄 pv python环境
 7. 另外： helm init 要加 --stable-repo-url 改为离线或者其他地址，否则会加载谷歌的地址。 helm repo list中.
    helm init --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.5.1 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+
+
+
+额外部分，待审查:
+A.  /etc/docker/daemon.json 中定义cgroup-driver: 为systemd ，是一个驱动，这个可能要做.否则服务器可能莫名其妙的重启。
+inventory/group_vars/all/all.yaml:29:docker_cgroup_driver: 'systemd'
+roles/docker/defaults/main.yml:4:docker_cgroup_driver: 'systemd'
+roles/docker/templates/daemon.json.j2:2:    "exec-opts": ["native.cgroupdriver={{ docker_cgroup_driver }}"],
+Binary file roles/kubernetes/templates/.kubeadm-init.yaml.swp matches
+roles/kubernetes/templates/kubeadm-init.yaml:16:    cgroup-driver: "{{ docker_cgroup_driver }}"
+
