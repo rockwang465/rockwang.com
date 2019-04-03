@@ -17,3 +17,5 @@ rockwang.com/myself-project/ansible-kubeadm/roles/kubernetes/tasks/helm.yaml
 
 6. helm 命令执行失败，应该缺少export，要看下
    然后就弄 pv python环境
+7. 另外： helm init 要加 --stable-repo-url 改为离线或者其他地址，否则会加载谷歌的地址。 helm repo list中.
+   helm init --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.5.1 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
