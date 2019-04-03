@@ -6,7 +6,7 @@
   with_items:
     - "{{ docker_tools }}"
 
-- name: "docker | get aliyun docker repo"
+- name: "docker | get aliyun repo for docker"
   shell: "wget {{ docker_repo }} -O /etc/yum.repos.d/docker.repo"
   when:  repos.local == "disable"
 

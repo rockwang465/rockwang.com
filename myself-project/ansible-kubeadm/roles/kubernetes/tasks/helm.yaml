@@ -5,6 +5,12 @@
     dest: "{{ bin_dir }}/"
     mode: 0755
 
+- name: "helm |set TILLER_NAMESPACE=helm"
+  lineinfile:
+    path: ~/.bashrc
+    line: "export TILLER_NAMESPACE=helm"
+    state: present
+
 - name: "helm | copy helm_init.sh"
   template:
     src: helm_init.sh.j2

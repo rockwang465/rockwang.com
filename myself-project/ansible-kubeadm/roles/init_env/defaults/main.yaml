@@ -72,3 +72,6 @@ wait_reboot_timeout: 300
 #cuda_drivers_exclude: "xorg-x11-drv-nvidia-39* xorg-x11-drv-nvidia-38* xorg-x11-drv-nvidia-37*"
 
 timezone: /usr/share/zoneinfo/Asia/Shanghai
+
+
+python_path: /usr/local

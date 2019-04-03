@@ -1,0 +1,21 @@
+---
+- name: "python | copy python virtual evn file  to {{ python_path }}"
+  unarchive:
+    src: venv.tgz
+    dest: "{{ python_path }}"
+
+- name: "python | set export VIRTUAL_ENV={{ python_path }}/venv"
+  lineinfile:
+    path: ~/.bashrc
+    line: "export VIRTUAL_ENV={{ python_path }}/venv"
+    state: present
+
+#- name: "python | use virtual env"
+#  shell: "source {{ python_path }}/venv/bin/activate"
+
+- name: "python | add alias python"
+  lineinfile:
+    path: ~/.bashrc
+    line: "alias venv='source {{ python_path }}/venv/bin/activate'"
+
+    
