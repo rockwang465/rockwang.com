@@ -149,8 +149,10 @@ k8s_version:
   
   flannel_amd64: 'v0.10.0-amd64'
   kubernetes_dashboard_amd64: 'v1.10.1'
-  # tiller: v2.13.1  #这个是k8s v1.14.0版本的tiller，暂时没找到下载镜像地址，所以用下面旧地址.
-  tiller: 'v2.11.0'
+  tiller: v2.13.1  #这个是k8s v1.14.0版本的tiller，暂时没找到下载镜像地址，所以用下面旧地址.
+  # gcr.io/kubernetes-helm/tiller:v2.13.1
+  # registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.13.1
+  # tiller: 'v2.11.0'
 
   traefik: '1.7.9'
   metircs_server_adm64: 'v0.3.1'

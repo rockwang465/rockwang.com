@@ -6,7 +6,8 @@ docker pull mirrorgooglecontainers/pause:{{ k8s_version.pause }}
 docker pull mirrorgooglecontainers/etcd:{{ k8s_version.etcd }}
 docker pull coredns/coredns:{{ k8s_version.coredns }}
 docker pull registry.cn-shenzhen.aliyuncs.com/cp_m/flannel:{{ k8s_version.flannel_amd64 }}
-docker pull fishead/gcr.io.kubernetes-helm.tiller:{{ k8s_version.tiller }} 
+#docker pull fishead/gcr.io.kubernetes-helm.tiller:{{ k8s_version.tiller }} 
+docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:{{ k8s_version.tiller }}
 docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:{{ k8s_version.kubernetes_dashboard_amd64 }}
 
 docker tag mirrorgooglecontainers/kube-proxy:{{ k8s_version.kube }}  k8s.gcr.io/kube-proxy:{{ k8s_version.kube }}
@@ -17,7 +18,7 @@ docker tag mirrorgooglecontainers/etcd:{{ k8s_version.etcd }}  k8s.gcr.io/etcd:{
 docker tag coredns/coredns:{{ k8s_version.coredns }} k8s.gcr.io/coredns:{{ k8s_version.coredns }}
 docker tag mirrorgooglecontainers/pause:{{ k8s_version.pause }}  k8s.gcr.io/pause:{{ k8s_version.pause }}
 docker tag registry.cn-shenzhen.aliyuncs.com/cp_m/flannel:{{ k8s_version.flannel_amd64 }} quay.io/coreos/flannel:{{ k8s_version.flannel_amd64 }}
-docker tag fishead/gcr.io.kubernetes-helm.tiller:{{ k8s_version.tiller }} {{ helm_tiller_image }} 
+docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:{{ k8s_version.tiller }} {{ helm_tiller_image }} 
 docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:{{ k8s_version.kubernetes_dashboard_amd64 }} k8s.gcr.io/kubernetes-dashboard-amd64:{{ k8s_version.kubernetes_dashboard_amd64 }}
 
 # docker rmi mirrorgooglecontainers/kube-apiserver:{{ k8s_version.kube }}
