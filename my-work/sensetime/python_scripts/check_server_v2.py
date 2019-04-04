@@ -25,9 +25,10 @@ topic = ["stream.features.automobile", "stream.features.automobile.garbage", "st
          "stream.features.cyclist.garbage", "stream.features.face_24602", "stream.features.face_24602.garbage",
          "stream.features.pedestrian", "stream.features.pedestrian.garbage", "stream.rws.td.comparison",
          "stream.sensekeeper.biz", "stream.sensekeeper.rwstsdb", "sync.stream.features.face_24602"]
-bucket = ["keeper_face", "video_automobile_cropped", "video_automobile_panoramic", "video_cyclist_cropped",
-          "video_cyclist_panoramic", "video_face", "video_panoramic", "video_pedestrian_cropped",
-          "video_pedestrian_panoramic"]
+# bucket = ["keeper_face", "video_automobile_cropped", "video_automobile_panoramic", "video_cyclist_cropped",
+#           "video_cyclist_panoramic", "video_face", "video_panoramic", "video_pedestrian_cropped",
+#           "video_pedestrian_panoramic"]
+bucket = ["keeper_face", "video_face", "video_panoramic", "GLOBAL"]
 dbs = ["senseguard", "sys", "uums"]
 users = ["GRANT USAGE ON *.* TO `senseguard`@`%`", "GRANT ALL PRIVILEGES ON `senseguard`.* TO `senseguard`@`%`",
          "GRANT ALL PRIVILEGES ON `uums`.* TO `senseguard`@`%`"]
@@ -53,7 +54,7 @@ def check_node_state():
         state1 = os.popen('kubectl get nodes | sed 1d')
         state2 = state1.readlines()
         if not state2:
-            count +=1
+            count += 1
             print("Error : 无任何 Node 节点")
         else:
             for line in state2:
@@ -91,7 +92,6 @@ def check_pods_state():
     time.sleep(2)
 
 
-
 def check_license_state():
     # print("\n3. 检查加密狗状态".ljust(87, '*'))
     print("\n3. 检查加密狗状态")
@@ -113,9 +113,11 @@ def check_topic_state():
     count = 0
     # print("\n4. 检查topic状态".ljust(84, '*'))
     print("\n4. 检查topic状态")
-    recode = os.system("kubectl exec -it -n component kafka-default-0 -- kafka-topics.sh --list --zookeeper zookeeper-default:2181/kafka | grep -v 'consumer_offsets' >/dev/null 2>&1")
+    recode = os.system(
+        "kubectl exec -it -n component kafka-default-0 -- kafka-topics.sh --list --zookeeper zookeeper-default:2181/kafka | grep -v 'consumer_offsets' >/dev/null 2>&1")
     if recode == 0:
-        state1 = os.popen("kubectl exec -it -n component kafka-default-0 -- kafka-topics.sh --list --zookeeper zookeeper-default:2181/kafka | grep -v 'consumer_offsets'")
+        state1 = os.popen(
+            "kubectl exec -it -n component kafka-default-0 -- kafka-topics.sh --list --zookeeper zookeeper-default:2181/kafka | grep -v 'consumer_offsets'")
         state2 = state1.read()
         if state2:
             for i in topic:
@@ -151,7 +153,7 @@ def check_bucket_state():
             # print(k1)
             if 'name' in k1:
                 # print(k1['name'])
-                url_bucket.append(k1['name'])  #拿到所有存在的bucket名字
+                url_bucket.append(k1['name'])  # 拿到所有存在的bucket名字
                 # print(url_bucket)
             # else:
             #     print(str("Error : 无任何buckets，请全部创建", encoding='utf-8'))
@@ -180,9 +182,11 @@ def check_es_state():
     # print("\n6. 检查elasticsearch状态".ljust(84, '*'))
     print("\n6. 检查elasticsearch状态")
     # url2='http://'+ip+':'+es_nodeport+'/_cat/health?pretty'
-    recode = os.system("kubectl get svc -n logging | grep elasticsearch-client | awk '{print $5}' | awk -F '[:/]' '{print $2}' >/dev/null 2>&1")
+    recode = os.system(
+        "kubectl get svc -n logging | grep elasticsearch-client | awk '{print $5}' | awk -F '[:/]' '{print $2}' >/dev/null 2>&1")
     if recode == 0:
-        nodeport1 = os.popen("kubectl get svc -n logging | grep elasticsearch-client | awk '{print $5}' | awk -F '[:/]' '{print $2}'")
+        nodeport1 = os.popen(
+            "kubectl get svc -n logging | grep elasticsearch-client | awk '{print $5}' | awk -F '[:/]' '{print $2}'")
         nodeport2 = nodeport1.read()
         if nodeport2:
             url1 = 'http://' + local_host_ip + ':' + nodeport2.strip() + '/_cluster/health'
