@@ -1,0 +1,22 @@
+---
+- name: devops | create devops values dir
+  file:
+    path: "{{ devopsChartPath }}"
+    state: directory
+  when: inventory_hostname == groups['kube-master']|first
+
+- name: devops | copy devops override values.yaml
+  template:
+    src: "{{ item.name }}.values.yaml"
+    dest: "{{ devopsChartPath }}/{{ item.name }}.values.yaml"
+  with_items: "{{ devops_charts }}"
+  when: inventory_hostname == groups['kube-master']|first
+
+- name: devops | helm install devops packages
+  shell: "helm upgrade -i {{ item.name }}-{{ item.namespace }} --namespace={{ item.namespace }} -f {{ devopsChartPath }}/{{ item.name }}.values.yaml {{ chartmuseum }}/charts/{{ item.name }}-{{ item.version }}.tgz"
+  environment:
+    PATH: "{{ bin_dir }}:{{ ansible_env.PATH }}"
+    TILLER_NAMESPACE: helm
+  with_items: "{{ devops_charts }}"
+  delegate_to: "{{ groups['kube-master']|first }}"
+  run_once: true

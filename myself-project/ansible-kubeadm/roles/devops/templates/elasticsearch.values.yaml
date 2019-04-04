@@ -1,0 +1,42 @@
+---
+image:
+  repository: "{{ docker_registry }}/elasticsearch/elasticsearch-oss"
+  pullPolicy: "IfNotPresent"
+  # If specified, use these secrets to access the image
+  # pullSecrets:
+  #   - registry-secret
+
+initImage:
+  repository: "{{ docker_registry }}/elasticsearch/busybox"
+  pullPolicy: "IfNotPresent"
+
+{% if deploy_mode == "standalone" %}
+cluster:
+  env:
+    MINIMUM_MASTER_NODES: "1"
+client:
+  replicas: "1"
+data:
+  replicas: "1"
+  persistence:
+    size: "100Gi"
+  resources:
+    limits:
+      cpu: "4"
+      memory: "10Gi"
+    requests:
+      cpu: "4"
+      memory: "10Gi"
+{% endif %}
+{% if deploy_mode == "distributed" %}
+data:
+  persistence:
+    size: "100Gi"
+  resources:
+    limits:
+      cpu: "4"
+      memory: "10Gi"
+    requests:
+      cpu: "4"
+      memory: "10Gi"
+{% endif %}

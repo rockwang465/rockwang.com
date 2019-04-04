@@ -1,0 +1,54 @@
+---
+alertmanager:
+  alertmanagerSpec:
+    image:
+      repository: "{{ docker_registry }}/prometheus/alertmanager"
+
+prometheusOperator:
+  ## Prometheus-operator image
+  ##
+  image:
+    repository: "{{ docker_registry }}/coreos/prometheus-operator"
+    pullPolicy: IfNotPresent
+
+  ## Configmap-reload image to use for reloading configmaps
+  ##
+  configmapReloadImage:
+    repository: "{{ docker_registry }}/coreos/configmap-reload"
+
+  ## Prometheus-config-reloader image to use for config and rule reloading
+  ##
+  prometheusConfigReloaderImage:
+    repository: "{{ docker_registry }}/coreos/prometheus-config-reloader"
+
+  ## Hyperkube image to use when cleaning up
+  ##
+  hyperkubeImage:
+    repository: "{{ docker_registry }}/kubernetes/hyperkube"
+    pullPolicy: IfNotPresent
+
+prometheus:
+  prometheusSpec:
+    image:
+      repository: {{ docker_registry }}/prometheus/prometheus
+
+grafana:
+  image:
+    repository: {{ docker_registry }}/grafana/grafana
+  sidecar:
+    image: {{ docker_registry }}/kiwigrid/k8s-sidecar:0.0.6
+
+kube-state-metrics:
+  image:
+    repository: {{ docker_registry }}/coreos/kube-state-metrics
+
+prometheus-node-exporter:
+  image:
+    repository: {{ docker_registry }}/prometheus/node-exporter
+
+prometheus-blackbox-exporter:
+  image:
+    repository: {{ docker_registry }}/prom/blackbox-exporter
+  configmapReload:
+    image:
+      repository: {{ docker_registry }}/jimmidyson/configmap-reload

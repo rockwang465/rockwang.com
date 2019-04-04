@@ -167,7 +167,16 @@ iface: eth0
 dashboard_nodeport: 30000
 
 
-
+devops_charts:
+  - name: elasticsearch
+    version: 6.5.4-master-53b56e8
+    namespace: logging
+  - name: prometheus-operator
+    version: 2.0.0-master-95af25b
+    namespace: monitoring
+  - name: jaeger-operator
+    version: 1.10.0-master-d096d64
+    namespace: monitoring
 
 
 

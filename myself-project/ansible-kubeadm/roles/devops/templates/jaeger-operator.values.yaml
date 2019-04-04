@@ -1,0 +1,12 @@
+---
+image:
+  repository: "{{ docker_registry }}/jaegertracing/jaeger-operator"
+  pullPolicy: IfNotPresent
+
+instance:
+  enabled: true
+  agentImage: {{ docker_registry }}/jaegertracing/jaeger-agent:1.10
+  queryImage: {{ docker_registry }}/jaegertracing/jaeger-query:1.10
+  collectorImage: {{ docker_registry }}/jaegertracing/jaeger-collector:1.10
+  sparkDependenciesImage: {{ docker_registry }}/jaegertracing/spark-dependencies
+  esIndexCleanerImage: {{ docker_registry }}/jaegertracing/jaeger-es-index-cleaner
