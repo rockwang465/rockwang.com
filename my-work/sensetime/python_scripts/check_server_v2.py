@@ -21,10 +21,12 @@ ingress_http_port = "30080"
 license_bin = "/usr/local/bin/license_client"
 
 # ns = ["addons","component","default","helm","ingress","kube-public","kube-system","logging","monitoring","mysql-operator"]
-topic = ["stream.features.automobile", "stream.features.automobile.garbage", "stream.features.cyclist",
-         "stream.features.cyclist.garbage", "stream.features.face_24602", "stream.features.face_24602.garbage",
-         "stream.features.pedestrian", "stream.features.pedestrian.garbage", "stream.rws.td.comparison",
-         "stream.sensekeeper.biz", "stream.sensekeeper.rwstsdb", "sync.stream.features.face_24602"]
+# topic = ["stream.features.automobile", "stream.features.automobile.garbage", "stream.features.cyclist",
+#          "stream.features.cyclist.garbage", "stream.features.face_24602", "stream.features.face_24602.garbage",
+#          "stream.features.pedestrian", "stream.features.pedestrian.garbage", "stream.rws.td.comparison",
+#          "stream.sensekeeper.biz", "stream.sensekeeper.rwstsdb", "sync.stream.features.face_24602"]
+topic = ["stream.features.face_24602", "stream.features.face_24602.garbage", "stream.sensekeeper.biz",
+         "stream.sensekeeper.rwstsdb", "stream.rws.td.comparison"]
 # bucket = ["keeper_face", "video_automobile_cropped", "video_automobile_panoramic", "video_cyclist_cropped",
 #           "video_cyclist_panoramic", "video_face", "video_panoramic", "video_pedestrian_cropped",
 #           "video_pedestrian_panoramic"]
