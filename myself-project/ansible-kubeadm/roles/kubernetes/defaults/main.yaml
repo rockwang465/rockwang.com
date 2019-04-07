@@ -74,3 +74,35 @@ kube_apiserver_client_key: "{{kube_cert_dir}}/apiserver-kubelet-client.key"
 # docker image define
 helm_tiller_image: "gcr.io.kubernetes-helm.tiller:{{ k8s_version.tiller }}"
 dashboard_image: "k8s.gcr.io/kubernetes-dashboard-amd64:{{ k8s_version.kubernetes_dashboard_amd64 }}" 
+
+storageclass_config:
+  # - name: "storageclass-local-cassandra"
+  #   hostDir: "/mnt/locals/cassandras"
+  #   mountDir: "/local-cassandra-disks"
+  # - name: "storageclass-local-kafka"
+  #   hostDir: "/mnt/locals/kafkas"
+  #   mountDir: "/local-kafka-disks"
+  # - name: "storageclass-local-zookeeper"
+  #   hostDir: "/mnt/locals/zookeepers"
+  #   mountDir: "/local-zookeeper-disks"
+  # - name: "storageclass-local-engine"
+  #   hostDir: "/mnt/locals/engine"
+  #   mountDir: "/local-engine-disks"
+  # - name: "storageclass-local-mysql"
+  #   hostDir: "/mnt/locals/mysql"
+  #   mountDir: "/local-mysql-disks"
+  - name: "storageclass-local-prometheus"
+    hostDir: "/mnt/locals/prometheus"
+    mountDir: "/local-prometheus-disks"
+  # - name: "storageclass-local-elasticsearch"
+  #   hostDir: "/mnt/locals/elasticsearch"
+  #   mountDir: "/local-elasticsearch-disks"
+  # - name: storageclass-local-seeweedfsmaster
+  #   hostDir: /mnt/locals/seeweedfsmaster
+  #   mountDir: /local-seeweedfsmaster-disks
+  # - name: storageclass-local-seeweedfsvolume
+  #   hostDir: /mnt/locals/seeweedfsvolume
+  #   mountDir: /local-seeweedfsvolume-disks
+  # - name: storageclass-local-minio
+  #   hostDir: /mnt/locals/minio
+  #   mountDir: /local-minio-disks
