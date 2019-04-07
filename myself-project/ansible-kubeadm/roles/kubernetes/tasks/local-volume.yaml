@@ -10,7 +10,7 @@
     dest: "{{ kube_config_dir }}/addons/local-volume-provisioner/values.yaml"
 
 - name: "local-volume | helm install local volume"
-  shell: "helm upgrade -i {{ item.name }} --namespace={{item.namespace }} -f {{ kube_config_dir}}/addons/{{ item.name}}/values.yaml"
+  shell: "helm upgrade -i {{ item.name }} --namespace={{item.namespace }} -f {{ kube_config_dir}}/addons/{{ item.name}}/values.yaml ."
   with_items:
     - "{{ addons_charts }}"
   delegate_to: "{{ groups['kube-master']|first }}"
