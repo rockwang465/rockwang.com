@@ -146,17 +146,14 @@ kube_tools_version: '1.14.0-0'  #kubelet kubectl kubeadm
 k8s_version:
   # v1.14.0 versions可以去此地址看: https://www.kubernetes.org.cn/5213.html
   kube: 'v1.14.0'  #images version and kubeadm init version
-  # coredns: '1.2.6'
-  coredns: '1.3.1'
-  # etcd: '3.2.24'
-  etcd: '3.3.10'
+  coredns: '1.3.1' # coredns: '1.2.6'
+  etcd: '3.3.10'  # etcd: '3.2.24'
   pause: '3.1'
   
   flannel_amd64: 'v0.10.0-amd64'
   kubernetes_dashboard_amd64: 'v1.10.1'
   tiller: v2.13.1  #这个是k8s v1.14.0版本的tiller. 地址记录: gcr.io/kubernetes-helm/tiller:v2.13.1  # registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.13.1
-  # local_volume: v2.3.0
-  local_volume: v2.1.0
+  local_volume: v2.1.0  # local_volume: v2.3.0  这里的镜像后面已经导入了，所以这里不设置也没事.
 
   traefik: '1.7.9'
   metircs_server_adm64: 'v0.3.1'
