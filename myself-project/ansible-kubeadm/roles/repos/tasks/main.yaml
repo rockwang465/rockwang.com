@@ -1,0 +1,21 @@
+---
+#- import_tasks: python.yml
+#  when:
+#    - repos.local == 'enable'
+#    - inventory_hostname == groups['kube-master']|first
+#
+#- import_tasks: yum.yml
+#  when:
+#    - repos.local == 'enable'
+#    - inventory_hostname == groups['kube-master']|first
+#
+#- import_tasks: docker-registry.yml
+#  when:
+#    - repos.local == 'enable'
+#    - inventory_hostname == groups['kube-master']|first
+
+- import_tasks: helm-charts.yml
+  when:
+#    - repos.local == 'enable'
+    - inventory_hostname == groups['kube-master']|first
+

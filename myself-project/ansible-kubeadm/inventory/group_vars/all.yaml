@@ -33,8 +33,7 @@ repos:
     port: 8080
     package: helm_charts/charts_package
 
-# chartmuseum: http://10.5.6.10:8080  # 暂时没有离线仓库，所以先用下面的临时用下.
-chartmuseum: https://charts.bitnami.com   #helm repo add bitnami https://charts.bitnami.com
+chartmuseum: "http://{{ IP }}:8080"  # 暂时没有离线仓库，所以先用下面的临时用下.
 
 py3:
   off_line: enable

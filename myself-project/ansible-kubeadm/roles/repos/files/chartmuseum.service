@@ -1,0 +1,17 @@
+[Unit]
+Description=chartmuseum service is helm charts
+Documentation=https://chartmuseum.com/docs/#
+After=network-online.target firewalld.service
+Wants=network-online.target
+
+[Service]
+Type=forking
+ExecStart=/etc/init.d/chartmuseum.sh start
+ExecStop=/etc/init.d/chartmuseum.sh stop
+ExecReload=/etc/init.d/chartmuseum.sh restart
+PrivateTmp=true
+
+
+[Install]
+WantedBy=multi-user.target
+

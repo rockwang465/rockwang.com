@@ -1,0 +1,63 @@
+#!/bin/sh
+bin_path="/usr/bin/chartmuseum"
+
+
+function start(){
+  startline1=`ps -ef | grep 'chartmuseum --debug --port={{ repos.helm.port }}' | grep -v 'grep' | wc -l`
+  if [ ${startline1} -eq 0 ];then
+    /usr/bin/chartmuseum --debug --port={{ repos.helm.port }} --storage="local" --storage-local-rootdir="{{ repos.helm.data }}" --allow-overwrite=true 2>&1 &
+    startline2=`ps -ef | grep 'chartmuseum --debug --port={{ repos.helm.port }}' | grep -v 'grep' | wc -l`
+      if [ ${startline2} -eq 1 ];then
+        echo -e "\n chartmuseum start success ! \n"
+        exit 0
+      elif [ ${startline2} -eq 0 ];then
+        echo -e "\n Error : chartmuseum can not start , please to check ! \n"
+      else
+        echo -e "\n Error : chartmuseum process exception , please to check ! \n"
+      fi
+  else
+    echo -e "\n chartmuseum has started ! \n"
+  fi
+}
+
+
+function stop(){
+  stopline1=`ps -ef | grep 'chartmuseum --debug --port={{ repos.helm.port }}' | grep -v 'grep' | wc -l`
+  if [ ${stopline1} -gt 0 ];then
+    stoppid=`ps -ef | grep 'chartmuseum --debug --port={{ repos.helm.port }}' | grep -v 'grep' | awk '{print $2}'`
+    for i in ${stoppid} ; do kill -9 $i 2>&1; done
+    stopline2=`ps -ef | grep 'chartmuseum --debug --port={{ repos.helm.port }}' | grep -v 'grep' | wc -l`
+    if [ ${stopline2} -eq 0 ];then
+      echo -e "\n chartmuseum stop success ! \n"
+      exit 0
+    else
+      echo -e "\n Error : chartmuseum can not stop , please to check ! \n"
+    fi
+  else
+    echo -e "\n chartmuseum has stopped ! \n"
+  fi
+}
+
+function restart(){
+echo "restart"
+}
+
+case "$1" in
+    start)
+        start
+        exit 0
+    ;;
+    stop)
+        stop
+        exit 0
+    ;;
+    reload|restart)
+        stop
+        start
+        exit 0
+    ;;
+    **)
+        echo "Usage: $0 {start|stop}" 1>&2
+        exit 1
+    ;;
+esac

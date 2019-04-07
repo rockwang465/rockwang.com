@@ -1,0 +1,74 @@
+---
+- name: "helm | copy helm bin file to /usr/bin"
+  copy:
+    src: helm
+    dest: /usr/bin/
+    mode: 0755
+    owner: root
+    group: root
+
+- name: "helm | helm init localhost"
+  shell: helm init -c
+  ignore_errors: true
+
+- name: "helm | copy bin file to /usr/bin"
+  copy:
+    src: chartmuseum
+    dest: /usr/bin
+    mode: 0755
+    owner: root
+    group: root
+
+- name: "helm | cpoy script to /etc/init.d/"
+  template:
+    src: chartmuseum.sh.j2
+    dest: /etc/init.d/chartmuseum.sh
+    mode: 0755
+    owner: root
+    group: root
+
+- name: "helm | cpoy systemd file to /lib/systemd/system"
+  copy:
+    src: chartmuseum.service
+    dest: /lib/systemd/system
+    mode: 0754
+    owner: root
+    group: root
+
+- name: "helm | mkdir data directory"
+  file:
+    path: /data/charts
+    state: directory
+
+- name: "helm | daemon-reload"
+  shell: systemctl daemon-reload
+
+- name: "helm | start chartmuseum service"
+  service:
+    name: chartmuseum
+    state: restarted
+    enabled : yes
+
+- name: "helm | copy python scripts1 to /tmp/sensenebula-guard-1.0/helm_charts/charts_package"
+  template:
+    src: push_charts.py.j2
+    dest: "{{ repos.package_path }}/{{ repos.helm.package }}/push_charts.py"
+    mode: 0755
+    owner: root
+    group: root
+
+- name: "helm | copy python scripts2 to /tmp/sensenebula-guard-1.0/helm_charts/charts_package"
+  template:
+    src: fetch_charts.py.j2
+    dest: "{{ repos.package_path }}/{{ repos.helm.package }}/fetch_charts.py"
+    mode: 0755
+    owner: root
+    group: root
+
+- name: "helm | copy image_info.txt to /tmp/sensenebula-guard-1.0/helm_charts/charts_package"
+  copy:
+    src: charts_info.txt
+    dest: "{{ repos.package_path }}/{{ repos.helm.package }}/"
+
+- name: "helm | execute python push scripts"
+  shell: "cd {{ repos.package_path }}/{{ repos.helm.package }} &&  python push_charts.py"
