@@ -9,8 +9,15 @@
     src: local-volume-provisioner-values.yaml
     dest: "{{ kube_config_dir }}/addons/local-volume-provisioner/values.yaml"
 
+- name: "local-volume | docker load -i local-volume image"
+  shell: "docker load -i {{ kube_config_dir }}/addons/local-volume-provisioner/docker-image-local-volume-provisioner.tgz"
+
 - name: "local-volume | helm install local volume"
   shell: "helm upgrade -i {{ item.name }} --namespace={{item.namespace }} -f {{ kube_config_dir}}/addons/{{ item.name}}/values.yaml ."
   with_items:
     - "{{ addons_charts }}"
   delegate_to: "{{ groups['kube-master']|first }}"
+  run_once: true
+  environment:
+    PATH: "{{ bin_dir }}:{{ ansible_env.PATH }}"
+    TILLER_NAMESPACE: helm

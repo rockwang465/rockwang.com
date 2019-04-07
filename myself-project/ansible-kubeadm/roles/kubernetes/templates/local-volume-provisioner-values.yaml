@@ -19,8 +19,8 @@ daemonset:
   #
   # Defines Provisioner's image name including container registry.
   #
-  image: quay.io/external_storage/local-volume-provisioner:v2.3.0
-  #image: "{{ docker_registry }}/external_storage/local-volume-provisioner:v2.3.0" 
+  #image: quay.io/external_storage/local-volume-provisioner:{{ k8s_version.local_volume }}
+  image: "{{ docker_registry }}/external_storage/local-volume-provisioner:v2.3.0" 
   #
   # Defines Image download policy, see kubernetes documentation for available values.
   #

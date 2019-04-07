@@ -9,6 +9,7 @@ docker pull registry.cn-shenzhen.aliyuncs.com/cp_m/flannel:{{ k8s_version.flanne
 #docker pull fishead/gcr.io.kubernetes-helm.tiller:{{ k8s_version.tiller }} 
 docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:{{ k8s_version.tiller }}
 docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:{{ k8s_version.kubernetes_dashboard_amd64 }}
+docker pull silenceshell/local-volume-provisioner:{{ k8s_version.local_volume }}
 
 docker tag mirrorgooglecontainers/kube-proxy:{{ k8s_version.kube }}  k8s.gcr.io/kube-proxy:{{ k8s_version.kube }}
 docker tag mirrorgooglecontainers/kube-scheduler:{{ k8s_version.kube }} k8s.gcr.io/kube-scheduler:{{ k8s_version.kube }}
@@ -20,6 +21,7 @@ docker tag mirrorgooglecontainers/pause:{{ k8s_version.pause }}  k8s.gcr.io/paus
 docker tag registry.cn-shenzhen.aliyuncs.com/cp_m/flannel:{{ k8s_version.flannel_amd64 }} quay.io/coreos/flannel:{{ k8s_version.flannel_amd64 }}
 docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:{{ k8s_version.tiller }} {{ helm_tiller_image }} 
 docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/kubernetes-dashboard-amd64:{{ k8s_version.kubernetes_dashboard_amd64 }} k8s.gcr.io/kubernetes-dashboard-amd64:{{ k8s_version.kubernetes_dashboard_amd64 }}
+docker tag silenceshell/local-volume-provisioner:{{ k8s_version.local_volume }} quay.io/external_storage/local-volume-provisioner:{{ k8s_version.local_volume }}
 
 # docker rmi mirrorgooglecontainers/kube-apiserver:{{ k8s_version.kube }}
 # docker rmi mirrorgooglecontainers/kube-controller-manager:{{ k8s_version.kube }}
