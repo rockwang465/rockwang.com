@@ -49,26 +49,26 @@
     state: restarted
     enabled : yes
 
-- name: "helm | copy python scripts1 to /tmp/sensenebula-guard-1.0/helm_charts/charts_package"
-  template:
-    src: push_charts.py.j2
-    dest: "{{ repos.package_path }}/{{ repos.helm.package }}/push_charts.py"
-    mode: 0755
-    owner: root
-    group: root
-
-- name: "helm | copy python scripts2 to /tmp/sensenebula-guard-1.0/helm_charts/charts_package"
-  template:
-    src: fetch_charts.py.j2
-    dest: "{{ repos.package_path }}/{{ repos.helm.package }}/fetch_charts.py"
-    mode: 0755
-    owner: root
-    group: root
-
-- name: "helm | copy image_info.txt to /tmp/sensenebula-guard-1.0/helm_charts/charts_package"
-  copy:
-    src: charts_info.txt
-    dest: "{{ repos.package_path }}/{{ repos.helm.package }}/"
-
-- name: "helm | execute python push scripts"
-  shell: "cd {{ repos.package_path }}/{{ repos.helm.package }} &&  python push_charts.py"
+#- name: "helm | copy python scripts1 to /tmp/sensenebula-guard-1.0/helm_charts/charts_package"
+#  template:
+#    src: push_charts.py.j2
+#    dest: "{{ repos.package_path }}/{{ repos.helm.package }}/push_charts.py"
+#    mode: 0755
+#    owner: root
+#    group: root
+#
+#- name: "helm | copy python scripts2 to /tmp/sensenebula-guard-1.0/helm_charts/charts_package"
+#  template:
+#    src: fetch_charts.py.j2
+#    dest: "{{ repos.package_path }}/{{ repos.helm.package }}/fetch_charts.py"
+#    mode: 0755
+#    owner: root
+#    group: root
+#
+#- name: "helm | copy image_info.txt to /tmp/sensenebula-guard-1.0/helm_charts/charts_package"
+#  copy:
+#    src: charts_info.txt
+#    dest: "{{ repos.package_path }}/{{ repos.helm.package }}/"
+#
+#- name: "helm | execute python push scripts"
+#  shell: "cd {{ repos.package_path }}/{{ repos.helm.package }} &&  python push_charts.py"
