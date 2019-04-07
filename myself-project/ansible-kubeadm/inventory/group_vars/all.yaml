@@ -33,6 +33,9 @@ repos:
     port: 8080
     package: helm_charts/charts_package
 
+# chartmuseum: http://10.5.6.10:8080  # 暂时没有离线仓库，所以先用下面的临时用下.
+chartmuseum: https://charts.bitnami.com   #helm repo add bitnami https://charts.bitnami.com
+
 py3:
   off_line: enable
 #---------------------------------------------
@@ -152,7 +155,7 @@ k8s_version:
   
   flannel_amd64: 'v0.10.0-amd64'
   kubernetes_dashboard_amd64: 'v1.10.1'
-  tiller: v2.13.1  #这个是k8s v1.14.0版本的tiller. 地址记录: gcr.io/kubernetes-helm/tiller:v2.13.1  # registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.13.1
+ tiller: v2.13.1  #这个是k8s v1.14.0版本的tiller. 地址记录: gcr.io/kubernetes-helm/tiller:v2.13.1  # registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.13.1
   local_volume: v2.1.0  # local_volume: v2.3.0  这里的镜像后面已经导入了，所以这里不设置也没事.
 
   traefik: '1.7.9'
