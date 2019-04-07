@@ -4,3 +4,5 @@
 - import_tasks: helm.yaml 
 
 - import_tasks: dashboard.yaml
+
+- import_tasks: local-volume.yaml
