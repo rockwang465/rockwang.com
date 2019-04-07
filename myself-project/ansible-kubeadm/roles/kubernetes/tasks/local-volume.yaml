@@ -1,4 +1,16 @@
 ---
 - name: "local-volume | copy local volume file"
-  src:
-  dest:
+  unarchive:
+    src: local-volume-provisioner.tar.gz
+    dest: "{{ kube_config_dir }}/addons/"
+
+- name: "local-volume | copy local volume values.yaml"
+  template:
+    src: local-volume-provisioner-values.yaml
+    dest: "{{ kube_config_dir }}/addons/local-volume-provisioner/values.yaml"
+
+- name: "local-volume | helm install local volume"
+  shell: "helm upgrade -i {{ item.name }} --namespace={{item.namespace }} -f {{ kube_config_dir}}/addons/{{ item.name}}/values.yaml"
+  with_items:
+    - "{{ addons_charts }}"
+  delegate_to: "{{ groups['kube-master']|first }}"

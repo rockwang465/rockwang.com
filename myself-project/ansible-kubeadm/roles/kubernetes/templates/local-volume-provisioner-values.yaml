@@ -1,0 +1,27 @@
+#
+# Configure storage classes.
+#
+classes:
+{% for item in storageclass_config %}
+  - name: {{ item.name }}
+    hostDir: {{ item.hostDir }}
+    mountDir: {{ item.mountDir }}
+    storageClass: true
+{% endfor %}
+
+# Configure DaemonSet for provisioner.
+#
+daemonset:
+  #
+  # Defines the name of a Provisioner
+  #
+  name: "local-volume-provisioner"
+  #
+  # Defines Provisioner's image name including container registry.
+  #
+  #image: quay.io/external_storage/local-volume-provisioner:v2.3.0
+  image: "{{ docker_registry }}/external_storage/local-volume-provisioner:v2.3.0" 
+  #
+  # Defines Image download policy, see kubernetes documentation for available values.
+  #
+  imagePullPolicy: IfNotPresent
