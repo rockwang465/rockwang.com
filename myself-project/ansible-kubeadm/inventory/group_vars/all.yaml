@@ -59,7 +59,7 @@ disk_parted_rules:
            start: 10000MB
            end: 20000MB           # 10G
          path: /mnt/locals/redis/volume0
-       - bdev: /dev/sdb2
+       - bdev: /dev/sdb3
          capacity:
            start: 20000MB
            end: 30000MB           # 10G
