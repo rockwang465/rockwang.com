@@ -171,6 +171,16 @@ iface: eth0
 
 dashboard_nodeport: 30000
 
+addons_charts:
+  - name: local-volume-provisioner
+    version: 2.3.0-master-1e4ec68
+    namespace: kube-system
+  # - name: kubernetes-dashboard
+  #   version: 1.10.1-master-7cd5efa
+  #   namespace: kube-system
+  # - name: nginx-ingress
+  #   version: 0.21.0-master-8128f23
+  #   namespace: kube-system
 
 devops_charts:
   - name: elasticsearch
