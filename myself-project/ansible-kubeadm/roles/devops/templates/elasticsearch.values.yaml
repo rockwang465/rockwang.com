@@ -23,14 +23,14 @@ data:
   resources:
     limits:
       #cpu: "4"
-      cpu: "2"
+      cpu: "200m"
       #memory: "10Gi"
-      memory: "2Gi"
+      memory: "200Mi"
     requests:
       #cpu: "4"
       cpu: "200m"
       #memory: "10Gi"
-      memory: "500Mi"
+      memory: "200Mi"
 {% endif %}
 {% if deploy_mode == "distributed" %}
 data:
@@ -40,12 +40,12 @@ data:
   resources:
     limits:
       #cpu: "4"
-      cpu: "2"
+      cpu: "200m"
       #memory: "10Gi"
-      memory: "2Gi"
+      memory: "200Mi"
     requests:
       #cpu: "4"
       cpu: "200m"
       #memory: "10Gi"
-      memory: "500Mi"
+      memory: "200Mi"
 {% endif %}
