@@ -19,16 +19,15 @@ rockwang.com/myself-project/ansible-kubeadm/roles/devops/
    则 kubeadm reset && kubeadm init 不执行。没有结果则执行。
    加一层判断更安全。
    ------------- 完成，通过判断/var/lib/kubernetes/config.yaml 文件存在来进行判断的。
-5. 添加分区模块进来。 需要有local-volume charts
-
-6. helm 命令执行失败，应该缺少export，要看下
+5. helm 命令执行失败，应该缺少export，要看下
    然后就弄 pv python环境
-7. 另外： helm init 要加 --stable-repo-url 改为离线或者其他地址，否则会加载谷歌的地址。 helm repo list中.
+6. 另外： helm init 要加 --stable-repo-url 改为离线或者其他地址，否则会加载谷歌的地址。 helm repo list中.
    helm init --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.5.1 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
 
-8. local-volume 一定要加了，不然 prometheus有问题
-9. helm客户端(二进制命令)为2.11.0  ， 而tiller可以用2.13.1版本，现在用的是2.11.0，等以后有时间，全部统一到2.13.1版本。
-10. /etc/fstab swap 问题依然存在.
+# 7. local-volume 一定要加了，不然 prometheus有问题。 ------完成
+8. helm客户端(二进制命令)为2.11.0  ， 而tiller可以用2.13.1版本，现在用的是2.11.0，等以后有时间，全部统一到2.13.1版本。
+9. /etc/fstab swap 问题依然存在.
+10. efk有时间加一下，需要拉一下efk的代码，因为Infra去除了filebeat和kibana。
 
 额外部分，待审查:
 A.  /etc/docker/daemon.json 中定义cgroup-driver: 为systemd ，是一个驱动，这个可能要做.否则服务器可能莫名其妙的重启。
