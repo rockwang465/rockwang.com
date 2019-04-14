@@ -24,6 +24,7 @@ preinstall_packages:
   #- tmux
   - parted
   - nfs-utils
+  - bind-utils
   - ipvsadm
   - bzip2
 
