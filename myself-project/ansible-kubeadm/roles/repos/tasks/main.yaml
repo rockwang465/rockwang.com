@@ -4,12 +4,12 @@
 #    - repos.local == 'enable'
 #    - inventory_hostname == groups['kube-master']|first
 #
-#- import_tasks: yum.yml
-#  when:
+- import_tasks: yum-repo.yaml
+  when:
 #    - repos.local == 'enable'
-#    - inventory_hostname == groups['kube-master']|first
-#
-#- import_tasks: docker-registry.yml
+    - inventory_hostname == groups['kube-master']|first
+
+- import_tasks: docker-registry.yml
 #  when:
 #    - repos.local == 'enable'
 #    - inventory_hostname == groups['kube-master']|first
