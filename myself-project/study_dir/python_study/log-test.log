@@ -1,0 +1,28 @@
+2019-04-15 01:05:35 PM This message is info
+2019-04-15 01:05:35 PM This message is warning
+2019-04-15 01:05:35 PM This message is critical
+
+2019-04-15 01:08:10 PM - INFO This message is info
+2019-04-15 01:08:10 PM - WARNING This message is warning
+2019-04-15 01:08:10 PM - CRITICAL This message is critical
+
+2019-04-15 01:08:28 PM - INFO - This message is info
+2019-04-15 01:08:28 PM - WARNING - This message is warning
+2019-04-15 01:08:28 PM - CRITICAL - This message is critical
+
+2019-04-15 01:16:00 PM - ERROR £º140.logging_module.py:say_err:10 : There are has error
+2019-04-15 01:16:00 PM - INFO £º140.logging_module.py:<module>:16 : This message is info
+2019-04-15 01:16:00 PM - WARNING £º140.logging_module.py:<module>:17 : This message is warning
+2019-04-15 01:16:00 PM - CRITICAL £º140.logging_module.py:<module>:18 : This message is critical
+
+2019-04-15 01:16:42 PM - ERROR £º140.logging_module.py:say_err:12 : There are has error
+2019-04-15 01:16:42 PM - INFO £º140.logging_module.py:<module>:18 : This message is info
+2019-04-15 01:16:42 PM - WARNING £º140.logging_module.py:<module>:19 : This message is warning
+2019-04-15 01:16:42 PM - CRITICAL £º140.logging_module.py:<module>:20 : This message is critical
+
+2019-04-15 01:18:45 PM - ERROR £º140.logging_module.py:say_err:12 : There are has error
+2019-04-15 01:18:45 PM - INFO £º140.logging_module.py:<module>:18 : This message is info
+2019-04-15 01:18:45 PM - WARNING £º140.logging_module.py:<module>:19 : This message is warning
+2019-04-15 01:18:45 PM - CRITICAL £º140.logging_module.py:<module>:20 : This message is critical
+
+
