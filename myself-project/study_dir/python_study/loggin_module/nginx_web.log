@@ -1,0 +1,56 @@
+test error log
+
+test debug log
+
+test error log
+
+test error log
+
+test debug log
+test error log
+test error log
+
+2019-04-16 15:53:41,097 - web - WARNING - test warning log 
+2019-04-16 15:53:41,097 - web - ERROR - test error log 
+2019-04-16 15:53:41,097 - web - CRITICAL - test critical log
+ 
+2019-04-16 16:22:48,769 - web - WARNING - test warning log 
+2019-04-16 16:22:48,770 - web - ERROR - test error log and db backup 
+2019-04-16 16:22:48,770 - web - CRITICAL - test critical log
+ 
+2019-04-16 16:23:29,691 - web - WARNING - test warning log 
+2019-04-16 16:23:29,691 - web - ERROR - test error log and db backup 
+2019-04-16 16:23:29,691 - web - CRITICAL - test critical log
+ 
+2019-04-16 16:25:02,636 - web - INFO - test info log 
+2019-04-16 16:25:02,652 - web - WARNING - test warning log 
+2019-04-16 16:25:02,652 - web - ERROR - test error log and db backup 
+2019-04-16 16:25:02,652 - web - CRITICAL - test critical log
+ 
+2019-04-16 16:25:14,813 - web - DEBUG - test debug log 
+2019-04-16 16:25:14,813 - web - INFO - test info log 
+2019-04-16 16:25:14,813 - web - WARNING - test warning log 
+2019-04-16 16:25:14,813 - web - ERROR - test error log and db backup 
+2019-04-16 16:25:14,813 - web - CRITICAL - test critical log
+ 
+2019-04-16 16:26:28,665 - web - DEBUG - test debug log 
+2019-04-16 16:26:28,666 - web - DEBUG - test debug db backup log 
+2019-04-16 16:26:28,666 - web - INFO - test info log 
+2019-04-16 16:26:28,666 - web - WARNING - test warning log 
+2019-04-16 16:26:28,666 - web - ERROR - test error log and db backup 
+2019-04-16 16:26:28,666 - web - CRITICAL - test critical log
+ 
+2019-04-16 16:28:18,088 - web - DEBUG - 47 - test debug log 
+2019-04-16 16:28:18,088 - web - DEBUG - 48 - test debug db backup log 
+2019-04-16 16:28:18,088 - web - INFO - 49 - test info log 
+2019-04-16 16:28:18,088 - web - WARNING - 50 - test warning log 
+2019-04-16 16:28:18,088 - web - ERROR - 51 - test error log and db backup 
+2019-04-16 16:28:18,088 - web - CRITICAL - 52 - test critical log
+ 
+2019-04-16 16:29:04,919 - web - DEBUG - test debug log 
+2019-04-16 16:29:04,919 - web - DEBUG - test debug db backup log 
+2019-04-16 16:29:04,919 - web - INFO - test info log 
+2019-04-16 16:29:04,919 - web - WARNING - test warning log 
+2019-04-16 16:29:04,919 - web - ERROR - test error log and db backup 
+2019-04-16 16:29:04,919 - web - CRITICAL - test critical log
+ 
