@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>京东-购特色</title>
+    <style type="text/css">
+        body{
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style-type: none;  /*去掉li标签前面的小点*/
+            width: 140px;
+            height: 190px;
+            float: left;  /*浮动到左边,变成一行，因为li是块级元素*/
+            margin-left: 5px;
+        }
+
+        a {
+            text-decoration: none;  /*去掉下划线*/
+            color: white;
+        }
+
+        h3 {
+            padding-top: 30px;  /*这里使用padding，虽然盒子会增大，但是不用担心，因为超过盒子的地方也看不见的*/
+            margin: 0;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+
+        .bgcolor1, .bgcolor2, .bgcolor3 {
+            text-align: center;
+            height: 90px;
+            /*border: 1px solid green;*/
+            margin-top: 100px;
+        }
+        .bgcolor1 {
+            background-color: #916d56;
+        }
+        .bgcolor2 {
+            background-color: #835f8c;
+        }
+        .bgcolor3 {
+            background-color: #b72d35;
+        }
+
+        #bg {
+            background-image: url("../picture/京东img/001.png");
+        }
+        #bg2 {
+            background-image: url("../picture/京东img/002.png");
+        }
+        #bg3 {
+            background-image: url("../picture/京东img/003.png");
+        }
+        /*由于background-size是存在于background-image中，默认值为0，这样会导致图片变大*/
+        /*为了解决此问题，把统一定义bg bg2 bg3放在下面，让上面3个先被读取，最后读取background-size:140px 190px，来解决图片变化*/
+        #bg,#bg2,#bg3 {
+            background-repeat: no-repeat;
+            background-size: 140px 190px;
+            border: 1px solid white;  /*这里必须加边框，否则内部h2和p标签无法使用margin-top的效果*/
+            /*而边框使用白色white，则显示上看好像没有设置边框一样*/
+        }
+    </style>
+</head>
+<body>
+    <!--这里用ul li列表来显示图片上面的两行文字-->
+    <ul>
+        <li id="bg">
+            <div class="bgcolor1">
+                <a href="http://www.jd.com">
+                    <h3>司法拍卖</h3>
+                    <p>法院好货 公开抢拍</p>
+                </a>
+            </div>
+        </li>
+        <li id="bg2">
+            <div class="bgcolor2">
+                <a href="http://www.jd.com">
+                    <h3>环球时尚</h3>
+                    <p>环球名品 奢华精选</p>
+                </a>
+            </div>
+        </li>
+        <li id="bg3">
+            <div class="bgcolor3">
+                <a href="http://www.jd.com">
+                    <h3 class="tag_h">品牌特卖</h3>
+                    <p class="tag_p">品牌显示专场 劲爆来袭</p>
+                </a>
+            </div>
+        </li>
+
+
+    </ul>
+</body>
+</html>

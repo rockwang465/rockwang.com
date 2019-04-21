@@ -41,6 +41,10 @@
             /*height: 10%;*/
             background: blue;
         }
+
+        .clear {  /*通过定义clear: both解决浮动问题*/
+            clear: both;
+        }
     </style>
 </head>
 <body>
@@ -48,6 +52,7 @@
     <div class="main">
         <div class="left">left</div>
         <div class="right">right</div>
+        <div class="clear">clear</div>  /*通过定义clear的css来解决*/
     </div>
     <div class="footer">footer</div>
 </body>
