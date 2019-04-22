@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>淘宝-轮动图片</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+
+        .wrap {
+            /*width: 100%;*/
+            width: 520px; /************************/
+            height: 280px;
+            background: gray;
+            margin: 50px auto;  /********非常重点：水平居中,这样整个盒子里的东西都在中间了*/
+            position: relative;  /*2.6 下面根据这里来定位*/
+        }
+
+        ul{
+            margin: 0;
+            padding: 0 5px 0 0 ;  /*2.10 发现背景不对称，右边少了5px，加一下，这里只有padding合适做内部撑大*/
+            position: absolute;  /*2.7 将大圆点移到图片中间*/
+            left: 220px;    /*2.7*/
+            bottom: 20px;   /*2.7*/
+
+            background: rgba(255,255,255,0.5); /*2.9 大圆点后面做一个背景，并且半透明*/
+            border-radius: 5px;  /*2.11 背景从方的变成圆的*/
+        }
+
+        li {
+            list-style: none;  /*2.1 去掉li前面的圆点*/
+            width: 12px;  /*2.2 这里制作一个正方形，然后用border-radius做成大圆点*/
+            height: 12px;
+            border-radius: 50%;  /*2.3 制作成大圆点*/
+            background-color: gray;
+
+            float: left;  /*2.5 li ul都是块级元素，让li在一行显示*/
+            margin-left: 5px; /*2.4 设置大圆点之间的间距*/
+        }
+
+        #active {
+            background: red;  /*2.8 第一个圆点变红色，其他都是灰色*/
+        }
+
+        .tag { /*定义左右箭头<>*/
+            /*background: red;  !*3.1 定义左右箭头背景，用于测试*!*/
+            width: 100%;  /*3.2 难理解: 宽度必须要加，否则两个箭头到不到两边去,会导致都在左边了*/
+            position: absolute;  /*3.3 添加位置定义，要放入图片中*/
+            top: 140px;  /*3.3 箭头位置放到图片中间*/
+        }
+
+        span {
+            display: block;  /*3.5 转换成块级元素，否则不能定义高、宽*/
+            width: 20px;  /*3.6 定义箭头背景的宽与高*/
+            height: 30px;
+            background: rgba(6,6,6,0.5);  /*3.7 定义箭头的背景颜色*/
+            color: white;  /*3.8 箭头自身颜色修改*/
+            line-height: 30px;
+            text-align: center;  /*3.9 箭头水平居中*/
+        }
+
+        #left {
+            float: left;  /*3.4 浮动箭头< 到左侧*/
+        }
+        #right {
+            float: right;  /*3.4 浮动箭头> 到右侧*/
+
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="img">
+            <img id="lundong-img" src="../picture/淘宝img/轮动001.jpg"/>
+        </div>
+        <div class="tag">
+            <span id="left"><</span>
+            <span id="right">></span>
+        </div>
+        <ul class="li-target">
+            <li id="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</body>
+</html>
