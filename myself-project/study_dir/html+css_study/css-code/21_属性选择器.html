@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>属性选择器</title>
+    <style type="text/css">
+        /*input[name]{*/  /*选择一个属性*/
+            /*border: 2px solid red;*/
+        /*}*/
+        /*input[type="text"]{  !*选择属性+值*!*/
+            /*border: 2px solid green;*/
+        /*}*/
+        /*input[name^=u]{  !*选择属性值name中以 u 开头的*!*/
+            /*border: 2px solid green;*/
+        /*}*/
+        input[name$="d"]{  /*选择属性name中以 d 结尾的*/
+            border: 2px solid darkred;
+        }
+
+
+    </style>
+</head>
+<body>
+    <input type="text" name="username" id="" value="" />
+    <input type="text" />
+    <input type="password" name="password" />
+</body>
+</html>

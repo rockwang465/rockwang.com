@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>伪类</title>
+    <style type="text/css">
+        a:link{     /*a链接默认没有点击时状态的颜色*/
+            color: orangered;
+        }
+        a:visited{  /*a链接被点开过后(被访问过)状态的颜色*/
+            color: darkslategray;
+        }
+        a:hover{    /*鼠标放到a链接上时状态的颜色*/
+            color: blue;
+        }
+        a:active{   /*鼠标按下(点a链接)，还没有放开时状态的颜色*/
+            color: red;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            float: left;
+            width: 100px;
+            height: 60px;
+            background: black;
+            color: white;
+
+            line-height: 60px;
+            text-align: center;
+        }
+
+        li:hover {  /*做成鼠标放上去时颜色变成红色效果*/
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <a href="http://www.baidu.com">百度一下,你就知道</a>
+    <ul>
+        <li>主页</li>
+        <li>实战</li>
+        <li>课程</li>
+        <li>培训</li>
+    </ul>
+</body>
+</html>
