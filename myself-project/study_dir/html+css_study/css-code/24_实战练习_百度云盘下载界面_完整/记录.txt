@@ -1,0 +1,70 @@
+img dir 放图片
+
+css dir 放css文件
+    index.css 为css样式定义
+
+index.html 做入口文件
+    里面要引入css
+
+
+第52讲: 整体思路分析以及网页架构搭建
+见 百度云下载页面-分解图-理解.png
+
+第53讲: css的样式重置
+html元素默认会有一些样式，可能会影响我们的布局。
+可以去百度搜索: reset:css 会有一堆样式重置的例子，拷贝过来就可以了
+
+例如: 还有很多类似下面这些的设置
+/*css样式重置*/
+body, p, ul, li, input {  /*将margin padding重置为0*/
+    margin: 0;
+    padding: 0;
+}
+
+  li {  /*取消列表前面的小点*/
+    list-style: none;
+}
+
+  a {   /*取消下划线*/
+      text-decoration: none;
+  }
+
+  .pull-left {  /*将盒子浮动到左侧*/
+      float: left;
+  }
+
+  .pull-right {  /*将盒子浮动到右侧*/
+      float: right;
+  }
+
+  .clearfix {  /*兼容IE的hasLayout*/
+      *zoom: 1;
+  }
+  .clearfix:after {  /*清除浮动异常问题*/
+      content: ".";
+      display: block;
+      height: 0;
+      visibility: hidden;
+      clear: both;
+  }
+
+第54讲: header模块结构搭建
+讲的是header头部左右两边盒子制作
+
+
+第55讲:
+讲的是 min-width 的作用
+
+第56讲:
+由于SEO优化，在a链接里的文字是需要的
+但文字又没有用，需要移动到浏览器外
+
+第57讲:
+完整header的制作
+
+第58讲:
+开始写第二部分: 下载菜单部分
+
+
+
+

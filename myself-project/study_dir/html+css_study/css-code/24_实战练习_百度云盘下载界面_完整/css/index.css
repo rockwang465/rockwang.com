@@ -1,0 +1,119 @@
+/*1. css样式重置*/
+body, p, ul, li, input { /*将margin padding重置为0*/
+    margin: 0;
+    padding: 0;
+}
+
+li { /*取消列表前面的小点*/
+    list-style: none;
+}
+
+a { /*取消下划线*/
+    text-decoration: none;
+}
+
+.pull-left { /*将盒子浮动到左侧*/
+    float: left;
+}
+
+.pull-right { /*将盒子浮动到右侧*/
+    float: right;
+
+}
+
+.clearfix { /*兼容IE的hasLayout*/
+    *zoom: 1;
+}
+
+.clearfix:after { /*清除浮动异常问题*/
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+/*2. 第一层: header头部内容定义*/
+/*2.1 定义header整个头部的格式*/
+.header {
+    /*width: 100%;*/
+    height: 60px;
+    border-bottom: 2px solid #dcdcdc; /*下边框颜色*/
+    min-width: 960px; /*定义最小的宽度，两个盒子相加的宽度，如果不加，右侧盒子【会到下一行】，影响布局*/
+    /*加了之后，当页面【小于960px】宽度后，会出现【滚动条】*/
+}
+
+/*2.2定义左侧盒子的格式*/
+.header-left {
+    width: 240px; /* 155 + 85 = 240 */
+    height: 60px;
+    border: 1px solid red;
+    margin-left: 20px; /*两边有个边距*/
+}
+
+/*2.3 定义右侧盒子的格式*/
+.header-right {
+    /*height: 60px;*/  /*不用设置高度，否则右侧盒子放下来会影响布局的*/
+    width: 305px;
+    /*border: 1px solid green;*/
+    margin-right: 20px; /*两边有个边距*/
+
+    margin-top: 35px;  /*2.5.1 调节文字位置*/
+}
+
+/*2.4.1 定义header左侧盒子中的logo图标的(a标签)中的文字移走*/
+.header-left > a, .header-left > span { /*空格后代选择器，>大于号子元素选择器，逗号多元素选择器*/
+    /*让a标签里的文字消失，通过背景图片显示(为什么要加文字，又让他消失呢？是为了SEO优化，
+    让百度的蜘蛛爬你，影响你的百度排名(蜘蛛就是要有文字的匹配)) */
+    display: inline-block; /*要转成块级元素，否者不能移走，不知道为什么*/
+    text-indent: -9999px; /*将文字移出浏览器*/
+}
+
+/*2.4.2 定义header左侧盒子中a标签的logo背景图片*/
+.header-left > a {
+    background-image: url("../../../picture/百度img/baidu-yunpan-download-all.gif");
+    background-repeat: no-repeat; /*图片不重复*/
+    width: 150px; /*设置盒子的大小，上面已经转成inline-block了*/
+    height: 60px;
+    background-position: -648px 10px; /*通过此处选择图片的区域位置(所有图片都在一张图片里了)*/
+    /*border: 1px solid blue;*/
+}
+
+/*2.4.3 定义header左侧盒子中span标签的logo背景图片*/
+.header-left > span {
+    background-image: url("../../../picture/百度img/baidu-yunpan-download-all.gif");
+    background-repeat: no-repeat; /*图片不重复*/
+    width: 80px; /*设置盒子的大小，上面已经转成inline-block了；注意:如果header-left宽度不够会跳到下一行的*/
+    height: 60px;
+    background-position: -686px -40px; /*通过此处选择图片的区域位置(所有图片都在一张图片里了)*/
+    /*border: 1px solid blue;*/
+}
+
+/*  以上header-left已经写完了    */
+
+
+/*2.5.1 定义header右侧盒子中a标签于span标签的格式*/
+.header-right a, .header-right span {
+    font-size: 11px;
+    color: #2974b6;
+    padding-top: 200px;
+}
+/*2.5.2 定义header右侧盒子中的第一个span内容为红色字体*/
+.header-right #right1 {
+    color: #f8645c;
+}
+/*  以上header-right已经写完了   */
+
+/* ##################################################### */
+/*  以上 header 头部已经全部写完了                        */
+/* ##################################################### */
+
+
+/*3 第二层: download-menu下载菜单内容定义*/
+/*3.1 子标签tab-menu 定义*/
+.download-menu .tab-menu {
+
+}
+
+
+

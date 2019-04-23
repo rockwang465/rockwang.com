@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度网盘 客户端下载</title>
+    <!--css外联引入css文件-->
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+</head>
+<body>
+    <!--搭建网页结构-->
+    <!--头部信息-->
+    <div class="header clearfix">  <!--并且clearfix清理浮动-->
+        <!--左浮动pull-left 通过伪元素直接加在后面-->
+        <div class="header-left pull-left">
+            <!--左侧 logo + 文字 -->
+            <a href="www.baidu.com">百度云盘</a>
+            <span>客户端下载</span>
+        </div>
+
+        <!--右浮动pull-right 通过伪元素直接加在后面-->
+        <div class="header-right pull-right">
+            <a id="right1">Mac同步版本更新说明</a>
+            <span>|</span>
+            <a>百度首页</a>
+            <span>|</span>
+            <a>官方贴吧</a>
+            <span>|</span>
+            <a>版本更新</a>
+        </div>
+    </div>
+
+    <!--下载平台的菜单栏-->
+    <div class="download-menu">
+        <ul class="tab-menu">
+            <!--不理解为什么这里套这么多层？ li->a->span -->
+            <!--难道是因为有几个图片，就用li，li就必须用ul套起来-->
+            <!--而里面要用文字表达就要用span，而文字自身是链接所以外面包a标签-->
+            <li><a href=""><span>Windows</span></a></li>
+            <li><a href=""><span>Android</span></a></li>
+            <li><a href=""><span>iPhone</span></a></li>
+            <li><a href=""><span>iPad</span></a></li>
+            <li><a href=""><span>Wp</span></a></li>
+            <li><a href=""><span>Mac</span></a></li>
+        </ul>
+    </div>
+
+    <!--下载平台打开后对应的信息-->
+    <div class="download-info"></div>
+
+    <!--下载方式-->
+    <div class="download-method"></div>
+
+    <!--底部信息-->
+    <div class="footer"></div>
+</body>
+</html>
