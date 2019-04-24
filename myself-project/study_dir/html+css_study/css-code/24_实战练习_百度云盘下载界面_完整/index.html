@@ -13,19 +13,19 @@
         <!--左浮动pull-left 通过伪元素直接加在后面-->
         <div class="header-left pull-left">
             <!--左侧 logo + 文字 -->
-            <a href="www.baidu.com">百度云盘</a>
+            <a href="">百度云盘</a>
             <span>客户端下载</span>
         </div>
 
         <!--右浮动pull-right 通过伪元素直接加在后面-->
         <div class="header-right pull-right">
-            <a id="right1">Mac同步版本更新说明</a>
+            <a id="right1" href="">Mac同步版本更新说明</a>
             <span>|</span>
-            <a>百度首页</a>
+            <a href="">百度首页</a>
             <span>|</span>
-            <a>官方贴吧</a>
+            <a href="">官方贴吧</a>
             <span>|</span>
-            <a>版本更新</a>
+            <a href="">版本更新</a>
         </div>
     </div>
 
@@ -33,24 +33,69 @@
     <div class="download-menu">
         <ul class="tab-menu">
             <!--不理解为什么这里套这么多层？ li->a->span -->
-            <!--难道是因为有几个图片，就用li，li就必须用ul套起来-->
+            <!--难道是因为有几个图片，就用li，li就必须用ul套起来（用列表展示）-->
             <!--而里面要用文字表达就要用span，而文字自身是链接所以外面包a标签-->
-            <li><a href=""><span>Windows</span></a></li>
-            <li><a href=""><span>Android</span></a></li>
-            <li><a href=""><span>iPhone</span></a></li>
-            <li><a href=""><span>iPad</span></a></li>
-            <li><a href=""><span>Wp</span></a></li>
-            <li><a href=""><span>Mac</span></a></li>
+            <li><a id="menu1" href=""><span>Windows</span></a></li>
+            <li><a id="menu2" href=""><span>Android</span></a></li>
+            <li><a id="menu3" href=""><span>iPhone</span></a></li>
+            <li><a id="menu4" href=""><span>iPad</span></a></li>
+            <li><a id="menu5" href=""><span>Wp</span></a></li>
+            <li><a id="menu6" href=""><span>Mac</span></a></li>
         </ul>
     </div>
 
-    <!--下载平台打开后对应的信息-->
-    <div class="download-info"></div>
+    <!--下载平台打开后对应的信息展示-->
+    <div class="download-info clearfix">  <!--用来填充背景，clearfix清除浮动(浮动经常忘记)-->
+        <!--主要用来居中-->
+        <div class="download-info-content">
+            <div class="download-info-text">
+                <p>大小：11.74M&nbsp;&nbsp;&nbsp;&nbsp;版本：Mac版 V2.2.2</p>
+                <p>适应系统：Mac OS X 10.10+</p>
+                <p>更新时间：2018-06-11</p>
+                <a href=""><span>下载MAC版</span></a>
+            </div>
+        </div>
+    </div>
 
     <!--下载方式-->
-    <div class="download-method"></div>
+    <div class="download-method">  <!--仅仅做个下面的黑线-->
+        <div class="download-method-content clearfix">  <!--注意：(养成习惯)只要盒子里套两个盒子，分左右，就用clearfix清除浮动-->
+            <div class="download-method-left pull-left">  <!--左浮动-->
+                <p class="text-title">免费发送短信下载移动客户端</p>
+                <input class="phone" type="text" placeholder="请输入手机号码" />
+                <input class="check_code" type="text" placeholder="验证码" />
+                <img src="../../picture/百度img/验证码.jpg" alt="验证码" />
+                <!--button为按钮标签-->
+                <button class="btn">发送短信</button>
+            </div>
+
+            <div class="download-method-right pull-right  clearfix">  <!--右浮动-->
+                <div class="code-left pull-left">
+                    <p class="code-left-title">扫描二维码下载</p>
+                    <p>使用手机上的二维码扫描软件扫描，直接下载百度网盘。</p>
+                </div>
+                <div class="code-right pull-left">  <!--这里也是往左浮动的-->
+                    <!--二维码图片-->
+                    <img src="../../picture/百度img/baidu_app_link_code.png" />
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--底部信息-->
-    <div class="footer"></div>
+    <div class="footer">
+        <!--总结：整行写的时候用span，换行写用p标签。a标签也是一行(这里在一行写的用span)-->
+        <a href="">©2019 Baidu 移动开放平台</a>
+        <span>|</span>
+        <a href="">服务协议</a>
+        <span>|</span>
+        <a href="">权利声明</a>
+        <span>|</span>
+        <a href="">版本更新</a>
+        <span>|</span>
+        <a href="">帮助中心</a>
+        <span>|</span>
+        <a href="">版权投诉</a>
+    </div>
 </body>
 </html>

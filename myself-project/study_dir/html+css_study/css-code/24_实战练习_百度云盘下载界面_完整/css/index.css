@@ -18,7 +18,6 @@ a { /*取消下划线*/
 
 .pull-right { /*将盒子浮动到右侧*/
     float: right;
-
 }
 
 .clearfix { /*兼容IE的hasLayout*/
@@ -47,7 +46,7 @@ a { /*取消下划线*/
 .header-left {
     width: 240px; /* 155 + 85 = 240 */
     height: 60px;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     margin-left: 20px; /*两边有个边距*/
 }
 
@@ -105,14 +104,263 @@ a { /*取消下划线*/
 /*  以上header-right已经写完了   */
 
 /* ##################################################### */
-/*  以上 header 头部已经全部写完了                        */
+/*  以上 第一层 header 头部已经全部写完了                  */
 /* ##################################################### */
 
 
-/*3 第二层: download-menu下载菜单内容定义*/
+/*3 第二层: download-menu下载菜单内容定义----------自己写的*/
 /*3.1 子标签tab-menu 定义*/
-.download-menu .tab-menu {
+.download-menu {
+    margin: 0 auto;
+    width: 950px;
+    height: 96px;
+    /*border: 1px solid greenyellow;*/
+}
+/*3.2 移除span中的文字--SEO优化*/
+.download-menu span {
+    display: inline-block;
+    text-indent: -9999px;
+}
 
+/*3.3 定义a标签背景图片的整体样式*/
+.download-menu a {
+    width: 132px;
+    height: 50px;
+    /*border: 1px solid red;*/
+    float: left;
+    margin: 26px 0px 0 21px;
+    background-image: url("../../../picture/百度img/baidu-yunpan-download-all.gif");
+    background-repeat: no-repeat;
+}
+
+/*注意：这里有个更好的方法，就是这里，我下面通过id方式选择没有这个好(这里先注释了）*/
+/*选择.tab-menu下面的第一个li(括号里是1，就是第1个)。css3才支持，ie6是不支持的*/
+/*.tab-menu li:nth-of-type(1){*/
+    /*background-position: -13px 124px;*/
+/*}*/
+
+/*3.3 单个标签背景样式配置*/
+.download-menu #menu1{
+    background-position: -13px -124px;
+}
+/*3.4 单个标签鼠标移上去变色配置 (hover的使用)*/
+.download-menu #menu1:hover{
+    background-position: -13px -180px;
+}
+
+.download-menu #menu2{
+    background-position: -178px -124px;
+}
+.download-menu #menu2:hover{
+    background-position: -178px -179px;
+}
+
+.download-menu #menu3{
+    background-position: -356px -124px;
+}
+.download-menu #menu3:hover{
+    background-position: -356px -180px;
+}
+
+.download-menu #menu4{
+    background-position: -504px -124px;
+}
+.download-menu #menu4:hover{
+    background-position: -504px -180px;
+}
+
+.download-menu #menu5{
+    background-position: -621px -124px;
+}
+.download-menu #menu5:hover{
+    background-position: -621px -180px;
+}
+
+.download-menu #menu6{
+    background-position: -756px -180px;
+}
+.download-menu #menu6:hover{
+    background-position: -756px -124px;
+}
+
+/* ##################################################### */
+/*  以上 第二层 download-menu 下载菜单已经全部写完了       */
+/* ##################################################### */
+
+
+/*4 第三层: download-info下载信息 内容定义 */
+/*4.1 整个下载信息的蓝色背景设置--一条竖线无限重复的效果*/
+.download-info {
+    width: 100%;
+    height: 439px;  /*图片的高度:这个高度可以从保存这个照片时页面中看到的*/
+    background-image: url("../../../picture/百度img/bg_download.png") ;
+    background-repeat: repeat-x;  /*由于这个图片是一条竖线，需要x轴无限重复即可填充背景了*/
+
+}
+
+/*4.2 设置主图片居中(这个图片和上面图片不是一张图片的，而是iPhone、iPad之类的图片)*/
+.download-info .download-info-content {
+    width: 980px;
+    height: 439px;
+    background-image: url("../../../picture/百度img/bg_mac.jpg");
+    background-repeat: no-repeat;
+    margin: 0 auto;  /*图片居中*/
+
+    position: relative;  /*定位*/
+}
+
+/*4.3 设置图片右下角文字+图标的盒子*/
+.download-info-content .download-info-text {  /*注意:我开始弄错了，设置到p标签上，导致总是堆叠到一起了，分不开，其实应该在这里设置*/
+
+    width: 275px;
+    height: 176px;
+    /*border: 1px solid green;*/
+
+    position: absolute;  /*设置盒子的位置*/
+    right: 116px;
+    bottom: 70px;
+}
+
+/*4.4 设置文件行之间的间距*/
+.download-info-content .download-info-text p {
+    font-size: 12px;
+    color: white;
+    line-height: 16px;
+    margin-top: 5px;
+}
+
+/*4.7 按钮:将共同规则设置到一起来*/
+.download-info-text a, .download-info-text a:hover {
+    background-image: url("../../../picture/百度img/baidu-yunpan-download-all.gif");
+    background-repeat: no-repeat;
+}
+
+/*4.5 设置图片右下角按钮*/
+.download-info-text a {
+    text-indent: -9999px;  /*移走文字*/
+    /*border: 1px solid red;*/
+    width: 170px;
+    height: 59px;
+    display: block;
+
+    position: absolute;
+    right: 101px;
+    bottom: 30px;
+
+    background-position: -692px -295px;
+}
+
+/*4.6 设置鼠标移到图标上变化效果*/
+.download-info-text a:hover {
+    background-position: -692px -365px;
+}
+
+/* ##################################################### */
+/*  以上 第三层 download-info 下载信息已经全部写完了       */
+/* ##################################################### */
+
+
+/*5 第四层: download-method下载方式 内容定义 */
+/*5.1 最外层盒子做成底下的黑线条*/
+.download-method {
+    border-bottom: 1px solid #CCCCCC;
+    width: 100%;
+    height: 200px;
+    /*margin-bottom: 20px;*/
+}
+
+/*5.2 第二层盒子定义*/
+.download-method-content {
+    width: 960px;
+    height: 200px;
+    /*border: 1px solid red;*/
+    margin: 0 auto;
+}
+
+/*!*5.3 第三层左边盒子定义*!*/
+/*.download-method-left {*/
+/*}*/
+
+/*5.5 第三层左变盒子里面的2个input + 验证码 + 按钮 垂直居中对齐*/
+.download-method-left input, .download-method-left img, .download-method-left button {
+    vertical-align: middle;  /*注意： 这个是垂直居中对齐*/
+    height: 32px;  /*框子高度*/
+    margin-top: 20px;
+}
+
+/*5.6 第三层左边和右边盒子里面的小盒子里的title文字变大*/
+.download-method-left  .text-title, .download-method-right .code-left-title {
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+/*5.7.1 修饰手机号码的input框*/
+.download-method-left .phone {
+    width: 190px;
+}
+
+/*5.7.2 修饰验证码的input框*/
+.download-method-left .check_code {
+    margin-left: 12px;
+    width: 112px;
+}
+
+/*注意：百度网盘用的图片做的按钮，我们这里学习下使用标签做按钮*/
+/*5.8 修饰按钮button */
+.download-method-left .btn {
+    width: 100px;
+    background: #09aaff;
+    border: none;  /*注意：按钮边框可以取消掉*/
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+}
+
+
+/*5.4 第三层右边盒子定义*/
+.download-method-right{
+    width: 324px;
+    /*border: 1px solid green;*/
+    margin-right: 48px;
+}
+
+/*5.9 第三层右边盒子里面左边盒子文字大小设置*/
+.download-method-right p{
+    font-size: 12px;
+}
+
+/*5.10 第三层右边盒子里左边盒子整体框架位置设置*/
+.download-method-right .code-left {
+    width: 160px;
+    margin-right: 40px;
+}
+
+.download-method-right .code-left-title {
+    margin-bottom: 20px;
+}
+
+.download-method-right .code-right img {
+    margin-top: 50px;
+}
+
+/* ##################################################### */
+/*  以上 第四层 download-method 下载方式已经全部写完了       */
+/* ##################################################### */
+
+
+
+/*6 第五层: footer底部版权 内容定义 */
+/*6.1 居中*/
+.footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 48px;
+    margin-bottom: 10px;
+}
+/*字体颜色要在a标签里面定义才可以*/
+.footer a {
+    color: #666666;
 }
 
 
