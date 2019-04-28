@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>wechat</title>
+    <style>
+        /*1. css样式重置*/
+        body, p, ul, li, input, h1, h2, h3, h4, h5, h6 { /*将margin padding重置为0*/
+            margin: 0;
+            padding: 0;
+        }
+
+        li { /*取消列表前面的小点*/
+            list-style: none;
+        }
+
+        a { /*取消下划线*/
+            text-decoration: none;
+        }
+
+        ul {
+            height: 499px;
+            background: url("背景图.jpg") repeat-x ;
+        }
+
+        a {
+            background: url("滑动门背景图2.png") no-repeat left;  /*拿到图片左侧*/
+            display: inline-block;
+            height: 33px;
+            margin-left: 100px;
+            padding-left: 15px;  /*左侧加个内边距，这样字体在中间显示，好看多了*/
+            color: #fff;
+            margin-top: 20px;
+        }
+        span {
+            /*text-align: center;*/
+            line-height: 33px;
+            background: url("滑动门背景图2.png") no-repeat right;  /*拿到图片右侧*/
+            padding-right: 15px;  /*右侧加内边距，让文字居中，好看多了*/
+            display: inline-block;  /*一定要转行内块元素，否则图片很窄*/
+        }
+
+        li {
+            display: inline-block;
+        }
+
+        ul a:hover, ul a:hover span {  /*难点: 前面想到了。后面时a:hover span才对*/
+            background-image: url("滑动门背景图.png");
+        }
+
+    </style>
+</head>
+<body>
+    <ul>
+        <li>
+            <a href="#">
+                <span>首页</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span>帮助与反馈</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span>公众平台</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span>开放平台</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span>微信支付</span>
+            </a>
+        </li>
+    </ul>
+</body>
+</html>
