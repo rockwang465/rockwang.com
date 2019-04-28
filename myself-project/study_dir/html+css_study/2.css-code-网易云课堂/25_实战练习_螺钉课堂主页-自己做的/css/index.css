@@ -1,0 +1,372 @@
+/*1. css样式重置*/
+body, p, ul, li, input, h1, h2, h3, h4, h5, h6 { /*将margin padding重置为0*/
+    margin: 0;
+    padding: 0;
+}
+
+li { /*取消列表前面的小点*/
+    list-style: none;
+}
+
+a { /*取消下划线*/
+    text-decoration: none;
+}
+
+.pull-left { /*将盒子浮动到左侧*/
+    float: left;
+}
+
+.pull-right { /*将盒子浮动到右侧*/
+    float: right;
+}
+
+.clearfix { /*兼容IE的hasLayout*/
+    *zoom: 1;
+}
+
+.clearfix:after { /*清除浮动异常问题*/
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+
+/*2 头部header定义*/
+/*2.1 左侧logo定义*/
+.header {
+    height: 76px;
+    width: 100%;
+    background: 100%;
+    /*border: 1px solid green;*/
+    position: relative;
+    min-width: 1200px;
+}
+
+/*2.2.1 定义logo图标左侧位置*/
+.header .logo {
+    display: inline-block;
+    /*margin: 10px 0 15px 115px;*/
+    margin-left: 100px;
+    margin-top: 7px;
+    width: 200px; /*不用设置高度，让它自己伸缩*/
+}
+
+/*2.2.2 定义中间盒子居中对齐*/
+.header .header-mid {
+    /*border: 1px solid deeppink;*/
+    width: 500px;
+    height: 50px;
+    position: absolute;
+
+    /*设置盒子居中*/
+    bottom: 0;
+    left: 50%;
+    margin-left: -250px;
+}
+
+/*2.2.3 定义字体*/
+.header .header-mid a {
+    font-size: 16px;
+    font-weight: 700;
+    color: #383838;
+    line-height: 38px;
+    /*display: inline-block;*/
+    margin: 0 30px;
+    font-family: "微软雅黑";
+}
+
+/*2.2.4 单独设置主页文字有特效*/
+.header .header-mid #first-tag {
+    color: #E15671;
+    border-bottom: 2px solid red;
+}
+
+/*2.2.5 设置所有文字有鼠标移动的特效*/
+.header .header-mid a:hover {
+    color: #E15671;
+    border-bottom: 2px solid red;
+    /*transition: all 1s;*/
+}
+
+/*2.3 右侧盒子定义*/
+/*2.3.1 定义盒子的位置*/
+.header .header-right {
+    margin: 20px 105px 40px 0;
+}
+
+/*2.3.2 设置文字*/
+.header .header-right a, .header .header-right span {
+    font-size: 16px;
+    font-weight: 700;
+    color: #383838;
+    line-height: 38px;
+    font-family: "微软雅黑";
+}
+
+/*2.3.3 设置鼠标移到文字上的效果*/
+.header .header-right a:hover {
+    color: #E15671;
+    border-bottom: 2px solid red;
+}
+
+
+/*3 main-wrap 主体内容定义*/
+/*3.1 主体盒子定义*/
+.main-wrap {
+    background: url("../img/background.png") no-repeat;
+    /*background-size: 106% 100%;  !*图片宽度宽一点，高度正常*!*/
+    background-size: cover; /*图片宽度宽一点，高度正常*/
+    height: calc(100vh - 210px); /*calc玩法*/
+    width: 100%;
+    /*width: 1195px;*/
+    border-bottom: 1px solid #e04571;
+    min-width: 1200px;
+    min-height: 580px;
+}
+
+/*3.2 定义内部盒子居中*/
+.main-wrap .main-inner {
+    /*width: 1195px;*/  /*注意：之前的配置，下面的是临时改的*/
+    width: 1200px;
+    height: 510px;
+    /*border: 1px solid black;*/
+    margin: 0 auto;
+    padding-top: 50px; /*遇到塌陷问题了，由于不能加方框在父盒子，所有用padding*/
+
+}
+
+/*3.3 定义内部的左侧盒子*/
+/*3.3.1 左侧盒子大小定义*/
+.main-wrap .main-inner .main-content-left {
+    width: 405px;
+    height: 505px;
+    /*border: 2px solid purple;*/
+    color: white;
+    font-family: "微软雅黑", Serif;
+}
+
+/*3.3.2 字体设置 3段文字*/
+.main-inner .main-content-left h1 {
+    font-size: 40px;
+    margin-top: 35px;
+    margin-bottom: 25px;
+}
+
+.main-inner .main-content-left .first-p {
+    color: #06E9E6;
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+
+.main-inner .main-content-left .second-p {
+    line-height: 26px;
+    margin-bottom: 30px;
+}
+
+/*3.3.3 二维码盒子定义*/
+.main-inner .main-content-left .QRcode {
+    /*width: 384px;  !*要减去16*!*/
+    height: 104px; /*要减去16*/
+    /*border: 2px solid green;*/
+    padding: 8px;
+    background: #2d2249;
+    margin-bottom: 30px;
+}
+
+/*3.3.4 二维码盒子里文字定义*/
+.main-inner .main-content-left .QR-info {
+    margin: 24px 90px 0 0;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+/*3.4 左侧盒子底部3个内容定义 学习路线、常见问题、QQ交流群*/
+/*3.4.1 浮动3个div盒子*/
+.main-inner .main-content-left .info-area > div {
+    float: left;
+    /*border: 1px solid darkgreen;*/
+    /*margin: 0 auto;*/
+    width: 122px;
+    height: 60px;
+    /*margin-right: 11px;*/
+}
+
+.main-inner .main-content-left .info-area .info2 {
+    margin-left: 17px;
+}
+
+.main-inner .main-content-left .info-area .info3 {
+    float: right;
+}
+
+/*3.4.2 设置图片的蓝色圆圈背景*/
+.main-inner .main-content-left .info-area div div {
+    /*border: 1px solid midnightblue;*/
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #319b90;
+}
+
+.main-inner .main-content-left .info-area div {
+    position: relative;
+    font-size: 14px;
+}
+
+.main-inner .main-content-left .info-area div div > img {
+    margin: 10px 0 0 10px;
+}
+
+.main-inner .main-content-left .info-area div .img2 {
+    background: #c8764c;
+}
+
+.main-inner .main-content-left .info-area div .img3 {
+    background: #32accc;
+}
+
+.info-area .a1 {
+    color: #319b90;
+}
+
+.info-area .a2 {
+    color: #c8764c;
+}
+
+.info-area .a3 {
+    color: #32accc;
+}
+
+.main-inner .main-content-left .info-area div a {
+    position: absolute;
+    top: 10px;
+    left: 50px;
+}
+
+/*3.5 定义内部的右侧盒子*/
+/*3.5.1 右侧盒子大小定义*/
+.main-inner .main-module-right {
+    width: 765px;
+    height: 500px;
+    /*border: 1px solid blue;*/
+}
+/*3.5.4 5个小盒子总体属性*/
+.main-module-right a > div {
+    /*width: 240px;*/
+    /*height: 240px;*/
+    width: 194px;
+    height: 182px;
+    margin: 0 0 14px 10px;
+    /*border: 1px solid yellow;*/
+    float: left;
+    padding: 29px 23px;
+    position: relative;
+}
+
+.main-module-right a div {
+    color: white;
+}
+
+.main-module-right a h6 {
+    font-size: 24px;
+    font-family: "微软雅黑", Serif;
+}
+.main-module-right a p {
+    font-size: 20px;
+    font-family: "微软雅黑", Serif;
+}
+
+.main-module-right .module1 {
+    background: #6067d5;
+}
+
+.main-module-right .module2 {
+    background: #9965e2;
+}
+
+.main-module-right .module3 {
+    background: #fbc00d;
+}
+
+.main-module-right .module4 {
+    background: #62c464;
+}
+
+.main-module-right .module5 {
+    background: #e04571;
+}
+
+/*3.5.5 每个span的盒子定位*/
+.main-module-right a div div {
+    width: 16px;
+    height: 50px;
+    /*border: 1px solid darkgreen;*/
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -8px;  /*盒子一半宽度，来居中*/
+    font-size: 30px;
+}
+
+/*3.5.6 设置鼠标移上去效果*/
+.main-module-right a div:hover{
+    background: yellowgreen;
+}
+
+
+/*4 footer 底部内容定义*/
+/*4.1 footer 底部盒子定义*/
+.footer {
+    width: 100%;
+    height: 133px;
+}
+
+/*4.2 盒子中的盒子设置*/
+.footer .footer-border {
+    /*width: 700px;*/
+    width: 660px;
+    height: 133px;
+    /*border: 1px solid black;*/
+    margin: 0 auto;
+}
+
+/*4.3 左侧logo图片设置*/
+.footer-border .footer-logo {
+    border-right: 1px solid #dfdfdf;
+    margin: 30px 0 50px 0;
+}
+
+/*4.4 设置右侧小盒子位置*/
+.footer-border .footer-right {
+    /*border: 1px solid blue;*/
+    /*margin: 30px 50px 55px 0;*/
+    margin: 30px 10px 55px 0;
+}
+
+.footer-right .nav-list {
+    margin-bottom: 10px;  /*注意：具体大小还不确定*/
+}
+
+/*4.5 右侧上面一行字设置*/
+.footer-right .nav-list a{
+    border-right: 1px solid #dfdfdf;
+    /*margin: 10px;*/
+    padding: 0 17px 0 0;  /*注意: 大亮点: paddingright + margin right 都是盒子内右侧和盒子外右侧加边距*/
+    margin-right: 17px;
+    color: #383838;
+    font-size: 14px;
+    font-family: "微软雅黑", Serif;
+}
+
+.footer-right .nav-list #last-nav-a {
+    border: none;
+}
+
+/*4.6 右侧下面一行字设置*/
+.footer-right .copyright span {
+    font-size: 14px;
+    font-family: "微软雅黑", Serif;
+    color: #383838;
+}
