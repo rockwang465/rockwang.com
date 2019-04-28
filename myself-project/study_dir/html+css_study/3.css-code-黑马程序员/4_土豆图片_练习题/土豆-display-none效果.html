@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>土豆-display-none效果图</title>
+    <style>
+        a {
+            display: block;
+            width: 450px;
+            height: 255px;
+            position: relative;
+        }
+
+        /*mask为灰色方框，正常时隐藏的*/
+        .mask {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: rgba(1,1,1,0.3) url("播放图标.png") no-repeat center;
+            /*background-position: 50% 50%;*/
+            display: none;  /*这里隐藏*/
+        }
+
+        /*鼠标放到a身上(因为mask已经隐藏了，放不到mask上面)， a【里面的】mask出现。*/
+        a:hover .mask{  /*大亮点： 鼠标放到a上面，就是a:hover； a里面的mask显示出来, a:hover .mask*/
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+        <a href="#">
+            <img src="bg-img.jpg" alt="田馥甄综艺节目图片" />
+            <div class="mask"></div>
+        </a>
+</body>
+</html>
