@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>input标签</title>
+</head>
+<body>
+<form action="https://www.baidu.com">
+    文本框: <input type="text"/> <br>
+    密码框: <input type="password"/> <br>
+    复选框: <input type="checkbox"/>篮球  <input type="checkbox"/>足球 <br>
+    单选框: <input type="radio" name="aaa"/>男 <input type="radio" name="aaa"/>女 <br>
+    隐藏域: <input type="hidden"/> <br>
+    button按钮: <input type="button" value="百度一下"/> <br>
+    submit按钮: <input type="submit" value="百度一下"/> <br>
+    file控件: <input type="file"/> <br>
+</form>
+
+
+
+
+
+<!--
+学好input标签，要掌握几种常见的属性
+type: text  表示文本输入框，用来输入文本(使用场景： 用户名、邮箱、手机号...)
+type: password   表示密码框，用来输入密码(使用场景： 输入密码，让用户不可见)
+type: checkbox  复选框/多选框 (使用场景: 支持多选几项内容)
+type: radio  单选框，但每个input要配合name，且name值相同，则为一组 (使用场景: 性别为男女选一个)
+type: hidden  隐藏域 (使用场景: 当数据不想被用户看见的时候使用)
+type: button  普通按钮，点击后不会触发form的提交行为 (使用场景: 留给js控制，什么时候发数据)
+type: submit  提交按钮，点击后会触发form的action，进行页面跳转
+type: file  文件上传控件/工具
+
+
+input type=text 中的值
+<input type="text" value="请输入用户名" readonly/disabled
+name 表单项的名字，规定input元素的名称，后台会根据这个属性的值来接收数据。
+value 表单项的值（在框中显示的内容）
+readonly 指定控件处于只读状态，针对输入框有效，数据可以被发送出去，但对按钮无意义
+disabled 控件不可用，灰色，并且表单提交时不会传送此数据
+checked  表示打钩选中状态，针对check_box 和 radio
+<input type="checkbox" checked/>  加了checked这直接打钩选中
+
+注意： 如果元素没有name属性，表单提交的时候，数据不会被发送出去的。
+
+
+-->
+
+
+<!--textarea 和button标签-->
+<!--注意： 如果元素没有name属性，表单提交的时候，数据不会被发送出去的。-->
+
+
+<textarea name=""  rows="5" cols="30" ></textarea> <br>
+<!--textare文本域标签  在框内输入文字  固定一个区域大小可以输入文字
+rows 行宽
+cols 列高
+disabled
+
+-->
+
+<botton>百度一下</botton> <br>
+<!--input type=button 和button标签的区别：
+button语义话标签(看到标签名称，就知道干嘛的)  html5比较推崇，且里面可以放图片,如下面：
+-->
+<button><img src="../picture/header-girl-002.png" alt="">百度一下哦</button>
+
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form表单的属性</title>
+</head>
+<body>
+
+    <form action="http://www.baidu.com" method="post">
+        用户名:<input type="text" name="username"> <br>
+        密码:<input type="password" name="pwd"> <br>
+        <!--<input type="button" value="登录">-->
+        <input type="submit" value="登录">
+    </form>
+</body>
+</html>
+
+
+<!--
+1. action 表单提交的地址，将收集好的数据发送到的后台网页位置由action决定。
+   依赖: submit
+   action="#" 为#时，请求的是当前的(如pycharm自身)服务器。
+2. method 表单发送数据的方式
+   A. get : 显示提交
+      默认是get，可以不加method。(依赖: input中的name定义)
+      https://www.baidu.com/?username=rock&pwd=1234
+      这里发现会把输入的用户名、密码发送地址栏上了。
+      使用场景: 网页请求内容时用，例如百度搜索任意关键词的时候，用此方法跳转。
+   B. post : 隐藏提交
+      通过F12 ==> network ==> 左侧Name中的一个网页请求中有个header
+      ==>在header 里面有个 From data ==> 可以看到 用户名、密码
+      使用场景: 登录页面，涉及到后台数据库的。
+
+2. submit 提交，是input的一个属性值。
+
+
+-->

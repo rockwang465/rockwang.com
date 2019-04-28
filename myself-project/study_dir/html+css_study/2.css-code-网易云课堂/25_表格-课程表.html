@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格</title>
+    <style type="text/css">
+        table {
+            border: 4px solid orangered;  /*表格的外边框  => border="4px"*/
+            margin: 0 auto;  /*表格居中 => algin="center"*/
+            border-spacing: 0;  /*表格间隙为0 => cellspacing="0"*/
+            width: 80%;  /*表格宽度 => width="80%"*/
+        }
+        td {  /*单元格设置*/
+            font-size: 16px;  /*单元格中的字体大小设置*/
+            text-align: center;  /*单元格文字居中*/
+            border: 1px solid gray;  /*单元格里面的内部小框设置*/
+        }
+        .title {
+            font-size: 25px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!--<table border="3px" cellspacing="0" width="50%" align="center">-->
+    <table>
+        <tr>
+            <!--注意：td字段的居中，必须要在这里设置，css做不了-->
+            <td class="title" colspan="7" align="center" height="30px">课程表</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td>星期一</td>
+            <td>星期二</td>
+            <td>星期三</td>
+            <td>星期四</td>
+            <td>星期五</td>
+        </tr>
+        <tr>
+            <td rowspan="4">上午</td>
+            <td width="30px">1</td>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>历史</td>
+            <td>政治</td>
+        </tr>
+        <tr>
+            <td width="30px">2</td>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>历史</td>
+            <td>政治</td>
+        </tr>
+        <tr>
+            <td width="30px">3</td>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>历史</td>
+            <td>政治</td>
+        </tr>
+        <tr>
+            <!--<td>上午</td>-->
+            <td>4</td>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>历史</td>
+            <td>政治</td>
+        </tr>
+        <tr>
+            <td colspan="7" align="center">午休</td>
+        </tr>
+        <tr>
+            <td rowspan="4">下午</td>
+            <td>5</td>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>历史</td>
+            <td>政治</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>历史</td>
+            <td>政治</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>历史</td>
+            <td>政治</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>语文</td>
+            <td>数学</td>
+            <td>英语</td>
+            <td>历史</td>
+            <td>政治</td>
+        </tr>
+    </table>
+</body>
+</html>
+
+
+<!--
+table:
+    border:表格边框  (border="1px")
+    width: 表格宽度  (width="50%"  width="120px")
+    algin: 表格位置  (algin="center" 居中)
+    cellspacing: 表格单元格之间的间隙  (cellspacing="0" 单元格间间隙为0)
+当然以上也可以通过css去修饰。
+-->
+
+
+

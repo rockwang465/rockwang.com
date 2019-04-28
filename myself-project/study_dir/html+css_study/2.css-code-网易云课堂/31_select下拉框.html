@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>select下拉框</title>
+</head>
+<body>
+<select name="" size="6" multiple>
+    <option value="北京">北京</option>
+    <option value="">上海</option>
+    <option >广州</option>
+    <option value="">深圳</option>
+
+    <!--注意：
+    1. select:
+        name是加在select上的
+        size的值，为可见选项的条数
+        multiple，在网页中用shift时，可以多选
+    2. option：
+    option中value="北京"，发送数据时，发送的是北京
+            value=""，发送数据时，则为空
+            没有value值时，则发送option里面的内容，如广州
+
+
+    -->
+
+</select>
+</body>
+</html>

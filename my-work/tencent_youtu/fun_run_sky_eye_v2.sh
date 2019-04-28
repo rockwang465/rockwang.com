@@ -1,6 +1,6 @@
 #!/bin/bash
 passwd="123456"
-#home_dir=/home/youtuapp/html-code/sky_eye_v2
+#home_dir=/home/youtuapp/1.html-code/sky_eye_v2
 gpu_dir=`pwd`
 cd ..
 home_dir=`pwd`

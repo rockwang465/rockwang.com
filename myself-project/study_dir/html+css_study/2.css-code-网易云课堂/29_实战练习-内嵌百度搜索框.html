@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度搜索框</title>
+</head>
+<body>
+    <form action="https://www.baidu.com/s">
+        <input type="text" name="wd" />
+        <input type="submit" value="百度一下" />
+    </form>
+</body>
+</html>
+
+
+
+
+<!--
+需求： 把百度搜索框加到自己的网页中
+
+input中属性总结:
+type="text" 表示一个文本输入框
+type="submit"  表示一个提交按钮，相当于一个开关，告诉form要发送数据了
+value="百度一下"  表示按钮上显示的文字
+name="wd"  表示请求头
+
+当我们在2345.com  或者 hao123.com 中的百度搜索框中输入：螺钉课堂，会跳转下面的页面
+https://www.baidu.com/s?wd=螺钉课堂xxxxx
+这里看到有个wd=螺钉课堂
+所以我们定义的: form 的 action="https://www.baidu.com/s"
+               input 的 name="wd"
+-->

@@ -1,6 +1,6 @@
 #!/bin/bash
 now_dir=`pwd`
-default_dir="/home/youtuapp/html-code/sky_eye_v2"
+default_dir="/home/youtuapp/1.html-code/sky_eye_v2"
 
 #mdkir -p default_dir
 function mkdir_sky_eye(){
@@ -24,7 +24,7 @@ function skyeye_untar(){
   fi
 }
 
-#copy *.tar.gz to /home/youtuapp/html-code/sky_eye_v2
+#copy *.tar.gz to /home/youtuapp/1.html-code/sky_eye_v2
 function cp_all_file_to_sky_eye(){
   cd ./skyeyev2.4.1
   cp *.tar.gz ${default_dir}
@@ -33,7 +33,7 @@ function cp_all_file_to_sky_eye(){
   sleep 4
 }
 
-#decompressing  /home/youapp/html-code/sky_eye_v2/*.tar.gz files
+#decompressing  /home/youapp/1.html-code/sky_eye_v2/*.tar.gz files
 function untar(){
   cd ${default_dir}
 #  find ${default_dir} -name '*.tar.gz' | grep -v scripts*.tar.gz | xargs -i tar -zxvf {} -C ${default_dir}
