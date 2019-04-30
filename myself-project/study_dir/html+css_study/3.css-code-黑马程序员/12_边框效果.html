@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片边框鼠标移上去的效果</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .box1 {
+            width: 700px;
+            height: 700px;
+            position: relative;
+            border: 1px solid green;
+            border-radius: 10px;
+            overflow: hidden;  /*亮点：溢出的隐藏，解决图片圆角的问题*/
+        }
+        .box1:hover  .box2{
+            border: 100px solid rgba(200,20,200, 0.8);
+            box-sizing: border-box;
+            float: left;
+            left: 0;
+            top: 0;
+            position: absolute;
+            border-radius: 10px;
+            width: 700px;
+            height: 700px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="box1">
+        <img src="../picture/header-girl-001.jpg" alt="">
+        <div class="box2"></div>
+    </div>
+</body>
+</html>

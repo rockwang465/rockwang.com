@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结构伪类选择器</title>
+    <style>
+        ul li {
+            font-size: 26px;
+        }
+        /*ul li:first-child {*/
+            /*background-color: red;*/
+        /*}*/
+        /*ul li:last-child {*/
+            /*background-color: red;*/
+        /*}*/
+        /*ul li:nth-child(2) {*/
+            /*background-color: red;*/
+        /*}*/
+        /*ul li:nth-child(even) {  !*偶数行*!*/
+            /*background-color: green;*/
+        /*}*/
+        /*ul li:nth-child(odd) {  !*奇数行*!*/
+            /*background-color: red;*/
+        /*}*/
+
+        /*ul li:nth-child(n) {*/  /*所有行*/
+            /*background-color: red;*/
+        /*}*/
+        /*ul li:nth-child(2n) {*/  /*偶数行 == even*/
+            /*background-color: red;*/
+        /*}*/
+
+        /*ul li:nth-child(2n+1) {  !*+1成为 奇数行*!*/
+            /*background-color: red;*/
+        /*}*/
+
+        /*ul li:nth-child(3n) {  !*隔2行: *!*/
+            /*background-color: red;*/
+        /*}*/
+
+        ul li:nth-child(4n) {  /*隔3行: */
+            background-color: green;
+    </style>
+</head>
+<body>
+
+    <ul>
+        <li>燕洵</li>
+        <li>楚乔</li>
+        <li>小乔</li>
+        <li>亚瑟</li>
+        <li>德玛西亚</li>
+        <li>诺克萨斯</li>
+        <li>艾欧尼亚</li>
+        <li>黑色玫瑰</li>
+        <li>战争学院</li>
+    </ul>
+</body>
+</html>

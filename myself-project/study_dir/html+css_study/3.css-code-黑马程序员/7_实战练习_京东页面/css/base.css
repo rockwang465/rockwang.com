@@ -1,0 +1,82 @@
+/*   ---- 公共样式 ----  */
+
+/*版心*/
+.w {
+    width: 1190px;  /*版心的宽度*/
+    margin: auto;
+}
+
+/*左右浮动定义*/
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+/*将margin padding重置为0*/
+body, p, ul, li, input, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+/*取消列表前面的小点*/
+li {
+    list-style: none;
+}
+
+/*取消下划线*/
+a {
+    color: #666;
+    text-decoration: none;
+}
+
+/*鼠标移到a标签文字颜色变化效果*/
+a:hover {
+    color: #c81623;
+}
+
+/*按钮、表单 文字默认显示格式*/
+button, input {
+    font-family: "微软雅黑", Serif;
+}
+
+/*兼容IE的hasLayout*/
+.clearfix {
+    *zoom: 1;
+}
+
+/*清除浮动异常问题*/
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+/*当鼠标移到按钮上的时候，变成小手*/
+button {
+    cursor: pointer;
+}
+
+/*图片和文字在一起时，文字居中-解决底部留白的问题*/
+img{
+    border: 0;
+    vertical-align: middle;
+}
+
+
+
+/*font 字体图标引入*/
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?spdupw');
+  src:  url('../fonts/icomoon.eot?spdupw#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?spdupw') format('truetype'),
+    url('../fonts/icomoon.woff?spdupw') format('woff'),
+    url('../fonts/icomoon.svg?spdupw#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
