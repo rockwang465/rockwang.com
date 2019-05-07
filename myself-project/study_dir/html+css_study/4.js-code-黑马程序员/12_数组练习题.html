@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组练习题</title>
+</head>
+<body>
+
+<script>
+
+    // 去掉数组中的重复的元素
+    var a = [1, 3, 6, 5, 9, 3, 2, 0, 1];
+    var set = [];
+    for (var i = 0; i < a.length; i++) {
+        var flag = true;
+        //循环判断是否有相同的元素
+        for (var j = 0; j < set.length; j++) {
+            if (set[j] == a[i]) {
+                //如果有相同元素，则定义false
+                flag = false;
+            }
+        }
+        //如果为true，表示没有重复，就添加进去
+        if (flag == true) {
+            //这里有bug：如果有重复的情况下，set长度肯定<=a的长度的。
+            //set[i]=a[i];  此方法不行的
+            set[set.length] = a[i];  //此方法搞定长度问题
+        }
+    }
+    console.log(set)
+</script>
+</body>
+</html>

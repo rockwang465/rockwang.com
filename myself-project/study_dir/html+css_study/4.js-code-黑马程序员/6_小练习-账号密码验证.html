@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小练习-账号密码验证</title>
+</head>
+<body>
+<script>
+    var user="rock";
+    var pass="123abc";  //密码应该以字符串存储，因为密码可能有字母符号
+    var flag = false
+    var userName=prompt("请输入用户名:");
+    var password=prompt("请输入密码:");
+    while (userName!=user || password!=pass){
+        var userName=prompt("请输入用户名2:");
+        var password=prompt("请输入密码2:");
+        // var flag = true
+    }
+    // if (flag==true){
+    console.log("恭喜您登录成功");
+    alert("恭喜您登录成功啦！！！");
+    // }else {
+    //     alert("再见！！！");
+    // }
+</script>
+
+</body>
+</html>

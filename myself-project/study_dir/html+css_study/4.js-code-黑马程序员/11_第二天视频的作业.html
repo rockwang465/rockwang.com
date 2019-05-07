@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第二天课程结束的作业</title>
+</head>
+<body>
+
+<script>
+    // 1. 10000元做本金，年利息为千分之三，第二年会把本金+利息重新计算。问5年后有多少钱？
+    var rate = 0.003;
+    value = 10000;
+    for (var i = 0; i < 5; i++) {
+        value = value + (value * rate);
+        console.log("第" + (i + 1) + "年的可以拿到全部的钱是:", value)
+    }
+
+    // 斐波拉契数列： 1 2 3 5 8 13
+    var a = 1;
+    var b = 2;
+    var c = 0;
+    var result = 0;
+    for (var i = 0; i < 12; i++) {
+        c = b;
+        b = b + a;
+        a = c;
+        console.log("第"+(i+1)+"个月的兔子数量为: "+b);
+    }
+
+    /*
+    1: c 1  a 1   b 2
+    2: c 1  a 2   b 3
+    3: c 1  a 3   b 5
+     */
+
+</script>
+</body>
+</html>

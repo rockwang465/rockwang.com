@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>for循环</title>
+</head>
+<body>
+
+<script>
+    var jishu = 0;
+    var zhengchu3 = 0;
+    var zhengchu7 = 0
+    for (var i = 0; i < 101; i++) {
+        if (i % 2 != 0) {
+            jishu += i;
+        }
+        if (i % 3 == 0) {
+            zhengchu3 += i;
+        }
+        if (i % 7 == 0) {
+            zhengchu7 += i;
+        }
+    }
+    console.log("奇数和:"+jishu);
+    console.log("整除3和:"+zhengchu3);
+    console.log("整除7和:"+zhengchu7);
+</script>
+</body>
+</html>

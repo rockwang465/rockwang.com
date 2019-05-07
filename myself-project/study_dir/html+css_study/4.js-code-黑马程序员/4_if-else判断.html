@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>if-else判断</title>
+</head>
+<body>
+<script>
+    // var age=parseInt(prompt("请输入您的年龄:"))
+    // if (age >= 18){
+    //     console.log("恭喜，您成年了")
+    // }
+    // else {
+    //     console.log("您还未成年，快去写作业去！")
+    // }
+
+    // var a=parseInt(prompt("请输入数字:"));
+    // // var result=a%2
+    // if (a%2 == 0){
+    //     console.log("这是偶数",a)
+    // }
+    // else {
+    //     console.log("这是奇数",a)
+    // }
+
+    var result = Number(prompt("请输入您的成绩:"))  //建议用Number，因为更严格
+    if (!isNaN(result)) {  //判断输入为数字
+        if (result > 90 && result <= 100) {
+            console.log("您的成绩为A")
+        } else if (result > 80 && result <= 90) {
+            console.log("您的成绩为B")
+        } else if (result > 70 && result <= 80) {
+            console.log("您的成绩为C")
+        } else if (result >= 60 && result <= 70) {
+            console.log("您的成绩为D")
+        } else if (result >= 0 && result < 60) {
+            console.log("您未及格，成绩为E")
+        } else {
+            console.log("请输入0-100范围内的数字")
+        }
+    }else {
+        console.log("您的输入有误，请输入数字，且范围在1-100.")
+    }
+</script>
+</body>
+</html>
