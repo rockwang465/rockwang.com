@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数练习题</title>
+</head>
+<body>
+
+<script>
+    //求和
+    // function sum(x,y){
+    //     return x+y;
+    // }
+    // console.log(sum(10,20));
+    //
+    // //求1--100的和
+    // function  value100() {
+    //
+    // }
+
+
+    // 第9讲: 判断用户输入的日期为当年的第多少天，并且判断是否为闰年，是闰年在要加1天。
+    // var date = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    // sum = 0;
+    //
+    // function date_days(Year, Month, Day) {
+    //     //计算当前输入月份的前面每个月求和，并加上输入月份的天数。
+    //     for (var i = 0; i < Month - 1; i++) {
+    //         sum += date[i];
+    //     }
+    //     // 判断是否为闰年，是闰年，且用户输入的月份是大于2月的时候，总的天数+1
+    //     if (Year%4==0 && Month >2){
+    //         sum ++;
+    //     }
+    //     return sum + Day;
+    // }
+    //
+    // var result = date_days(2017, 3, 2);
+    // alert(result);
+
+
+    // 第10讲: 求一个数字的阶乘的和
+    // 例如: 5的阶乘 = 5！+4！+3！+2！+1！
+    function getJieChengSum(num) {
+        var sum = 1;
+        var val = 1;
+        // for (var j=1; j< num; j++) {
+        for (var i = 1; i < num; i++) {
+            val = val * (i + 1);  //val每次保存上一次阶乘的结果，在乘以新的数字。
+            sum = sum + val;
+            // sum += getJieChengSum(i);  //老师写的，一行解决，太高深了。
+        }
+        // }
+        return sum;
+    }
+
+    alert(getJieChengSum(5))
+
+
+</script>
+</body>
+</html>

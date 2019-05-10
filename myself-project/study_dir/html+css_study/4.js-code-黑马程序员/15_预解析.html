@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>预解析</title>
+</head>
+<body>
+<script>
+    // 第14讲：预解析
+
+    // 例1： 当var num=10;中var定义变量，其预解析就是:
+    // var num;
+    // num = 10;
+
+    /*
+    console.log(num);    这是输出的结果是underfined，因为预解析，否则是报错的状态的。
+    var num=10;
+
+    上面2行代码相当于:
+    var num;
+    console.log(num);
+    num=10;
+    所以，结果为: underfined
+    */
+
+
+    // 例2 function的预解析
+    /*
+    function  f1() {
+        console.log("你好1");
+    }
+    f1();
+    function  f1() {  //这段声明代码会提前
+        console.log("你好2");
+    }
+    f1();
+
+    // 这里会把第二段的代码声明提前
+    function  f1() {
+        console.log("你好1");
+    }
+    function  f1() {  //这段声明代码会提前
+        console.log("你好2");
+    }
+    f1();
+    f1();
+    所以，结果为:  你好2  你好2  (第二个f1()执行了2次)
+    */
+
+    // 例3: {}花括号内的变量:
+    /*
+    function f2() {
+        console.log(num);
+        var num = 10;
+    }
+    f2();
+
+    // 这里在括号内，预解析效果为:
+    function f2() {
+        var num;  //会提前声明，但赋值没有，所以结果为underfined
+        console.log(num);
+        num = 10;
+    }
+    f2();
+    */
+
+    // 例4: 如果在上面在定义一个num
+    /*
+    var num = 20;  //如果这里也定义一个num
+    function f2() {
+        console.log(num);
+        var num = 10;
+    }
+    f2();
+    */
+    // 结果为: underfined,因为还是花括号里的var num;还是在 console.log()上面，所以console还是找var num;
+    //         所以是undefined。
+
+    // 例5: f2();调用提前
+    /*
+    f2(); //这里调用在前面
+    var num = 20;
+    function f2() {
+        console.log(num);
+    }
+
+    // 预解析: 函数声明(代码部分)提前
+    var num; //而声明变量也是在最前面，所以结果为underfined
+    function f2() {
+        console.log(num);
+    }
+    f2(); //这里调用在前面
+    num = 20;
+    结果为: underfind
+           因为函数声明会提前到f2();前面
+           而变量声明var
+    */
+
+
+
+    /*
+    * 总结:
+    * 函数调用的时候，会把函数的声明(代码部分)提升到作用于的上面(函数调用的上面f1();)
+    * 函数内的变量声明，会把变量的声明提升到变量被使用的前面(var=num;放到console.log(num);上面)
+    *
+    * 15讲：
+    * 例1：
+    * 预解析中，变量的提升，只会在当前作用于中提升，不会提前到当前的作用域的最上面。
+    * 函数中的变量只会提前到函数的作用域的最前面，不会离开函数到外面去。--局部变量
+    *
+    * 老师的总结:
+    *
+    *
+    *
+    *不同script标签，完全相互隔离，所以变量不能相互使用。
+    *
+    * */
+
+
+    // 第15讲: 预解析分段问题
+    // 例1:
+    /*
+    function f3() {
+        console.log(num);  //这里为undefined
+        var num = 10;
+    }
+    f3();
+    console.log(num); //这里报错，因为函数内的声明变量为局部变量
+    */
+
+    // 例2：
+    /*
+    console.log(a);  //undefined  var a;声明变量提前了。
+    function a() {
+        console.log('abcd');
+    }
+    console.log(a);  //a函数的代码。  因为这里的a是a函数。
+    var a = 1;
+    console.log(a);  // 1 因为上一行var a=1 ;就是 a=1; 的赋值
+    // 相当于
+
+    var a;
+    console.log(a);
+    function a() {
+        console.log('abcd');
+    }
+    console.log(a);
+    a = 1;
+    console.log(a);
+    */
+
+    // 正常都是:  1. 变量声明提升了，函数声明提升了；
+    //           2. 变量声明式在函数代码上面的。
+
+
+    // 例3：
+    /*
+    f3();
+    console.log(c);  //隐式全局变量9
+    console.log(b);  //9
+    console.log(a);  //没有值，所以报错
+    function f3() {
+        // var a;
+        // b = 9;  //隐式全局变量
+        // c = 9;  //隐式全局变量
+        var a = b = c = 9;
+        console.log(a);  //9
+        console.log(b);  //9
+        console.log(c);  //9
+    }
+    */
+
+
+    // 第20讲：
+    // 例1： 匿名函数的预解析的区别
+    /*
+    f1(); //报错，因为预解析是var f1,而下面f1(); 没有对应代码所以没有此函数，就报错了
+    var f1 = function () {
+        console.log(a);
+        var a = 10;
+    }
+
+    // 相当于
+    var f1;
+    f1();  //没有f1()函数，所以报错。
+    var f1 = function () {
+        console.log(a); //这里都执行不了，到不了这里
+        var a = 10;
+    }
+    */
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Date对象用法</title>
+</head>
+<body>
+<script>
+    // Date时间对用想法
+    // var dt = new Date();
+    // console.log(dt);  //结果: Thu May 09 2019 16:32:09 GMT+0800 (中国标准时间)
+
+    // var dt = new Date("2017-08-12");
+    // var dt2 = new Date("2019/1/1");
+    // console.log(dt);  //结果: Sat Aug 12 2017 08:00:00 GMT+0800 (中国标准时间)
+    // console.log(dt2);  //结果: Sat Aug 12 2017 08:00:00 GMT+0800 (中国标准时间)
+
+    // var dt = Date.now();  //注意这里不是构造函数，而是静态方法，直接调用就行。
+    // console.log(dt);  // 显示当前时间的毫秒数 1557391152846   （从1970-1-1 0:0开始算的）
+    // 作用是:  当两个日期需要计算的时候，通过毫秒的差计算，然后再算分钟、小时就简单了。
+
+
+    /*
+    var dt = new Date();
+    console.log(dt.getFullYear());   //获取年
+    console.log(dt.getMonth()+1);   //获取月，注意要+1，因为是从0开始的，11月为我们的12月。
+    console.log(dt.getDate());     //获取日
+    console.log(dt.getDay());     //获取周
+    console.log(dt.getHours());   //获取时
+    console.log(dt.getMinutes());   //获取分
+    console.log(dt.getSeconds());   //获取秒
+    console.log(dt.getMilliseconds());   //获取毫秒
+
+    var dt = new Date();
+    console.log(dt.toDateString());  //英文的日期  Thu May 09 2019
+    console.log(dt.toLocaleDateString());  //数字格式的日期  2019/5/9
+    console.log(dt.toTimeString());  // 17:35:12 GMT+0800 (中国标准时间)
+    console.log(dt.toLocaleDateString());  //2019/5/9
+    console.log(dt.valueOf()); //1557394639825  同上面18 19行的毫秒
+
+*/
+
+    function getDate(dt) {
+        // var dt = new Date();  //这里不定义，放到下面定义
+        var year = dt.getFullYear();
+        var month = dt.getMonth();
+        var day = dt.getDate();
+        month = month < 10 ? "0" + month : month;  //如果月份小于10前面加0
+        day = day < 10 ? "0" + day : day;
+        return year + "年" + month + "月" + day + "日"
+    }
+    var dt = new Date();  //这里使用内置函数
+    var time = getDate(dt);   //这里再传进去
+    // var time = getDate(new Date());
+    console.log(time);  //这里显示结果
+
+</script>
+
+</body>
+</html>

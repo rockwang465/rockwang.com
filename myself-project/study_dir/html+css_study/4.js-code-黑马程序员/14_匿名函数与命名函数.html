@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>匿名函数与命名函数</title>
+</head>
+<body>
+
+<script>
+    var f2=function () {  //这里是var声明函数
+        console.log("I am Rock");
+    };
+    f2();
+    f2=function () {  //这里是直接赋值
+        console.log("你是谁");
+    };
+    f2();
+</script>
+</body>
+</html>

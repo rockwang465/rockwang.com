@@ -8,26 +8,97 @@
 
 <script>
 
-    // 去掉数组中的重复的元素
-    var a = [1, 3, 6, 5, 9, 3, 2, 0, 1];
-    var set = [];
-    for (var i = 0; i < a.length; i++) {
-        var flag = true;
-        //循环判断是否有相同的元素
-        for (var j = 0; j < set.length; j++) {
-            if (set[j] == a[i]) {
-                //如果有相同元素，则定义false
-                flag = false;
+    // 第14讲: 去掉数组中的重复的元素
+    // var a = [1, 3, 6, 5, 9, 3, 2, 0, 1];
+    // var set = [];
+    // for (var i = 0; i < a.length; i++) {
+    //     var flag = true;
+    //     //循环判断是否有相同的元素
+    //     for (var j = 0; j < set.length; j++) {
+    //         if (set[j] == a[i]) {
+    //             //如果有相同元素，则定义false
+    //             flag = false;
+    //         }
+    //     }
+    //     //如果为true，表示没有重复，就添加进去
+    //     if (flag == true) {
+    //         //这里有bug：如果有重复的情况下，set长度肯定<=a的长度的。
+    //         //set[i]=a[i];  此方法不行的
+    //         set[set.length] = a[i];  //此方法搞定长度问题
+    //     }
+    // }
+    // console.log(set)
+
+    // 第15讲: 反转数组
+    // ROCK的方法:
+    // var arr4 = [1, 4, 5, 6, 7, "哈哈", "德玛西亚", 77];
+    // var list1 = [];
+    // for (var i = 0; i < arr4.length; i++) {
+    //     list1[i] = arr4[(arr4.length - 1) - i];
+    // }
+    // console.log(list1)
+
+    // 老师的方法:
+    // var arr4 = [1, 4, 5, 6, 7, "哈哈", "德玛西亚", 77];
+    // // var temp=[];
+    // for (var i = 0; i < arr4.length/2; i++) {
+    //     //length/2是因为只需要换一半的次数就行了
+    //     var temp = arr4[i];
+    //     arr4[i]=arr4[arr4.length-1-i];
+    //     arr4[arr4.length-1-i]=temp;
+    // }
+    // console.log(arr4);
+
+
+    // 第16讲: 数组案例求成绩
+    // 要求: 提示用户输入班级人数和每个人的个人成球；然后求总成绩，平均值，最高分，最低分---扩展题
+    // var class_count = parseInt(prompt("请输入班级人数:"));
+    // var score = [];
+    // var all_score = 0;
+    // for (var i = 0; i < class_count; i++) {
+    //     score[score.length] = parseInt(prompt("请输入第" + (i + 1) + "个人的成绩: "));
+    // }
+    // // 计算总分
+    // for (var j = 0; j < score.length; j++) {
+    //     all_score += score[j];
+    // }
+    // // 计算平均分
+    // avg_score = all_score / class_count;
+    // // 计算最高分
+    // var max_score=score[0];
+    // for (var k = 0; k < score.length; k++) {
+    //     if (max_score < score[k]){
+    //         max_score = score[k];
+    //     }
+    // }
+    // // 计算最低分
+    // var min_score=score[0];
+    // for (var k = 0; k < score.length; k++) {
+    //     if (min_score > score[k]){
+    //         min_score = score[k];
+    //     }
+    // }
+    //
+    // // console.log("全班"+class_count+"人，总成绩为:"+all_score)
+    // alert("全班" + class_count + "人，总成绩为:" + all_score);
+    // alert("全班" + class_count + "人，平均分为:" + avg_score);
+    // alert("全班" + class_count + "人，最高分为:" + max_score);
+    // alert("全班" + class_count + "人，最低分为:" + min_score);
+
+
+    // 第17讲 冒泡排序
+    var arr5 = [10, 40, 70, 20, 90, 30];
+    for (var i = 0; i < arr5.length - 1; i++) {
+        for (var j = 0; j < arr5.length - 1 - i; j++) {
+            if (arr5[j] > arr5[j + 1]) {
+                temp = arr5[j];
+                arr5[j] = arr5[j + 1];
+                arr5[j + 1] = temp;
             }
         }
-        //如果为true，表示没有重复，就添加进去
-        if (flag == true) {
-            //这里有bug：如果有重复的情况下，set长度肯定<=a的长度的。
-            //set[i]=a[i];  此方法不行的
-            set[set.length] = a[i];  //此方法搞定长度问题
-        }
     }
-    console.log(set)
+    console.log(arr5)
+
 </script>
 </body>
 </html>

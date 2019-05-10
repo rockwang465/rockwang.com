@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象练习题</title>
+</head>
+<body>
+
+<script>
+    // 创建一个手机对象，可以看电视、玩游戏、听音乐、敲代码、打电话、发信息
+
+    //定义音频媒体节目
+    function media() {
+        this.music = "欢迎收听音乐节目";
+        this.novel = "欢迎收听小说节目";
+        this.joke = "欢迎收听笑话节目";
+    }
+
+    //定义手机的功能
+    function  Phone() {
+        this.callYour = "喂，你好";
+        this.sendMessage = "你好，我是大橙子";
+        var mediaNew = new media();  //引用音频媒体节目
+        this.music = mediaNew.music;
+        this.novel = mediaNew.novel;
+        this.joke = mediaNew.joke;
+    }
+
+    //创建对象，使用属性
+    var MyPhone = new Phone();
+    console.log(MyPhone.callYour);
+    console.log(MyPhone.sendMessage);
+    console.log(MyPhone.music);
+    console.log(MyPhone.novel);
+    console.log(MyPhone.joke);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

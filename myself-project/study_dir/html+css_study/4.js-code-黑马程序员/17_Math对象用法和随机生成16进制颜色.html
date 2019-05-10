@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Math对象和随机生成16进制颜色</title>
+</head>
+<body>
+
+<script>
+    //1. 获取最大值:
+    //A. 自己写:
+    function get_Math() {
+        this.get_Max = function () {
+            var max = arguments[0];
+            for (var i = 0; i < arguments.length; i++) {
+                if (max < arguments[i]) {
+                    max = arguments[i];
+                }
+            }
+            return max;
+        };
+    }
+
+    var MyCount = new get_Math();
+    var result = MyCount.get_Max(12, 2, 3, 4, 5, 3, 2, 3);
+    console.log(result);
+
+    //B.使用内置对象:
+    // console.log(Math.max(5,4,1,6,7,8,2,3,4,5,1,2,5,6,0,98,2));
+
+    //2. 随机生成一个16进制的6位颜色 例如#c0c0c0
+    // A. 函数形式:
+    /*
+    function color() {
+        var list16 = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+        var str = "";
+        for (var i = 0; i < 6; i++) {
+            random_num = parseInt(Math.random() * 15);
+            str += list16[random_num];
+        }
+        return "#" + str;
+    }
+
+    console.log(randon_value = color());
+    */
+
+
+    function color2() {
+        this.get16Color = function () {
+            var list16 = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+            var str = "";
+            for (var i = 0; i < 6; i++) {
+                random_num = parseInt(Math.random() * 15);
+                str += list16[random_num];
+            }
+            return "#" + str;
+        };
+    }
+    var MyColor = new color2();
+    console.log(MyColor.get16Color());
+
+
+</script>
+</body>
+</html>
