@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>push_pop_shift_unshift</title>
+</head>
+<body>
+<script>
+    var list = [10, 20, 30, 40, 50, 60];
+    // push
+    var retu_val1 = list.push(110);  //返回追加后的数组长度
+    console.log(retu_val1, list);
+    // pop
+    var retu_val2 = list.pop();   //返回删除的(末尾)元素
+    console.log(retu_val2, list);
+    // shift
+    var retu_val3 = list.shift();  //返回删除的(第一个)元素
+    console.log(retu_val3, list);
+    // unshift
+    var retu_val4 = list.unshift(555);  //返回插入头部后的数组长度
+    console.log(retu_val4, list);
+</script>
+</body>
+</html>
