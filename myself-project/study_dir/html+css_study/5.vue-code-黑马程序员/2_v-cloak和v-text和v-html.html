@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第1章-第7讲:v-cloak v-text v-html</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+        [v-cloak] {  /*1.隐藏变量名，当网速特别慢的时候，原来可能有变量名存在，所以要隐藏掉*/
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--1.隐藏变量名，当网速特别慢的时候，原来可能有变量名存在，所以要隐藏掉-->
+    <p v-cloak>------{{ msg }}------</p>
+    <!--2. 类似插值表达式效果，也是渲染内容，
+        A. 优点: 由于没有用{{msg}}这种插值表达式，所以没有闪烁问题
+        B. 缺点: 但里面的等于号= 全部覆盖掉了;而插值表达式只会替换自己的这个占位符，不会把整个元素内容清空
+    -->
+    <h4 v-text="msg">========</h4>
+    {{ msg2 }}
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: '123',
+            msg2: '<h1>我是一个大大的H1</h1>'
+        }
+    })
+</script>
+</body>
+</html>
