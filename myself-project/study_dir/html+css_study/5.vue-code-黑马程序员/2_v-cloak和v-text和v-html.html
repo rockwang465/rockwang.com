@@ -19,14 +19,24 @@
         B. 缺点: 但里面的等于号= 全部覆盖掉了;而插值表达式只会替换自己的这个占位符，不会把整个元素内容清空
     -->
     <h4 v-text="msg">========</h4>
-    {{ msg2 }}
+    <div v-html="msg2"></div>  <!--这里h1只有通过v-html才能被解析成h1标签，其他的都被转义成文字-->
+    <input type="button" value="按钮" v-bind:title="mytitle + '123abc'">  <!--v-bind: 指定字符串为变量, 且可以加字符串 -->
+    <input type="button" value="按钮" :title="mytitle + '123abc'">  <!--v-bind: 还可以被简写为 : -->
+    <input type="button" value="按钮show" v-on:click="show">  <!-- v-on: 事件绑定机制, click为鼠标点击事件-->
+    <input type="button" value="按钮show" @mouseover="show">  <!-- v-on: 事件绑定机制，mouseover为鼠标移动上去的时间-->
 </div>
 <script>
     var vm = new Vue({
         el: '#app',
         data: {
             msg: '123',
-            msg2: '<h1>我是一个大大的H1</h1>'
+            msg2: '<h1>我是一个大大的H1</h1>',
+            mytitle: '这是一个自己定义的title'
+        },
+        methods: {  //定义方法，来被v-on:click调用
+            show: function () {
+                alert("Hello rock")
+            }
         }
     })
 </script>

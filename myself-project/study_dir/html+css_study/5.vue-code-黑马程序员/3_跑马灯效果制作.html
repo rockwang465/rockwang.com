@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第10 11讲:跑马灯效果制作</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+<!--跑马灯制作思路-->
+<!--1. 给 【浪起来】 按钮，绑定一个时间 v-on @-->
+<!--2. 再按钮的事件处理函数中，写相关的业务逻辑代码-->
+<!--3. 业务代码逻辑： 拿到msg1 字符串，进行减取操作 substring，进行字符串的截取操作，把第一个字符截取出来，放到最后一个位置-->
+<!--4. 需要一个定时器，自动截取功能-->
+
+
+<div id="app">
+    <input type="button" value="浪起来" @click="lang">
+    <input type="button" value="别浪啦" @click="stop">
+    <h4>{{ msg1 }}</h4>
+</div>
+<script>
+    //注意: 在vm实例中，想要获取data上的数据，或者调用methods中的方法，必须通过
+    //     this.数据属性名 或者 this.方法名 来进行访问，这里的this , 就表示我们 new 出来的vm实例对象
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg1: "猥琐发育，别浪~~!",
+            msg2: "稳住，我们能赢~~!",
+            intervalId: null
+        },
+        methods: {
+            lang() {  //这里可以这么简写，少写了   : function
+
+                if (this.intervalId != null) return; //这里要判断为null，才可以继续点【浪起来】，否则字跑起来会越来越快的
+                // this指向问题，解决this指向问题，让内部this是外部的this。
+                // 但是不推荐
+                // var _this = this;
+                // setInterval( function() {
+                // setInterval(() => {  //嵌套函数的方法，最佳。解决this只想问题，让内部this是外部的this。
+                this.intervalId = setInterval(() => {  //嵌套函数的方法，最佳。解决this指向问题，让内部this是外部的this。
+                    // console.log(this.msg1);  //通过this.msg1 的 this拿到data或者methods方法
+                    // 获取头的第一个字符，再获取后面的字符串，然后头尾拼接
+                    // var start = _this.msg1.substring(0, 1);
+                    var start = this.msg1.substring(0, 1);
+                    // var end = _this.msg1.substring(1);
+                    var end = this.msg1.substring(1);
+                    // _this.msg1 = end + start;
+                    this.msg1 = end + start;
+                    // 注意: vm实例，会监听自己身上 data 中所有数据的改变，只要数据以发生变化，
+                    //      就会自动把最新的数据，从data上同步到页面中取;
+                    // 【好处: 程序员只需要关心数据，不需要考虑如何重新渲染DOM页面】
+                }, 400)
+            },
+            stop() {  //清除定时器的id
+                clearInterval(this.intervalId); //这是停下来的按钮，清空intervalId
+                this.intervalId = null; //这里必须要重置为null，上面清空没用，因为需要结合 上面的判断是否为null来使用
+            }
+        }
+
+    })
+
+
+</script>
+</body>
+</html>
