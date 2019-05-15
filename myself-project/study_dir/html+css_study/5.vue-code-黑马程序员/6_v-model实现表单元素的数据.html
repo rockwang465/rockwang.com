@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-model实现表单元素的数据</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h4>{{msg}}</h4>
+        <input type="text" style="width: 100%" :value="msg">
+        <input type="text" style="width: 100%" v-model="msg">
+        <!--v-model 只能运用再 表单元素中
+        表单元素: input(radio,text,address,email...) select  checkbox  textarea 等
+        -->
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '大家都是好学生，爱写代码的程序员'
+            },
+            methods: {
+
+            }
+        });
+    </script>
+</body>
+</html>

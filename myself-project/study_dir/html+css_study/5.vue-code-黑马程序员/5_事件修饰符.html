@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件修饰符</title>
+    <script src="lib/vue-2.4.0.js"></script>
+    <style>
+        .inner {
+            height: 150px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <!--
+    1. 点击button按钮，先执行button，再执行inner div，往外层执行，冒泡状态
+    2. .stop阻止冒泡修饰符 : 阻止冒泡，只执行.stop 对应的button按钮
+    3. .prevent阻止默认行为修饰符: a链接中阻止默认行为 .prevent , 老师这里说会阻止默认跳转到网页的行为，但我测试好像没有效果。
+        再例如submit默认自动提交，把默认行为会阻止掉
+    4. .capture捕获修饰符: 点击按钮，从外到里的冒泡行为。这里是放到inner div盒子上的。
+    5. .self自身修饰符: 只有点自己，才会触发。上面3 4 几个都是可以受其他影响的。
+        用来.self，不会受其他的修饰符影响，不会被触发
+        仅只能阻止自己身上的行为，所以阻止冒泡行为还是得用stop。
+    6. .once 只触发一次行为。 例如 @click.prevent.once （没有先后顺序问题） 这里可以串联的用，
+                            代表只触发一次 a链接不跳转的默认阻止行为，第二次就会跳转了
+
+    -->
+
+<div class="outer">
+    <div id="app">
+        <!--<div class="inner" @click.capture="innerHandler">-->
+        <div class="inner" @click.self="innerHandler">
+            <input type="button" value="戳他哦" @click.stop="butHandler">
+        </div>
+    </div>
+
+    <a href="http://www.baidu.com" @click.prevent="linkClick">百度一下，你就知道1</a>
+    <a href="http://www.baidu.com" @click.prevent.once="linkClick">百度一下，你就知道2</a>
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: "aaa"
+        },
+        methods: {
+            innerHandler(){
+                console.log("inner div")
+            },
+            butHandler(){
+                console.log("button 按钮")
+            },
+            linkClick(){
+                console.log("百度链接 alink")
+            }
+        }
+    })
+</script>
+
+
+</body>
+</html>

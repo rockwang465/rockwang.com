@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for页面添加数据案例</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <div>
+        <label>ID:
+            <input type="text" v-model="userId">
+        </label>
+        <label>名称:
+            <input type="text" v-model="userName">
+        </label>
+        <input type="button" value="提交" @click="add">
+    </div>
+    <!-- :key="item.id" 也是为了解决v-for的一些问题
+         例如这里，不加的话，先勾选一个选项框，再用unshift添加数据，
+         会发现勾选框的位置会按照索引的值一直不动，所以勾选就出了问题。
+         所以以后写v-for的时候一定要写。
+    -->
+    <!--这里item要改为item.id，否则会报错。因为key必须为string或者number-->
+
+    <p v-for="item in list" :key="item.id">
+        <input type="checkbox">id:{{ item.id }} ---- 名字: {{ item.name }}
+    </p>
+
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            list: [
+                {id: 1, name: "关羽"},
+                {id: 2, name: "张飞"},
+                {id: 3, name: "刘备"},
+                {id: 4, name: "马超"},
+                {id: 5, name: "赵云"},
+                {id: 6, name: "黄忠"}
+            ],
+            userId: '',
+            userName: ''
+        },
+        methods: {
+            add() {
+                // this.list.push({id: this.userId,name: this.userName});
+                this.list.unshift({id: this.userId, name: this.userName});
+            }
+        }
+    })
+</script>
+</body>
+</html>

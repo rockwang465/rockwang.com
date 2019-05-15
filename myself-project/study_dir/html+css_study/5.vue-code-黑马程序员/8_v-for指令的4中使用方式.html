@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for的四种使用方式</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--索引从0开始-->
+        <p v-for="(item,i) in fruit">我第{{i}}喜欢吃的水果是:{{item}}</p>
+        <p v-for="(account,i) in db">id:{{account.id}}---name:{{account.name}}---index:{{i}}</p>
+        <!--值从1开始，索引还是从0开始-->
+        <p v-for="(count,i) in 10">值:{{count}}--索引:{{i}}</p>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                fruit: ['苹果','哈密瓜','香蕉','橘子'],
+                db: [
+                    { id: 1, name: 'rock'},
+                    { id: 2, name: 'mark'},
+                    { id: 3, name: 'kevin'},
+                    { id: 4, name: 'nova'}
+                ]
+            },
+            methods: {
+
+            }
+        })
+    </script>
+
+</body>
+</html>

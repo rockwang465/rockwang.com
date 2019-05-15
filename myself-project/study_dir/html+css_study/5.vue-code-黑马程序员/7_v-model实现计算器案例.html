@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-model实现计算器案例</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+<div id="MyCalc">
+    <!--<input type="text" value="v1" >-->
+    <input type="text" v-model="v1">  <!--变量值v1-->
+    <select name="" size="1" v-model="opt">  <!--设置默认的操作方法为 + 号-->
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <!--<input type="text" value="v2">-->
+    <input type="text" v-model="v2">  <!--变量值v2-->
+    <input type="button" value="=" @click="calc">  <!--calc方法进行计算-->
+    <input type="text" v-model="result">
+</div>
+
+<script>
+    var vm = new Vue({
+        el: "#MyCalc",
+        data: {
+            v1: 0,
+            v2: 0,
+            opt: "+",
+            result: 0
+        },
+        methods: {
+            calc() {
+                // switch (this.opt) {
+                //     case "+":
+                //         this.result = parseInt(this.v1) + parseInt(this.v2);
+                //         break;
+                //     case "-":
+                //         this.result = parseInt(this.v1) - parseInt(this.v2);
+                //         break;
+                //     case "*":
+                //         this.result = parseInt(this.v1) * parseInt(this.v2);
+                //         break;
+                //     case "/":
+                //         this.result = parseInt(this.v1) / parseInt(this.v2);
+                //         break;
+                // this.result = eval((this.v1 + this.opt + this.v2));
+                this .result = eval(this.v1 + this.opt + this.v2);
+            // }
+
+        }
+    }
+    })
+</script>
+
+</body>
+</html>

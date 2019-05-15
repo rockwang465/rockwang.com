@@ -35,7 +35,7 @@
                 // this指向问题，解决this指向问题，让内部this是外部的this。
                 // 但是不推荐
                 // var _this = this;
-                // setInterval( function() {
+                // setInterval( function() {  //里面套函数，下面一行是简写.
                 // setInterval(() => {  //嵌套函数的方法，最佳。解决this只想问题，让内部this是外部的this。
                 this.intervalId = setInterval(() => {  //嵌套函数的方法，最佳。解决this指向问题，让内部this是外部的this。
                     // console.log(this.msg1);  //通过this.msg1 的 this拿到data或者methods方法
