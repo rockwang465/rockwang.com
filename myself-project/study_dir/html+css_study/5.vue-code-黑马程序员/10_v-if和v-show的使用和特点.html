@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-if和v-show的使用和特点</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="vue元素按钮" @click="toggle">
+    <h3 v-if="flag">这是v-if控制元素</h3>
+    <h3 v-show="flag">这是v-show控制元素</h3>
+
+    <!--
+    v-if 的特点，是每次都会重新删除/创建元素来进行隐藏和显示。
+    v-show 的特点，是每次使用display: none;样式来隐藏和显示。
+
+    v-if 有较高的切换性能消耗
+    v-show 有较高的初始渲染消耗
+
+    如果元素涉及到频繁的切换，不要用v-if，推荐用v-show。
+    如果元素可能永远也不会被显示出来被用户看到，则推荐使用 v-if。
+    -->
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            flag: true
+        },
+        methods: {
+            toggle(){
+                this.flag = !this.flag;
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue.filter过滤器</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- 1.先把msg 发给 msgFormat方法进行处理 -->
+    <!-- '第二个参数','第三个参数', 可以传多个参数进来-->
+    <!--且msgFromat后面还可以接管道-->
+    <p>{{ msg | msgFormat('第二个参数','第三个参数') | test }}</p>
+</div>
+
+
+<script>
+    // msgFormat为过滤器的名字，function()为他的方法函数
+    // arg1 arg2 可以传多个参数进来
+    Vue.filter('msgFormat', function (msg, arg1, arg2) {
+        // 使用replace替换，使用正则//g批量替换。 return把值返回给msgFormat
+        // return msg.replace('单纯', '邪恶');
+        return msg.replace(/单纯/g, arg1 + arg2); //这里要把单引号去掉，全局是//g
+    });
+    Vue.filter('test', function (msg, test_value) {
+        return msg + "rock -------------";  //这里再接内容返回给msg，展示出来
+    });
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            msg: '曾经，我也是一个单纯的少年。单纯的我，单纯的小男孩'
+        },
+        methods: {}
+    });
+
+
+</script>
+</body>
+</html>
