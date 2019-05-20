@@ -5,9 +5,6 @@
     <title>品牌列表案例</title>
     <script src="lib/vue-2.4.0.js"></script>
     <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
-    <style>
-
-    </style>
 </head>
 <body>
 
@@ -29,17 +26,17 @@
                 -->
                 Name: <input type="text" class="form-control" v-model="name" @keyup.f2="add">
             </label>
+            <!--1 add方法制作 -- 添加数据到页面-->
             <!--<input type="button" value="添加" class="btn btn-primary" @click="add">-->
             <input type="button" value="添加" class="btn btn-primary" @click="add()">
             <!--这里add也可以加小括号的
                 加小括号的作用是传参，否则不如不加。
             -->
             <label>
-            搜索名称关键字: <input type="text" class="form-control" v-model="keyWords" id="search" v-focus>
-            <!--6. 自定义获取当前位置（获取焦点）的指令 v-focus，见下面全局自定义的Vue.directive('focus') -->
+                搜索名称关键字: <input type="text" class="form-control" v-model="keyWords" id="search" v-focus>
+                <!--6. 自定义获取当前位置（获取焦点）的指令 v-focus，见下面全局自定义的Vue.directive('focus') -->
             </label>
         </div>
-
     </div>
 
 
@@ -55,7 +52,7 @@
         </thead>
         <tbody>
         <!--当搜索框需要搜索时，此处不能用list，否则列表数据一直不会动。
-            而是得用一个search()方法,讲所有的关键字通过传参的形式传递到search方法中。
+            而是得用一个search()方法,将所有的关键字通过传参的形式传递到search方法中。
             在search方法中，通过执行for循环，把所有符合搜索关键字的数据，保存到一个新数组中，返回
         -->
         <tr v-for="item in search(keyWords)" :key="item.id">
@@ -76,7 +73,11 @@
 
 <!--其他vm，也可以使用全局过滤器-->
 <div id="app2">
-    {{ dt | dateFormat('') }}
+    <!--7.2 v-color -->
+    <!--7.4 vm中定义函数方法 fontweight-->
+    <!--7.6 vm中定义函数简写方法fontsize,注意些10px里面要用单引号包起来，10就不用了-->
+    <h3 v-color="red" v-fontweight="900" v-fontsize="'10px'">{{ dt | dateFormat('') }}</h3>
+
 </div>
 
 <script>
@@ -84,49 +85,67 @@
     // 日期的过滤器dateFormat
     // pattern="yyyy-mm-dd" 为形参的默认值，如果没有，则用 这个默认值。
     // 加默认值，是为了防止传入空值，如果是空值那就是undefined，所以要有默认值
-    Vue.filter('dateFormat', function (dateStr,pattern="yyyy-mm-dd") {
-       var dt = new Date(dateStr);
-       var y = dt.getFullYear();
-       var m = dt.getMonth() + 1;  //别忘记+1
-       var m = (dt.getMonth() + 1).toString().padStart(2,'0');
-       // var d = dt.getDate();
-       var d = dt.getDate().toString().padStart(2,'0');  //如果数字小于2位时，用0补充(注意要先转为字符串)
-       var H = dt.getHours();
-       var M = dt.getMinutes();
-       var S = dt.getSeconds().toString().padStart(2,'0');
+    Vue.filter('dateFormat', function (dateStr, pattern = "yyyy-mm-dd") {
+        var dt = new Date(dateStr);
+        var y = dt.getFullYear();
+        // var m = dt.getMonth() + 1;  //别忘记+1
+        var m = (dt.getMonth() + 1).toString().padStart(2, '0');
+        // var d = dt.getDate();
+        var d = dt.getDate().toString().padStart(2, '0');  //如果数字小于2位时，用0补充(注意要先转为字符串)
+        var H = dt.getHours().toString().padStart(2, '0');
+        var M = dt.getMinutes().toString().padStart(2, '0');
+        var S = dt.getSeconds().toString().padStart(2, '0');
 
-       // 如果存在pattern，则pattern.toLowerCase转为小写后，=== 'yyyy-mm-dd'
-       // 如果上面没有默认值pattern=yyyy-mm-dd的设置，这里pattern就有意义了
-       // 因为如果是空值传入，if中用pattern判断，非空为true,空为false，则后面&&就不执行了
-       if (pattern && pattern.toLowerCase() === 'yyyy-mm-dd'){
-           // return y+"-"+m+"-"+d+"-"+H+"-"+M+"-"+S
-           return `${y}-${m}-${d}`; //这种写法更清晰，类似shell
-        }else{
-           return `${y}-${m}-${d} ${H}:${M}:${S}`;
-       }
+        // 如果存在pattern，则pattern.toLowerCase转为小写后，=== 'yyyy-mm-dd'
+        // 如果上面没有默认值pattern=yyyy-mm-dd的设置，这里pattern就有意义了
+        // 因为如果是空值传入，if中用pattern判断，非空为true,空为false，则后面&&就不执行了
+        if (pattern && pattern.toLowerCase() === 'yyyy-mm-dd') {
+            // return y+"-"+m+"-"+d+"-"+H+"-"+M+"-"+S
+            return `${y}-${m}-${d}`; //这种写法更清晰，类似shell
+        } else {
+            return `${y}-${m}-${d} ${H}:${M}:${S}`;
+        }
     });
 
     // 5.2 自定义全局按键修饰符
-    Vue.conf.keyCodes.f2 = 113;
+    Vue.config.keyCodes.f2 = 113;
 
     // 6.1 自定义全局指令 v-foucs
     // 其中: 参数1 : 为指令的名称，但是注意定义的名称不需要加 v-
     // 因为: 只有被调用的时候，全面必须加上 v- 才行
     // 参数2 : 是一个对象，这个对象身上，有一些指令相关的函数，
     // 这些函数可以在特定的阶段，执行相关的操作
-    Vue.directive('focus',{
-        bind: function () { //每当指令绑定到元素上的时候，会立即执行这个 bind 函数，只执行一次
+    Vue.directive('focus', {
+        bind: function (el) {
+            // el 是被绑定指令的元素。
+            //每当指令绑定到元素上的时候，会立即执行这个 bind 函数，只执行一次
             // 注意 : 在每个函数中，第一个参数，永远是el,表示被绑定了指定的那个元素，这个el参数，是一个元素的js对象
-            el.focus()
+            // 在元素 刚绑定了指令的时候，还没有插入到DOM中去，这时候调用focus方法没有作用。
+            // 因为一个元素，只有插入DOM之后才能获取。
+            // 所以要放到inserted中
         },
-        inserted: function () {  //inserted 表示元素插入到DOM中的时候，会执行inserted函数--触发1次
-            
+        inserted: function (el) {  //inserted 表示元素插入到DOM中的时候，会执行inserted函数--触发1次
+            el.focus();
+            // 6.3 el.focus只能放到Inserted中使用，因为inserted表示元素插入到DOM中之后再执行el.focus
         },
         updated: function () {  // 当VNode更新的时候，会执行 updated，可能会触发多次
 
         }
     });
 
+    // 7. 自定义一个设置字体颜色的指令
+    Vue.directive('color', {
+        bind: function (el, binding) {
+            el.style.color = 'red';
+            console.log(binding.name);
+            // 和样式相关的操作，一般都可以在bind 执行
+
+            // console.log(binding.value);
+            // console.log(binding.expression);
+
+            el.style.color = binding.value;
+        }
+    });
 
     var vm = new Vue({
         el: '#app',
@@ -153,8 +172,8 @@
                 // 我写的解决方法:
                 for (var i = 0; i < this.list.length; i++) {
                     if (this.list[i].id == carId) {
-                        console.log("相等情况下，点击的ID"+carId+"对应的索引"+i);
-                        this.list.splice(i,1);  //splice(删除的索引开始值，删除数量)
+                        console.log("相等情况下，点击的ID" + carId + "对应的索引" + i);
+                        this.list.splice(i, 1);  //splice(删除的索引开始值，删除数量)
                     }
                 }
                 // this.list.splice((carId-1),carId);  //这个不行，因为不是拿索引位删除有异常的
@@ -176,7 +195,7 @@
                 //     }
                 // })
             },
-            search(keyWords){
+            search(keyWords) {
                 // var newList=[];
                 // this.list.forEach(item=>{
                 //     if (item.name.indexOf(keyWords) != -1){
@@ -187,11 +206,11 @@
 
                 // 注意: forEach some filter findIndex 这些都是属于数组的新方法，
                 // 都会对数组中的每一项，进行遍历，执行相关的操作；
-                var newList = this.list.filter(item=>{  //通过判断keyWords和item.name想比对的返回结果，和上面forEach一模一样
+                var newList = this.list.filter(item => {  //通过判断keyWords和item.name想比对的返回结果，和上面forEach一模一样
                     // if (item.name.indexOf(keyWords) != -1){  这里也可以这么写，这里就不写了
 
                     //这是ES6中的新方法，用includes判断是否包含字符串
-                    if (item.name.includes(keyWords)){
+                    if (item.name.includes(keyWords)) {
                         return item;  //如果包含，则返回item
                     }
                 });
@@ -207,9 +226,26 @@
         data: {
             dt: new Date()
         },
-        methods:{}
+        methods: {},
+        filters: {},
+        directives: {
+            // 7.3 vm中定义一个函数方法fontweight来使用
+            'fontweight': { //设置字体粗细
+                bind: function (el, binding) {
+                    // el为指定元素， binding为传入的参数(如900)
+                    // el.style.fontWeight为style的用法
+                    // binding.value为传参值
+                    el.style.fontWeight = binding.value;
+                }
+            },
+            // 7.5 简写方式,可以比较上面的fontweight
+            'fontsize': function (el, binding) { //注意: 这个function等同于把代码写到了bind和update 中去了
+                // el.style.fontSize = parseInt(binding.value) + 'px';  //针对10这种没有写px的
+                el.style.fontSize = binding.value;  //针对10px这种写了px的
+                // parseInt转换成数字， + px，这样组合很安全一点
+            }
+        }
     });
-
 
 
     // 如果vm2中也定义了一个同名字的过滤器，则会使用自己的过滤器。

@@ -1,113 +1,122 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>品牌列表案例</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自己写-品牌案例</title>
     <script src="lib/vue-2.4.0.js"></script>
-    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="lib/bootstrap-3.3.7.css">
 </head>
 <body>
-
 <div id="app">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">添加品牌</h3>
         </div>
         <div class="panel-body form-inline">
-            <label>
-                ID: <input type="text" class="form-control" v-model="id">
-            </label>
-            <label>
-                Name: <input type="text" class="form-control" v-model="name">
-            </label>
-            <!--<input type="button" value="添加" class="btn btn-primary" @click="add">-->
-            <input type="button" value="添加" class="btn btn-primary" @click="add()">
-            <!--这里add也可以加小括号的
-                加小括号的作用是传参，否则不如不加。
-            -->
-            <label>
-            搜索名称关键字: <input type="text" class="form-control" v-model="keyWords">
-            </label>
+            <label>ID: <input type="text" v-model="id"></label>
+            <label>Name: <input type="text" v-model="name"></label>
+            <!--1.1 add方法制作 添加数据到页面的列表中-->
+            <label><input type="button" class="btn btn-primary" value="添加" @click="add"></label>
+            <!--3.2 通过定义keyWords值进行筛选-->
+            <!--5.2 添加v-focus 获取焦点功能-->
+            <label>搜索名称关键字: <input type="text" v-model="keyWords" v-focus></label>
         </div>
-
     </div>
-
-
-    <!-- 这里table 用了好几个style定义的，这样表格很好看 -->
-    <table class="table table-bordered table-hover table-striped ">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>CTime</th>
-            <th>Operation</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="item in list" :key="item.id">
-            <td>{{ item.id }}</td>
-            <td v-text="item.name"></td>  <!-- {{ 插值表达式 }} v-text="item.name" 两种用法都可以的-->
-            <td>{{ item.ctime }}</td>
-            <!--<td><a href="" @click="del(item.id)">删除</a></td>-->
-            <td><a href="" @click.prevent="del(item.id)">删除</a></td>
-            <!--先阻止a链接的默认跳转功能。
-                点击删除，执行del方法，这里传入item.id的值进去
+    <div>
+        <table class="table table-bordered table-hover table-striped ">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>CTime</th>
+                <th>Operation</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--<tr v-for="item in list" :key="item.id">-->
+            <!--3.1 搜索关键字功能，由于搜索后的结果是按关键字来，所以上面的list是肯定要换掉的
+                list换成方法，通过search(keyWords) 后的结果return值给自身，变成一个列表，给item做for循环
             -->
-        </tr>
-        </tbody>
-    </table>
+            <tr v-for="item in search(keyWords)" :key="item.id">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name}}</td>
+                <!--<td>{{ item.CTime }}</td>-->
+                <!--4.1 格式化日期 使用下面dateFormat全局自定义过滤器格式化日期-->
+                <td>{{ item.CTime  | dateFormat }}</td>
+                <!--2.1 删除操作 通过点击'删除来删除对应数据'
+                    prevent阻止默认a标签跳转问题
+                -->
+                <td @click.prevent="del(item.id)"><a href="">删除</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <script>
+    // 4.2 全局自定义过滤器--格式化日期
+    Vue.filter('dateFormat',function (dateValue, pattern='yyyy-mm-dd') {
+        var dt = new Date(dateValue);
+        var y = dt.getFullYear();
+        // .toString().padStart(2,'0') 设置时间位数不为2的时候，前面加0
+        var m = (dt.getMonth() +  1).toString().padStart(2,'0');
+        var d = dt.getDate().toString().padStart(2,'0');
+        var H = dt.getHours().toString().padStart(2,'0');
+        var M = dt.getMinutes().toString().padStart(2,'0');
+        var S = dt.getSeconds().toString().padStart(2,'0');
+
+        return `${y}-${m}-${d} ${H}:${M}:${S}`
+
+    });
+
+    // 5.1 焦点设置 focus
+    // 由于input没有自带的焦点方法，这里只能制作一个
+    Vue.directive('focus',{
+        bind: function (el) {
+
+        },
+        inserted: function (el) {
+            el.focus();
+        },
+        updated: function(el){}
+    });
+
     var vm = new Vue({
         el: '#app',
         data: {
             list: [
-                {id: 1, name: "奥迪", ctime: new Date()},
-                {id: 2, name: "宝马", ctime: new Date()},
-                {id: 3, name: "奔驰", ctime: new Date()}
+                {id: 1, name: "奥迪", CTime: new Date()},
+                {id: 2, name: "宝马", CTime: new Date()},
+                {id: 3, name: "奔驰", CTime: new Date()}
             ],
-            list2: [23, 42, 5, 34, 543, 3, 45],
             id: '',
             name: '',
             keyWords: '',
         },
         methods: {
             add() {
-                this.list.push({id: this.id, name: this.name, ctime: new Date()});
-                this.id = '';  //添加完内容之后，这里要清空一下，让输入栏清空
-                this.name = ''
+                this.list.push({id: this.id, name: this.name, CTime: new Date()});
+                // id 和 name 要清空，否则页面还有数据。
+                this.id = '';
+                this.name = '';
             },
-            del(carId) {  //根据传进来的id参数进行删除
-                // 这里需要根据carId，找到对应项的索引，然后通过索引用数组的splice删除
-
-                // 我写的解决方法:
-                for (var i = 0; i < this.list.length; i++) {
+            del(carId) {
+                for (i = 0; i < this.list.length; i++) {
                     if (this.list[i].id == carId) {
-                        console.log("相等情况下，点击的ID"+carId+"对应的索引"+i);
-                        this.list.splice(i,1);  //splice(删除的索引开始值，删除数量)
+                        this.list.splice(i, 1);
                     }
                 }
-                // this.list.splice((carId-1),carId);  //这个不行，因为不是拿索引位删除有异常的
-
-                // 老师写的解决方法1 some:
-                // 通过some方法进行循环，如果达到条件，就return结果并结束循环
-                // this.list.some((item,i)=>{
-                //     if (item.id ==carId) {
-                //         this.list.splice(i,1);  //splice(删除的索引开始值，删除数量)
-                //         return true;
-                //     }
-                // })
-
-                // 老师写的解决方法2 findIndex:
-                // 但是我这里好像不行，没有这个方法
-                // var index = this.list.findIndex(item => {
-                //     if (item.id == carId ){
-                //         return true;
-                //     }
-                // })
+            },
+            search(keyWords) {
+                newList = [];
+                for (i=0;i<this.list.length;i++){
+                    if(this.list[i].name.indexOf(keyWords) != -1){
+                        newList.push(this.list[i]);
+                    }
+                }
+                return newList;
             }
         }
     })
