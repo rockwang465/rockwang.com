@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例列表隔行变色</title>
+</head>
+<body>
+<input type="button" value="隔行变色" id="btn"/>
+<ul id="uu">
+    <li>红旗</li>
+    <li>五菱宏光</li>
+    <li>奇瑞</li>
+    <li>奔驰</li>
+    <li>兰博基尼</li>
+    <li>哈弗</li>
+    <li>奥拓</li>
+    <li>悍马</li>
+</ul>
+<script src="common.js"></script>
+<script>
+    // 点击按钮
+    my$("btn").onclick = function () {
+        var list = my$("uu").getElementsByTagName("li");
+        for (var i = 0; i < list.length; i++) {
+            // if (i % 2 == 0) {
+            //     list[i].style.backgroundColor = "deeppink";
+            // } else {
+            //     list[i].style.backgroundColor = "yellowgreen";
+            // }
+            list[i].style.backgroundColor = i % 2 == 0 ? "red" : "yellow";
+        }
+    };
+</script>
+</body>
+</html>

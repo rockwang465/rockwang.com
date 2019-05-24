@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue-resource发起get、post、jsonp请求</title>
+    <script src="lib/vue-2.4.0.js"></script>
+
+    <!--注意: 这里是导入vue-resource包；且vue-resource依赖于Vue，所以先后顺序要注意-->
+    <script src="lib/vue-resource-1.3.4.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="get请求" @click="getInfo">
+    <input type="button" value="post请求" @click="postInfo">
+    <input type="button" value="jsonp请求" @click="jsonpInfo">
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {
+            getInfo() {  //发起get请求,格式get(url, [options])
+                // 当发起get请求之后，通过.then来设置成功的回调函数
+                this.$http.get('http://vue.studyit.io/api/getlunbo').then(function (result) {
+                    //.then是使用Promes封装的，后期会补充这个知识点，知道用.then即可
+                    console.log(result.body);  //拿到服务器返回的成功的数据-->建议使用body
+                    console.log(result.data);  //也是拿到服务器返回的成功的数据
+                });
+            },
+            postInfo() {  //发起post请求, 格式 post(url, [body数据], [options参数])
+                // 这里请求报错Uncaught(in promise)，是因为没有表单格式(表单格式为: application/x-www-form-urlencoded)
+                // 手动发起的post请求，默认没有表单格式，所以有的服务器处理不了
+                // 所以，通过post的第三个参数，设置提交的内容类型为普通表单数据格式
+                this.$http.post('http://vue.studyit.io/api/post', {}, {emulateJSON: true}).then(result => {
+                    console.log(result.body);
+                })
+            },
+            jsonpInfo(){  //jsonp请求, 格式 jsonp(url, [options参数])
+                console.log(result.body);
+            }
+        }
+    })
+</script>
+</body>
+</html>

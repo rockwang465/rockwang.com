@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>点击按钮切换图片</title>
+</head>
+<body>
+<input type="button" value="按钮" id="btn"/>
+<img src="../picture/header-girl-002.png" id="im" alt="">
+<script>
+    function my$(id) {
+        return document.getElementById(id);
+    }
+
+    var btnObj = my$('btn');
+    btnObj.onclick = function () {
+        my$("im").src="../picture/header-girl-001.jpg";
+    };
+</script>
+</body>
+</html>

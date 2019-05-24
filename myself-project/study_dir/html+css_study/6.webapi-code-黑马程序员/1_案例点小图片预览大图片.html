@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>点小图片预览大图片</title>
+</head>
+<body>
+<!--其实这里一行代码已经做到了效果，但是地址栏的链接地址却不相同。-->
+<a href="../picture/header-girl-001.jpg" id="ak"><img src="../picture/header-girl-002.png" alt="小图" title="图像为头像"
+                                                      alt="" id="im"></a>
+
+<script>
+    //这里就是为了解决地址栏的链接地址不相同的问题
+    var imgObj = document.getElementById("im");
+    imgObj.onclick = function () {
+        imgObj.src = document.getElementById("ak").href;
+        return false;  //这里必须加return false; 否则地址链接还是会变化的。
+    };
+</script>
+</body>
+</html>

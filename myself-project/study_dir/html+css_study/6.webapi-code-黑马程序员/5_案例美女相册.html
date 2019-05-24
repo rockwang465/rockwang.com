@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例美女相册</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        body a img {
+            width: 180px;
+            height: 120px;
+        }
+        #photo li {
+            float: left;
+            list-style: none;
+            margin-right: 10px;
+        }
+        #view {
+            margin: 20px 0 0 40px;
+        }
+    </style>
+</head>
+<body>
+<ul id="photo">
+    <li><a href="../picture/大小图相册图片/相册1-big.jpg" title="大楼"><img src="../picture/大小图相册图片/相册1-small.jpg" alt="图1" ></a>
+    </li>
+    <li><a href="../picture/大小图相册图片/相册2-big.jpg" title="风车"><img src="../picture/大小图相册图片/相册2-small.jpg" alt="图2" ></a>
+    </li>
+    <li><a href="../picture/大小图相册图片/相册3-big.jpg" title="沙滩"><img src="../picture/大小图相册图片/相册3-small.jpg" alt="图3"></a>
+    </li>
+    <li><a href="../picture/大小图相册图片/相册4-big.jpg" title="荷花"><img src="../picture/大小图相册图片/相册4-small.jpg" alt="图4" ></a>
+    </li>
+</ul>
+
+<!--预览图，默认图片大小为: 970 689-->
+<img id="view" src="../picture/大小图相册图片/墙面背景.jpg" alt="背景图" title="一个背景图而已" width="485" height="345">
+<p id="profile">请选择一张图片</p>
+
+<script src="common.js"></script>
+<script>
+    // 从ul标签获取所有的a标签
+    var aObj = my$("photo").getElementsByTagName("a");
+
+    // 遍历循环a标签
+    for (i = 0; i < aObj.length; i++) {
+        // 为每个a标签注册点击事件
+        aObj[i].onclick = function () {
+            // 为view标签赋值，获得图片
+            my$("view").src = this.href;
+            // 为p标签内容赋值
+            my$("profile").innerText = this.title;
+            // 阻止超链接跳转问题
+            return false;
+        };
+    }
+</script>
+</body>
+</html>

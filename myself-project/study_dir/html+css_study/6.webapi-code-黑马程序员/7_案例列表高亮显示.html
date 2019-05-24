@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例列表高亮显示</title>
+    <style>
+        #app li {
+            list-style: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<ul id="app">
+    <li>红旗</li>
+    <li>五菱宏光</li>
+    <li>奇瑞</li>
+    <li>奔驰</li>
+    <li>兰博基尼</li>
+    <li>哈弗</li>
+    <li>奥拓</li>
+    <li>悍马</li>
+
+</ul>
+<script src="common.js"></script>
+<script>
+    var list = my$("app").getElementsByTagName("li");
+    for (var i = 0; i < list.length; i++) {
+        list[i].onmouseover = function () {
+            this.style.backgroundColor = "yellow";
+        };
+        list[i].onmouseout = function () {
+            // this.style.backgroundColor = "deeppink";
+            this.style.backgroundColor = "white";  //变白色
+            // this.style.backgroundColor = "";
+        };
+    }
+
+</script>
+
+</body>
+</html>
