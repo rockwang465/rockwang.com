@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>根据name属性值获取元素</title>
+</head>
+<body>
+<input type="button" value="改变value的内容" id="btn"/><br/>
+<input type="text" value="你好啊" name="name1"><br/>
+<input type="text" value="你好啊" name="name2"><br/>
+<input type="text" value="你好啊" name="name3"><br/>
+<input type="text" value="你好啊" name="name1"><br/>
+<input type="text" value="你好啊" name="name3"><br/>
+<input type="text" value="你好啊" name="name1"><br/>
+<script src="common.js"></script>
+<script>
+    // 点击按钮，改变所有name属性值为name1的文本框中的value属性值。
+    my$("btn").onclick = function () {
+        // getElementsByName 是获取所有input标签中的name属性的对应值，返回一个数组给list。
+        var list = document.getElementsByName("name1");
+        for (var i = 0; i < list.length; i++) {
+            list[i].value="Rock change name1 value";
+        }
+    };
+</script>
+</body>
+</html>

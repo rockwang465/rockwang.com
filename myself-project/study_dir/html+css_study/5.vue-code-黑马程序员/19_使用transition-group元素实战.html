@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用transition-group元素实战</title>
+    <script src="lib/vue-2.4.0.js"></script>
+    <style>
+        ul li {
+            line-height: 35px;
+            border: 1px dashed darkgreen;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        ul li:hover {
+            background-color: hotpink;
+            transition: all 1.8s ease;
+        }
+
+        /*用在了添加时的动画*/
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateY(80px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.8s ease;
+        }
+
+        /*点击li移除时的动画*/
+        .v-move {
+            transition: all 0.8s ease;
+        }
+        /*需要配合.v-leave-active 才有效果，否则一下就冲上来了*/
+        .v-leave-active {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div>
+        <label>
+            ID: <input type="text" v-model="id">
+        </label>
+        <label>
+            Name: <input type="text" v-model="name">
+        </label>
+        <input type="button" value="添加" @click="add">
+    </div>
+
+    <ul>
+        <transition-group>
+            <!--item,i 中i为索引-->
+            <li v-for="(item,i) in list" :key="item.id" @click="del(i)">{{ item.id }}----{{ item.name }}</li>
+        </transition-group>
+    </ul>
+    <!--总结：
+    自己写了之后，很容易忘的
+    :key="item.id"
+    (item,i) in list 中i为索引值
+    data中 id: '', name: '' 忘了置为空
+
+    -->
+
+</div>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            id: '',
+            name: '',
+            list: [
+                {id: 1, name: '赵高'},
+                {id: 2, name: '秦桧'},
+                {id: 3, name: '和珅'},
+                {id: 4, name: '纪晓岚'}
+            ]
+        },
+        methods: {
+            add() {
+                this.list.push({id: this.id, name: this.name});
+                this.id = '';
+                this.name = '';
+            },
+            del(index){
+                this.list.splice(index,1);
+            }
+        }
+    })
+</script>
+</body>
+</html>

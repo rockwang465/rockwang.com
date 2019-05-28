@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小练习</title>
+</head>
+<body>
+<p>这是P的内容</p>
+<input type="button" value="按钮" id="btn"/>
+
+<script src="common.js"></script>
+<script>
+    my$("btn").onclick = function () {
+        console.log(document.getElementsByTagName("p")[0].innerText);
+    };
+</script>
+</body>
+</html>

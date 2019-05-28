@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例验证文本框密码长度</title>
+</head>
+<body>
+<input type="text" value="" id="txt" >
+<script src="common.js"></script>
+<script>
+    // 失去焦点的时候判断输入字符串的长度在6-10之间。
+    my$("txt").onblur = function () {
+        if (this.value.length >=6 && this.value.length<=10){
+            this.style.backgroundColor="green";
+        }else{
+            this.style.backgroundColor="red";
+        }
+    };
+</script>
+</body>
+</html>

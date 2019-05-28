@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tab切换实现</title>
+    <style>
+        #box {
+            width: 500px;
+            height: 300px;
+            /*border: 1px dashed deeppink;*/
+        }
+        .hd {
+            height: 60px;
+            /*border: 1px solid green;*/
+        }
+
+        .bd {
+            height: 236px;
+            /*border: 1px solid darkblue;*/
+            /*background-color: lightpink;*/
+        }
+
+        .hd span {
+            margin-right: 5px;
+            background-color: lightpink;
+            height: 60px;
+            width: 119px;
+            display: block;
+            float: left;
+            line-height: 60px;
+            text-align: center;
+        }
+
+        .bd div {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .bd .current {
+            background-color: purple;
+            display: block;
+        }
+
+        .hd .current {
+            background-color: purple;
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+<div id="box">
+    <div class="hd">
+        <span class="current">体育</span>
+        <span>娱乐</span>
+        <span>新闻</span>
+        <span>综合</span>
+    </div>
+    <div class="bd">
+        <div class="current">我是体育模块</div>
+        <div>我是娱乐模块</div>
+        <div>我是新闻模块</div>
+        <div>我是综合模块</div>
+    </div>
+</div>
+
+<script src="common.js"></script>
+<script>
+    // 获取hd下的每个span标签
+    var hdObj = my$("box").getElementsByClassName("hd")[0];
+    var spanList = hdObj.getElementsByTagName("span");
+    // 获取bd下的每个div标签
+    var bdObj = my$("box").getElementsByClassName("bd")[0];
+    var divList = bdObj.getElementsByTagName("div");
+
+    for (var i = 0; i < spanList.length; i++) {
+        // 为每个span添加新的属性 index,赋值为当前的i值
+        spanList[i].setAttribute("index", i);
+
+        // 添加每个span的点击事件
+        spanList[i].onclick = function () {
+            for (var j = 0; j < spanList.length; j++) {
+                // 移除每个span的class样式(背景效果)
+                spanList[j].removeAttribute("class");
+                // 移除bd下面每个div的class样式
+                divList[j].removeAttribute("class");
+            }
+            // 设置当前点击的span 的背景效果
+            this.setAttribute("class", "current");
+            // 获取当前点击的span的索引值
+            currentIndex = this.getAttribute("index");
+            divList[currentIndex].className = "current";
+        }
+    }
+</script>
+</body>
+</html>

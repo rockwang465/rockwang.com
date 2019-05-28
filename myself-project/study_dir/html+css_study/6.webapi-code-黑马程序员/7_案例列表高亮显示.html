@@ -26,13 +26,14 @@
 <script>
     var list = my$("app").getElementsByTagName("li");
     for (var i = 0; i < list.length; i++) {
+        // 为li注册鼠标进入事件
         list[i].onmouseover = function () {
             this.style.backgroundColor = "yellow";
         };
         list[i].onmouseout = function () {
-            // this.style.backgroundColor = "deeppink";
-            this.style.backgroundColor = "white";  //变白色
-            // this.style.backgroundColor = "";
+            // 为li注册鼠标离开事件
+            // this.style.backgroundColor = "white";  //变白色
+            this.style.backgroundColor = "";  //设置为空
         };
     }
 

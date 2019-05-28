@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例模拟搜索框</title>
+    <style>
+        input {
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+<input type="text" value="请输入搜索内容" id="txt">
+<script src="common.js"></script>
+<script>
+    // 获取文本框
+
+    // 注册获取焦点的事件
+    my$("txt").onfocus = function () {
+        console.log("有了焦点");
+        if (this.value == "请输入搜索内容") {
+            this.value = ""; // 清空文本框
+        } else {
+            this.style.color = "black";
+        }
+    };
+    // 注册失去焦点的事件
+    my$("txt").onblur = function () {
+        console.log("没了焦点");
+        if (this.value.length == 0) {
+            this.value="请输入搜索内容"; //如果内容为空，则赋值
+            this.style.color = "gray";   //这里老师是if里面的
+        }
+    };
+</script>
+</body>
+</html>

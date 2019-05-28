@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动画-自定义transition的v-前缀</title>
+    <script src="lib/vue-2.4.0.js"></script>
+    <style>
+        /*v-enter 是进入之前，元素的起始状态，此时还没有开始进入*/
+        /*v-leave-to 是动画离开之后，离开的终止状态，此时元素动画已经结束了*/
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;  /*透明度变化为0*/
+            transform: translateX(150px);  /*向右位移150px距离*/
+        }
+
+        /*.v-enter-active 入场动画的时间段 */
+        /*.v-leave-active 离场动画的时间段 */
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 3.5s ease;  /* 渐变时间2.5s */
+        }
+
+        /*my 区分不同组的动画*/
+        .my-enter,
+        .my-leave-to {
+            opacity: 0;  /*透明度变化为0*/
+            transform: translateX(70px);  /*向右位移150px距离*/
+        }
+        .my-enter-active,
+        .my-leave-active {
+            transition: all 1.5s ease;  /* 渐变时间2.5s */
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="toggle" @click="flag=!flag">
+    <!--需求: 点击按钮，让 h3标签的内容显示；再次点击按钮，让h3标签的内容隐藏-->
+    <!--1. 使用transition元素，把需要被动画控制的元素包裹起来；这个元素是Vue官方提供的-->
+    <transition>
+        <h3 v-if="flag">我是一个H3</h3>
+    </transition>
+
+    <hr>
+
+    <input type="button" value="toggle2" @click="flag2=!flag2">
+    <!--需求: 点击按钮，让 h3标签的内容显示；再次点击按钮，让h3标签的内容隐藏-->
+    <!--1. 使用transition元素，把需要被动画控制的元素包裹起来；这个元素是Vue官方提供的-->
+    <transition name="my">
+        <h6 v-if="flag2">我是一个H6</h6>
+    </transition>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            flag: true,
+            flag2: true
+        },
+        methods: {}
+    });
+</script>
+</body>
+</html>
