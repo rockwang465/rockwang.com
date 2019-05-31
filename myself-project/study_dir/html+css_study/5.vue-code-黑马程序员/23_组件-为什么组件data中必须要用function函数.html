@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>为什么组件data中必须要用function函数</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <mycom></mycom>
+    <mycom></mycom>
+    <mycom></mycom>
+</div>
+<template id="tmpl">
+    <!--注意：我一直错在：input 放到了div中，要知道div只能放component标签。-->
+    <!--而template里面是放真正的内容和模板的-->
+    <div>
+        <input type="button" value="按钮+1" @click="increment">
+        <h3>{{ count }}</h3>
+        <hr>
+    </div>
+
+</template>
+<script>
+    var countObj = {count: 0};
+
+    Vue.component('mycom', {
+        template: '#tmpl',
+        data: function () {
+            return {count: 0};
+        },
+        methods: {
+            increment() {
+                this.count += 1;
+            }
+        }
+    });
+
+    var vm = new Vue({
+        el: '#app'
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件中的data</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <mycom></mycom>
+</div>
+
+<script>
+    Vue.component('mycom',{
+       template: '<h3>组件的template数据 --- data数据: {{ msg }}</h3>',
+       data: function () {
+           return {
+               msg: "这是组件中的data定义的数据"
+           }
+       }
+    });
+
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {}
+    });
+</script>
+</body>
+</html>

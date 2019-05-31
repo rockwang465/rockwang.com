@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用components定义私有组件</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+<div id="app">
+    <login></login>
+</div>
+<template id="temp2">
+    <div>
+        <h2>这是私有的login组件</h2>
+    </div>
+</template>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {},
+        filters: {}, //私有过滤器
+        directives: {}, //私有指令
+        components: {  //私有组件定义
+            login: {  //login为标签名
+                template: '#temp2'
+            }
+        },
+
+        // 下面都是生命周期钩子函数
+        beforeCreate(){},
+        created(){},
+        beforeMount(){},
+        mounted(){},
+        beforeUpdate(){},
+        updated(){},
+        beforeDestroy(){},
+        destoyed(){}
+    })
+</script>
+</body>
+</html>

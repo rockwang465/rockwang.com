@@ -27,13 +27,14 @@
         .v-enter-active,
         .v-leave-active {
             transition: all 0.8s ease;
+            /*position: relative;*/
         }
 
         /*点击li移除时的动画*/
         .v-move {
             transition: all 0.8s ease;
         }
-        /*需要配合.v-leave-active 才有效果，否则一下就冲上来了*/
+        /*需要配合.v-leave-active 才有效果，否则删除内容后，下面的一行内容会一下就冲上来了*/
         .v-leave-active {
             position: absolute;
         }
@@ -51,17 +52,29 @@
         <input type="button" value="添加" @click="add">
     </div>
 
-    <ul>
-        <transition-group>
+    <!--<ul>  这里ul标签注释掉，因为transition-group通过tag="ul"渲染了一层ul标签，不渲染默认是span标签-->
+        <!--给transition-group添加appear属性，实现页面刚展示出来的时候的入场效果-->
+        <!--通过transition-group添加和设置tag属性，指定transition-group渲染指定的ul标签。
+            如果不指定tag属性,默认会渲染 span 标签，所以这里为了解决span的存在，把外出的ul删掉，
+            里面用tag定义ul标签，解决此问题。
+        -->
+
+        <transition-group appear tag="ul">
             <!--item,i 中i为索引-->
             <li v-for="(item,i) in list" :key="item.id" @click="del(i)">{{ item.id }}----{{ item.name }}</li>
         </transition-group>
-    </ul>
+    <!--</ul>-->
     <!--总结：
     自己写了之后，很容易忘的
     :key="item.id"
     (item,i) in list 中i为索引值
     data中 id: '', name: '' 忘了置为空
+
+    重点:
+    transition-group
+    appear
+    transition-group 中加tag="ul"属性
+    move移除时的效果
 
     -->
 

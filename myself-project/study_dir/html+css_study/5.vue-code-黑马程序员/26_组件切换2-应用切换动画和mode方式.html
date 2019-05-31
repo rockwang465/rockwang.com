@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件切换2-应用切换动画和mode方式</title>
+    <script src="lib/vue-2.4.0.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateX(150px);
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.8s ease;
+            /*position: absolute;*/
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--通过更改comName变量的值，来更改标签-->
+    <a href="" @click.prevent="comName='login'">登录</a>
+    <a href="" @click.prevent="comName='register'">注册</a>
+
+    <!-- 1.1 Vue提供了component 来展示对应名称的组件-->
+    <!-- 1.2 component是一个占位符，  :is 属性，可以用来指定要展示的组件的名称，即login register标签-->
+    <!-- 1.3 但由于 is 前面有: ,也就是会把字符串转为变量，所以需要用单引号在单独包起来才可以-->
+    <!--<component :is="'login'"></component>-->
+    <!-- 1.4 为了把多个组件标签进行展示，这里应该改为变量形式会更好-->
+    <!-- 1.5 mode属性，让前面的动画先出去，结束了，另一个动画再进来-->
+    <transition mode="out-in">
+        <component :is="comName"></component>
+    </transition>
+</div>
+
+<script>
+    Vue.component('login', {
+        template: '<h3>登录组件</h3>'
+    });
+    Vue.component('register', {
+        template: '<h3>注册组件</h3>'
+    });
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            comName: 'login'
+        }
+    })
+
+    // 总结: 当前学习了几个Vue提供的标签 -->4个标签
+    // component template transition transition-group
+
+</script>
+</body>
+</html>

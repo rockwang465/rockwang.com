@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件传值-父组件向子组件传值和data传值</title>
+    <script src="lib/vue-2.4.0.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <!--1.2 自定义一个属性parentmsg ，并让他对应值为data中的msg， v-bind: 简写为: -->
+        <com1 v-bind:parentmsg="msg"></com1>
+    </div>
+    <template id="tmp2">
+
+    </template>
+    <script>
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '这个是Vue的data中的msg数据'
+            },
+            methods: {},
+            components: {
+                com1: {
+                    // 1.1 结论： 经过演示，发现子组件中，默认无法访问到父组件中data的数据和methods的方法
+                    // template: '<h1>这是私有组件中的子组件---- {{ msg }}</h1>',
+                    // 1.4 引用当前的props中的parentmsg元素来连接到data的msg元素，进行调用
+                    template: '<h1>这是私有组件中的com1子组件 ---- {{ parentmsg }}</h1>',
+                    // 1.3 把父组件传递过来的 parentmsg 自定义属性，在props数组中定义一下，这样才能使用这个数据。
+                    // 注意1: 只有props是数组[]，其他的都必须是对象{}。
+                    // 注意2: 组件中的所有props 中的数据，都是通过 父组件传递给子组件的。
+                    // 注意3: props中的数据时只读的，无法重新赋值。(就算你赋值了，也成功显示了，但是还是会报错的，所以不要做。)
+                    //        如果需要赋值，就在data中定义数据和赋值。
+                    props: ['parentmsg'],
+                    data() { //1.5 注意: 子组件中的 data 数据，并不是通过 父组件传递过来的，而是子组件自身私有的，
+                        //    比如: 子组件通过Ajax请求回来的数据，都可以放到data身上；
+                        //1.6 data中定义数据的优点是: 可以赋值，而props中的数据如果赋值就会报错的。
+                        return {
+                            titile: '123',
+                            content: 'abc'
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
