@@ -6,45 +6,68 @@
     <script src="lib/vue-2.4.0.js"></script>
 </head>
 <body>
-
-<div id="app">
-    <!--2.3 自定义一个属性func，并引用methods的方法, 使用事件绑定机制 v-on: 简写为 @-->
-    <!--这样show方法就传递进来了，如果show()带了小括号，则是执行了后返回结果给func，这里不用带()-->
-    <com2 v-on:func="show"></com2>
-</div>
-<template id="tmp2">
-    <div>
-        <h1>这是子组件</h1>
-        <!--2.4 通过 @click 点击事件，来绑定func方法-->
-        <input type="button" value="这是子组件中的按钮 - 点击它，触发父组件传递过来的func方法" @click="myclick">
+    <div id="app">
+        <!--2.3 自定义一个属性func，并引用methods的方法, 使用事件绑定机制 v-on: 简写为 @-->
+        <!--这样父组件的show方法就传递进来了(因为这个com2是在app这个元素里面的)，
+            注意: 如果show()带了小括号，则是执行了后返回结果给func，这里不用带()
+            -->
+        <com2 v-on:func="show"></com2>
     </div>
+    <template id="tmp2">
+        <div>
+            <h1>这是子组件</h1>
+            <!--2.4 通过 @click 点击事件，来绑定func方法-->
+            <input type="button" value="这是子组件中的按钮 - 点击它，触发父组件传递过来的func方法" @click="myclick">
+        </div>
 
-</template>
-<script>
-    var com2 = {
-        // 2.1 定义第二个组件，引用父组件中的methods的方法
-        template: '#tmp2',
-        methods: {
-            myclick() {
-                this.$emit();
+    </template>
+    <script>
+        var com2 = {
+            // 2.1 定义第二个组件，引用父组件中的methods的方法
+            template: '#tmp2',
+            // 2.8 定义 一个data数据对象
+            data(){
+                return {
+                    sonmsg: {name: '大头儿子', age: 6}
+                }
+            },
+            methods: {
+                // 2.5 这里的this是com2，而com2中绑定了事件 @func；所以这里通过this.$emit去触发@func这个方法。
+                // emit的英文原意为: 触发、调用的意思。
+                myclick() {
+                    // 2.7 show中传参是来自这里的传入(调用父组件中的方法，并向父组件传参)
+                    // this.$emit('func','rock',666);
+                    // 2.9 使用com2中定义的data的sonmsg变量作为参数传参
+                    this.$emit('func',this.sonmsg);
+                }
             }
-        }
-    };
+        };
 
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                // 2.11 先定义一个空数据，用于后面拿到了数据后保存下来。
+                datamsgFormSon: null
+            },
+            methods: {
+                // 2.2 定义一个父组件方法，用来被调用
+                // 2.6 show里面再传入两个数据，data1 data2
+                // show(data1,data2) {
+                //     console.log('父组件--这是Vue的methods中的show方法： ---'+data1+data2)
 
-    var vm = new Vue({
-        el: '#app',
-        data: {},
-        methods: {
-            // 2.2 定义一个父组件方法，用来被调用
-            show() {
-                console.log('父组件--这是Vue的methods中的show方法')
+                // 2.10 接收传参进来
+                show(data) {
+                    // console.log(data);  //这里前面不要拼接其他内容，不然console.log显示的不详细
+
+                    // 2.12 保存及显示结果
+                    this.datamsgFormSon = data;
+                    console.log(this.datamsgFormSon);
+                }
+            },
+            components: {
+                com2  //相当于 com2: com2
             }
-        },
-        components: {
-            com2
-        }
-    })
-</script>
+        })
+    </script>
 </body>
 </html>
