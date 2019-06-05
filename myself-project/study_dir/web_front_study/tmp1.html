@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    import {name} from "./a.js" //路径根据你的实际情况填写
+    export default {
+        data() {
+            return {}
+        },
+        created: function () {
+            alert(name) //可以弹出来“李四”
+        }
+    }
+</script>
+</body>
+</html>

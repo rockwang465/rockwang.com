@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <!-- 1. 导入包 -->
+    <script src="./lib/vue-router-3.0.1.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <!--5. router-link 对应点击内容，相当于a链接，可以设置默认tag不为a链接-->
+    <router-link to="/login">登录</router-link>
+    <router-link to="/register">注册</router-link>
+
+    <!--4. router 容器-->
+    <router-view></router-view>
+</div>
+
+<script>
+    // 2. 创建模板组件
+    var login = {
+        template: '<h1>登录组件 -- 奔波霸开发</h1>'
+    };
+    var register = {
+        template: '<h1>注册组件 -- 霸波奔开发</h1>'
+    };
+
+    // 3. 创建一个路由
+    var router = new VueRouter({
+        routes: [ // 路由规则定义
+            {path: '/', redirect: '/login'},  // 5.1  设置根路径的路由为login--地址栏显示更优雅
+            {path: '/login', component: login},  //3.1 如果匹配的路由是login，则展示component的login模板
+            {path: '/register', component: register}
+        ],
+        linkActiveClass: 'myactive'  //3.2 和激活相关的类，前面讲过
+    });
+
+    // 0.创建 Vue 实例，得到 ViewModel
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {},
+        router  //3.3 路由挂载
+    });
+</script>
+</body>
+
+</html>

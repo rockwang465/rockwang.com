@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>名称案例--方式1</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <!--这里的keyup属性是 键盘按下去后上来的时候的效果-->
+    <input type="text" v-model="firstname" @keyup="getFullName"> +
+    <input type="text" v-model="lastname" @keyup="getFullName"> =
+    <input type="text" v-model="fullname">
+</div>
+
+<script>
+    // 创建 Vue 实例，得到 ViewModel
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            firstname: '',
+            lastname: '',
+            fullname: ''
+        },
+        methods: {
+            getFullName() {
+                this.fullname = this.firstname + "-" + this.lastname
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

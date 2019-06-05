@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>名称案例--方式2</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <input type="text" v-model="firstname"> +
+    <input type="text" v-model="lastname"> =
+    <input type="text" v-model="fullname">
+</div>
+
+<script>
+    // 创建 Vue 实例，得到 ViewModel
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            firstname: '',
+            lastname: '',
+            fullname: ''
+        },
+        methods: {},
+        watch: {  // 使用这个属性，可以监视 data 中指定数据的变化，然后触发这个watch中对应的function处理函数
+            // firstname: function (newValue,oldValue) {  //监视firstname是否有变化，有变化则触发后面的function
+            // 且默认是可以传2个value值，一个是新输入的value，一个是上一次的value，这里只需要用到新输入的value。
+            firstname: function (newValue) {  //监视firstname是否有变化，有变化则触发后面的function
+                console.log('监视到了 firstname 的变化');
+                // this.fullname = this.firstname + this.lastname;
+                this.fullname = newValue + '-' + this.lastname;
+
+            },
+            lastname: function (newValue) {  // 同样lastname也要监听的
+                this.fullname = this.firstname + '-' + newValue;
+            }
+        }
+    });
+    // 总结: 虽然keyup方便一些； 但是watch可以做到keyup一些做不到的地方。
+    //       例如可以用watch监视路由地址url的改变，见 39_watch-监视路由地址的改变
+</script>
+</body>
+
+</html>
