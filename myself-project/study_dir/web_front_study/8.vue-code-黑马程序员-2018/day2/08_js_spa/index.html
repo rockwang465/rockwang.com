@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    div {
+        height: 100px;
+    }
+
+    .h {
+        background-color: yellowgreen;
+    }
+
+    .b {
+        background-color: hotpink;
+    }
+
+    .f {
+        background-color: skyblue;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="h">我是头部</div>
+    <div id="content" class="b"></div>
+    <div class="f">我是底部</div>
+    <script type="text/javascript">
+    //监视锚点值的改变
+    window.addEventListener('hashchange', function() {
+        var text = '';
+        switch (location.hash) {
+            case '#/music':
+                text = '各种音乐的数据';
+                break;
+            case '#/movie':
+                text = '各种电影的数据';
+                break;
+        }
+
+        document.getElementById('content').innerHTML = text;
+
+
+
+    })
+    </script>
+</body>
+
+</html>

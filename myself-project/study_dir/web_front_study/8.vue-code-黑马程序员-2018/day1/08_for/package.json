@@ -1,0 +1,6 @@
+{
+    "scripts":{
+        "dev":"..\\node_modules\\.bin\\webpack-dev-server --inline --hot --open --port 8888",
+        "build":"webpack"
+    }
+}

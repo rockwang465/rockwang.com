@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev": "E:\\node_modules\\.bin\\webpack-dev-server --inline --hot --open",
+    "dev2": "..\\node_modules\\.bin\\webpack-dev-server --inline --hot --open",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "vue-router": "^3.0.6"
+  }
+}
