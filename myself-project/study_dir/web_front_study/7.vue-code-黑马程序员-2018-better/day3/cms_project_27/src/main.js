@@ -15,30 +15,49 @@ import 'mint-ui/lib/style.css';
 //Mint:安装插件
 Vue.use(Mint);
 
+//1.3.4 引入mui的样式
+import './static/vendor/mui/dist/css/mui.css'
+//1.3.5 引入全局样式(自定义的)
+import './static/css/global.css'
+
 //1.3.3 Axios:引入axios
 import Axios from 'axios';
 //挂载原型
 Vue.prototype.$ajax = Axios;
 // Axios.prototype.$axios = Axios;  //叫$axios最好，老师习惯，叫$ajax的，所以用的上面的
-
+//1.3.3.1 Axios的默认配置
+Axios.defaults.baseURL = "http://10.5.1.80:6001/images/";
 
 //引入第三方包 结束
 
 
-
 //1.1 引入自己的vue文件 开始
 import App from './app.vue';
-import Home from './components/home.vue';
+import Home from './components/home/home.vue';
+//1.1.2 引入底部按钮对应的组件文件
+import Search from './components/search/search.vue';
+import Vip from './components/vip/vip.vue';
+import Shopcart from './components/shopcart/shopcart.vue';
+//1.1.3 引入新闻列表文件
+import NewsList from './components/news/newsList.vue'
 //引入自己的vue文件 结束
 
 
 //1.4 VueRouter: 创建对象并配置路由规则
 let router = new VueRouter({
+    linkActiveClass: 'mui-active',
     routes: [
         //VueRouter: 配置路由规则
+        //name为路由的名字，path为url上显示的地址，component为上面引入文件的名字。
         //默认根目录配置重定向到home
         {path: '/', redirect: {name: 'home'}},
-        {name: 'Home', path: '/home', component: Home}
+        {name: 'home', path: '/home', component: Home},  //注意前面home和上面的home要一致
+        // 1.4.2 添加底部按钮的规则
+        {name: 'search', path: '/search', component: Search},
+        {name: 'vip', path: '/vip', component: Vip}, //会员
+        {name: 'shopcart', path: '/shopcart', component: Shopcart},
+        // 1.4.3 添加新闻列表的规则
+        {name: 'news.list', path: '/news/list', component: NewsList},
     ]
 });
 
