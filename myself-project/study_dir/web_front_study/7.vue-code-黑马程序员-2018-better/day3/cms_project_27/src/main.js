@@ -56,7 +56,11 @@ import Search from './components/search/search.vue';
 import Vip from './components/vip/vip.vue';
 import Shopcart from './components/shopcart/shopcart.vue';
 //1.1.3 引入新闻列表文件
-import NewsList from './components/news/newsList.vue'
+import NewsList from './components/news/newsList.vue';
+//1.1.4 引入新闻详细文件
+import NewsDetail from './components/news/newsDetail.vue';
+//1.1.5 引入图文分享文件
+import PhotoShare from './components/photo/photoShare.vue';
 //引入自己的vue文件 结束 +++++++++++++++++++++++++++++++++++++++
 
 
@@ -75,6 +79,10 @@ let router = new VueRouter({
         {name: 'shopcart', path: '/shopcart', component: Shopcart},
         // 1.4.3 添加新闻列表的规则
         {name: 'news.list', path: '/news/list', component: NewsList},
+        // 1.4.4 添加新闻详情的规则
+        {name: 'news.detail', path: '/news/detail', component: NewsDetail},
+        // 1.4.5 添加图文分享的规则
+        {name: 'photo.share', path: '/photo/share', component: PhotoShare},
     ]
 });
 
