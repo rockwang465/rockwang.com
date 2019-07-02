@@ -31,6 +31,22 @@ Axios.defaults.baseURL = "http://10.5.1.80:6001/images/";
 //1.3.6 Moment:引入moment.js插件
 import Moment from 'moment';
 
+//1.3.7 VuePreview:引入vue-preview
+import VuePreview from 'vue-preview';
+//挂载使用
+// Vue.use(VuePreview);  //旧版本vue-preview引用挂载使用方法--已经不好用了
+//新版本vue-preview挂载使用方法
+Vue.use(VuePreview, {
+  mainClass: 'pswp--minimal--dark',
+  barsSize: {top: 0, bottom: 0},
+  captionEl: false,
+  fullscreenEl: false,
+  shareEl: false,
+  bgOpacity: 0.85,
+  tapToClose: true,
+  tapToToggleControls: false
+});
+
 //引入第三方包 结束 ++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -61,6 +77,8 @@ import NewsList from './components/news/newsList.vue';
 import NewsDetail from './components/news/newsDetail.vue';
 //1.1.5 引入图文分享文件
 import PhotoShare from './components/photo/photoShare.vue';
+//1.1.6 引入图文详细文件
+import PhotoDetail from './components/photo/photoDetail.vue';
 //引入自己的vue文件 结束 +++++++++++++++++++++++++++++++++++++++
 
 
@@ -83,6 +101,8 @@ let router = new VueRouter({
         {name: 'news.detail', path: '/news/detail', component: NewsDetail},
         // 1.4.5 添加图文分享的规则
         {name: 'photo.share', path: '/photo/share', component: PhotoShare},
+        // 1.4.6 添加图文详细的规则(这里的:id 和 photoShare.vue中的params:{id:img.id}这个id对应)
+        {name: 'photo.detail', path: '/photo/detail/:id', component: PhotoDetail},
     ]
 });
 

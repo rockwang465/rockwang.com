@@ -35,11 +35,24 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,  //需要排除，否则报错nodemodule\\lodash\\lodash.js as it exceeds the max of '500KB'
-                options: {
-                    presets: ['es2015'], //关键字
-                    plugins: ['transform-runtime'], //函数
-                }
+                // options: {  //如果多次使用babel-loader就需要多次使用这个options，所以这里注释掉，
+                //               建议使用 .babelrc 文件，再当前根目录就可以了
+                //     presets: ['es2015'], //关键字
+                //     plugins: ['transform-runtime'], //函数
+                // }
             },
+            // 解析 vue-preview 的es代码
+            {
+                test: /vue-preview.src.*?js$/,
+                loader: 'babel-loader',
+                // options: {  //如果多次使用babel-loader就需要多次使用这个options，所以这里注释掉，
+                //               建议使用 .babelrc 文件，再当前根目录就可以了
+                //     presets: ['es2015'], //关键字
+                //     plugins: ['transform-runtime'], //函数
+                // }
+            },
+
+
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'

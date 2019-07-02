@@ -6,3 +6,13 @@ body {
 .tmpl {
     margin-bottom: 50px;
 }
+
+.my-gallery figure a img {
+    height: 100px; /*每个图片的高度*/
+    margin: 10px 0 10px 0; /*图片上下之间的间距*/
+    box-shadow: 0 0 10px #ccc; /*图片边框的阴影*/
+}
+
+.my-gallery figure {
+    display: inline-block;  /*让图片按行显示，否则默认是一行只有一个图片*/
+}
