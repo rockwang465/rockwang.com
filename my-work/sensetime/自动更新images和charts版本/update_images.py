@@ -27,6 +27,7 @@ def get_current_machine_images():
     machine_images = {}
     for i in result2:
         tmp1 = i.replace("\n", "").split(",")
+        # print(tmp1)
         tmp2 = tmp1[0].split(":")
 
         if machine_images.get(tmp2[0]):
@@ -45,7 +46,6 @@ def compare_images(old_images, new_images):
     new_images_version_dict = {'all_images': []}
 
     for index, i in enumerate(old_images['all_images']):
-        # for i in old_images['all_images']:
         images_name = i.get("repository")
         old_images_version = i.get("tag")
         new_images_version = new_images.get(images_name)
@@ -59,17 +59,21 @@ def compare_images(old_images, new_images):
                 result3 = os.popen("docker images | grep %s | awk '{print $2}' | sort -rn | uniq" % images_name)
                 result4 = result3.readlines()[0].replace("\n", "")
                 old_images['all_images'][index]['tag'] = result4
+                print(
+                    "[Warning] :  [%s] image name not found in [kubectl get pods --all-namespaces -o yaml], Now use the image from [docker images] , the version is : %s" % (
+                        images_name, result4))
             else:
-                print('[Error] : The [kubernetes yaml] no %s images ,but [docker images] has multiple, please check' % images_name)
+                print(
+                    '[Error] : The [kubernetes get pods --all-namespaces -o yaml] no %s images ,but [docker images] has multiple, please check' % images_name)
 
         # when old_images_version == new_images_version
         elif old_images_version == new_images_version:
-            print("[Info] : %s image version is right" % images_name)
+            print("[Info] : [%s] image version is right" % images_name)
             # print(index)
 
         # when old_images_version != new_images_version
         else:
-            print("[Warning] :  %s image version not right, the old version is : %s , the new version is %s" % (
+            print("[Warning] :  [%s] image version not right, the old version is : %s , the new version is : %s" % (
                 images_name, old_images_version, new_images_version))
             # use index to set new version
             old_images['all_images'][index]['tag'] = new_images_version
