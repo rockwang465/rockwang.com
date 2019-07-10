@@ -5,9 +5,6 @@ import yaml
 import os
 import re
 
-docker_host_10 = "10.5.6.10"
-docker_host_loacl = "10.5.6.68:5000"
-
 charts_groups = ['addons_charts', 'component_charts', 'console_charts', 'devops_charts', 'guard_charts',
                  'nebula_charts']
 
@@ -22,10 +19,9 @@ def get_old_charts():
 
 # get current machine all charts to the list data
 def get_current_machine_charts():
-    # result1 = os.popen("kubectl get pods --all-namespaces -o yaml | grep 'image:' | awk '{print $NF}' | sort -rn | uniq | sed 's#%s##g' | sed 's#%s##g' | sed 's#^/##g' | grep ':' | sort -rn | uniq" % (docker_host_10, docker_host_loacl))
-    # result1 = os.popen("kubectl get pods --all-namespaces -o yaml | grep 'image:' | awk '{print $NF}' | sort -rn | uniq | sed 's#%s##g' | sed 's#%s##g' | sed 's#^/##g' | grep ':' | sort -rn | uniq | grep -v '583ca717-2019050520'" % (docker_host_10, docker_host_loacl))
     result1 = os.popen("helm list --col-width 200 | sed 1d | awk '{print $9}' ")
     result2 = result1.readlines()
+    # shell取值命令，这里不用:
     # 取服务名 : helm list --col-width 200 | sed 1d | awk '{print $9}' | sed -r 's/([a-zA-Z-]*)-[v|0-9]?.*/\1/'
     # 取版本号 : helm list --col-width 200 | sed 1d | awk '{print $9}' | sed -r 's/[a-zA-Z-]*-([v|0-9]?.*)/\1/'
     # 注意: engine-video在上面用可能会受影响，结果可能只有engine了，因为以-v做切割的
@@ -40,7 +36,7 @@ def get_current_machine_charts():
 
         # when chart_name == []:
         if chart_name == []:
-            break
+            continue
         # when '-v1' in chart_name[0]:
         elif chart_name[0]:
             if '-v1' in chart_name[0]:
@@ -87,7 +83,10 @@ def compare_charts(old_charts, new_charts):
                     # print(new_charts.get(charts["name"]))
                     # print(new_charts_version_dict[group][index]["version"])
                 else:
-                    print("[Warning] : [%s] chart version not right, the old version is : %s , the new version is : %s" % (charts["name"], new_charts_version_dict[group][index]["version"], new_charts.get(charts["name"])))
+                    print(
+                        "[Warning] : [%s] chart version not right, the old version is : %s , the new version is : %s" % (
+                        charts["name"], new_charts_version_dict[group][index]["version"],
+                        new_charts.get(charts["name"])))
                     new_charts_version_dict[group][index]["version"] = new_charts.get(charts["name"])
             else:
                 print("[Error] : The current machine was not found this chart name : %s" % charts["name"])
