@@ -30,6 +30,7 @@
                 <li class="photo-comment">
                     <div>
                         <span>提交评论</span>
+                        <!--5.1 返回按钮效果-->
                         <span><a @click="goback">返回</a></span>
                     </div>
                 </li>
@@ -37,6 +38,8 @@
                     <textarea v-model="msg"></textarea>
                 </li>
                 <li>
+                    <!--4.1 添加发送评论按钮的方法-->
+                    <!--4.6 定义个好看的button按钮-->
                     <mt-button @click="sendComment" size="large" type="primary">发表评论按钮</mt-button>
                 </li>
                 <li class="photo-comment">
@@ -132,7 +135,7 @@
             loadFirst() {
                 // 请求获取打开的图文详细页面(cid)中的第一页评论(pageindex=1)。
                 // this.$ajax.get('postcomment/' + cid + '?pageindex=1')  //老师的代码
-                this.$ajax.get('photoDetail/postcomment/' + this.pid + 'pageindex1')  //Rock的代码，没有api的原因
+                this.$ajax.get('photoDetail/postcomment/' + this.pid + 'pageindex1')  //Rock的代码，没有api的原因,this.pid使用更方便
                     .then(res => {
                         // this.comments = res.data.message;  //老师的代码
                         this.comments = res.data;  //Rock的代码，没有api的原因
@@ -141,8 +144,20 @@
                         console.log(err);
                     });
             },
+            // 4.2 发表评论方法定义
             sendComment() {
-
+                // 4.3 post请求，"content="为key，this.msg为输入内容，此为键值对的一个操作
+                this.$ajax.post('postcomment/' + this.pid, 'content=' + this.msg)
+                    .then(res=>{
+                        console.log(res);
+                        // 4.4 重新获取第一页的数据,这样页面会始终更新最新的数据在最前面
+                        this.loadFirst()
+                        // 4.5 清空数据
+                        this.msg = ""
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                    })
             },
             // 3.8 loadByPage 加载更多，使用concat追加内容到第一页内容中
             loadByPage() {
@@ -151,13 +166,14 @@
                 this.$ajax.get('photoDetail/postcomment/' + this.pid + 'pageindex' + (++this.pageIndex))  //Rock的代码，没有api的原因
                     .then(res => {
                         // this.comments = res.data.message;  //老师的代码
-                        this.comments = this.comments.concat(res.data);  //Rock的代码，没有api的原因
+                        this.comments = this.comments.concat(res.data);  //Rock的代码，没有api的原因，追加内容，用于加载更多
                     })
                     .catch(err => {
                         console.log(err);
                     });
             },
             goback() {
+                // 5.2 返回按钮效果
                 this.route.go(-1);
             }
         }
@@ -253,6 +269,5 @@
         margin: 0;
         padding: 0;
     }
-
     /*评论样式 结束*/
 </style>
