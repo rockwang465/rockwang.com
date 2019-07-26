@@ -1,0 +1,76 @@
+# 例1
+# class OldboyStudent:
+#     school = 'oldboy'
+#
+#     def __init__(self):
+#         self.a = 1
+#         self.b = 2
+#         self.c = 3
+#
+#     def learn(self):
+#         print('is learning')
+#
+#     def eat(self):
+#         print('is eating')
+#
+#     def sleep(self):
+#         # print('is sleeping')
+#         self.c = 'is sleeping rock'
+#         return self.c
+#
+#
+# p1 = OldboyStudent()
+# # p1.learn()  == OldboyStudent.learn(p1)  # 两种调用是一样的
+# p2 = p1.sleep()
+# print(p2)
+
+
+# 例2
+# class Plus:
+#     def __init__(self, a, b):
+#         self.a = a
+#         self.b = b
+#
+#     def return_result(self):
+#         self.c = self.a + self.b
+#         return self.c
+#
+# # 那么在主程序中你就要调用这个类，如下：
+# equation = Plus(1, 2)
+# result = equation.return_result()
+# print(result)
+
+
+# 例3
+class Garen:  # 定义英雄盖伦的类，不同的玩家可以用它实例出自己英雄;
+    camp = 'Demacia'  # 所有玩家的英雄(盖伦)的阵营都是Demacia;
+
+    def __init__(self, nickname, aggressivity=100, life_value=455):  # 英雄的初始攻击力58...;
+        self.nickname = nickname  # 为自己的盖伦起个别名;
+        self.aggressivity = aggressivity  # 英雄都有自己的攻击力;
+        self.life_value = life_value  # 英雄都有自己的生命值;
+
+    def attack(self, enemy):  # 普通攻击技能，enemy是敌人;
+        enemy.life_value -= self.aggressivity  # 根据自己的攻击力，攻击敌人就减掉敌人的生命值。
+
+
+class Riven:
+    camp = 'Noxus'  # 所有玩家的英雄(锐雯)的阵营都是Noxus;
+
+    def __init__(self, nickname, aggressivity=50, life_value=414):  # 英雄的初始攻击力54;
+        self.nickname = nickname  # 为自己的锐雯起个别名;
+        self.aggressivity = aggressivity  # 英雄都有自己的攻击力;
+        self.life_value = life_value  # 英雄都有自己的生命值;
+
+    def attack(self, enemy):  # 普通攻击技能，enemy是敌人;
+        enemy.life_value -= self.aggressivity  # 根据自己的攻击力，攻击敌人就减掉敌人的生命值。
+
+
+g1 = Garen("草丛伦")  # 传入英雄
+r1 = Riven("瑞雯雯")
+
+print(g1.life_value)
+print(r1.life_value)
+
+g1.attack(r1)
+print(r1.life_value)
