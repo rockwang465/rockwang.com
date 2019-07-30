@@ -30,9 +30,9 @@ def get_current_machine_images():
         # print(tmp1)
         tmp2 = tmp1[0].split(":")
 
-        if machine_images.get(tmp2[0]):
+        if machine_images.get(tmp2[1]):
             print("[Error] : already have this image data")
-            print("[Error] : old data : %s:%s" % (tmp2[0], machine_images.get(tmp2[0])))
+            print("[Error] : old data : %s:%s" % (tmp2[0], machine_images.get(tmp2[1])))
             print("[Error] : new data : %s:%s" % (tmp2[0], tmp2[1]))
         else:
             machine_images[tmp2[0]] = tmp2[1]
