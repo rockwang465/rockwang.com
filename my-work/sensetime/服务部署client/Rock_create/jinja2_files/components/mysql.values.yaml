@@ -1,0 +1,49 @@
+imageRegistry: "{{ docker_registry }}"
+imagePullPolicy: IfNotPresent
+
+
+operator:
+  replicas: 1
+  image: mysql/mysql-operator:43f71db5-2018101118
+
+
+{% if deploy_mode == "standalone" %}
+cluster:
+  replicas: 1
+
+router:
+  replicas: 1
+  image: mysql/mysql-router:8.0.11-dd9f0e5
+
+mysqlHosts: {{ groups['kube-master']|first }}
+
+mysqlInnodbNumMembers: "1"
+
+grSeedsInHostNetwork: "{{ groups['kube-master']|first }}:33061"
+
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+cluster:
+  replicas: 3
+
+router:
+  replicas: 3
+  image: mysql/mysql-router:8.0.11-dd9f0e5
+
+mysqlHosts: "
+{%- for item in groups['kube-master'] -%}
+    {{ item }}
+    {%- if not loop.last %},{% endif -%}
+{%- endfor -%}
+"
+
+mysqlInnodbNumMembers: "2"
+
+grSeedsInHostNetwork: "
+{%- for item in groups['kube-master'] -%}
+    {{ item }}:33061
+    {%- if not loop.last %},{% endif -%}
+{%- endfor -%}
+"
+{% endif %}

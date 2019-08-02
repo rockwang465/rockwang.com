@@ -1,0 +1,2 @@
+image: "{{ docker_registry }}/spotahome/redis-operator"
+imageRegistry: "{{ docker_registry }}"

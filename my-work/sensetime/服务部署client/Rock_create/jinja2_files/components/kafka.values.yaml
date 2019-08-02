@@ -1,0 +1,26 @@
+###kafka configure #############
+{% if deploy_mode == "standalone" %}
+replicas: 1
+extraArgs:
+  zookeeperConnect: zookeeper-default-0.component.svc.cluster.local:2181/kafka
+
+{% endif %}
+{% if deploy_mode == "distributed" %}
+replicas: 3
+extraArgs:
+  zookeeperConnect: zookeeper-default-0.component.svc.cluster.local:2181,zookeeper-default-1.component.svc.cluster.local:2181,zookeeper-default-2.component.svc.cluster.local:2181/kafka
+
+{% endif %}
+image:
+  repository: "{{ docker_registry }}/component/kafka"
+  pullPolicy: IfNotPresent
+
+persistence:
+  size: "20Gi"
+
+#######burrow#######
+burrow:
+  replicas: 1
+  image: "{{ docker_registry }}/solsson/burrow:v1.0.0"
+  exporterImage: "{{ docker_registry }}/solsson/burrow-exporter:api-v3"
+

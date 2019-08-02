@@ -1,0 +1,38 @@
+image:
+  repository: "{{ docker_registry }}/component/minio"
+  pullPolicy: IfNotPresent
+
+mcImage:
+  repository: "{{ docker_registry }}/component/mc"
+  pullPolicy: IfNotPresent
+
+buckets:
+  - name: snapshot-alert-feature-db
+    policy: none
+    purge: false
+  - name: snapshot-timespace-feature-db
+    policy: none
+    purge: false
+  - name: senseguard-face-search
+    policy: none
+    purge: false
+  - name: senseguard-log-export
+    policy: none
+    purge: false
+  - name: senseguard-map-management
+    policy: none
+    purge: false
+  - name: senseguard-records-export
+    policy: none
+    purge: false
+  - name: senseguard-target-export
+    policy: none
+    purge: false
+  - name: senseguard-uums-export
+    policy: none
+    purge: false
+
+{% if deploy_mode == "standalone" %}
+mode: standalone
+replicas: 1
+{% endif %}
