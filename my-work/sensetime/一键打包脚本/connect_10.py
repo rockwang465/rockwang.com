@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import paramiko
 import sys
-import datetime
 import os
 
 
@@ -55,5 +54,3 @@ class scp_files:
             print("Error : Failure to execute script : %s" % ex)
             sys.exit(1)  # 异常则退出
         print("\n")
-
-# 2. 拿到服务

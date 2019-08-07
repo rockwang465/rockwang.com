@@ -178,7 +178,10 @@ class get_images_version:
                 "repository": k,
                 "tag": v
             })
-        machine_images["images"].append(lack_images)
+
+        for i in lack_images:
+            machine_images["images"].append(i)
+        # machine_images["images"].append(lack_images)
         self.new_images = machine_images
         # print(self.new_images)
 
