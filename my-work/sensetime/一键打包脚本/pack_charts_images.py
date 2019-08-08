@@ -24,7 +24,7 @@ mount_registry_path = '/var/lib/registry'  # 默认registry的容器目录
 registry_image = '10.5.6.10/docker.io/registry:2'
 
 work_dir = '/data/packages/sensenebula/pack'  # 后期jinja2优化
-json_file = './versions.json'  # 后期jinja2优化
+versions_pack_file = './versions_pack.json'  # 后期jinja2优化
 env_10_ip = '10.5.6.10'  # 后期jinja2优化
 env_10_charts_port = '8080'
 
@@ -89,14 +89,15 @@ class get_version:
     # 拿到images版本信息
     def get_version_data(self):
         os.chdir(work_dir)
-        with open(json_file, 'r') as fp:
+        with open(versions_pack_file, 'r') as fp:
             data = json.loads(fp.read())
         if data:
             pass
         else:
-            print("Error : get %s file data failure" % json_file)
+            print("Error : get %s file data failure" % versions_pack_file)
             sys.exit(1)
         self.images_version = data.get("images")
+        self.k8s_images_version = data.get("k8s_images")
         self.charts_version = data.get("charts")
 
 
@@ -178,6 +179,7 @@ version.get_version_data()
 
 p_img = pack_images()
 p_img.docker_operator(version.images_version)
+p_img.docker_operator(version.k8s_images_version)
 registry.del_docker_registry()
 
 p_helm = pack_charts()

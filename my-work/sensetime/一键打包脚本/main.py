@@ -20,7 +20,7 @@ remote_json_file = '/data/packages/sensenebula/pack/versions.json'
 script_file = './pack_charts_images.py'
 remote_script_file = '/data/packages/sensenebula/pack/pack_charts_images.py'
 versions_pack_file = './versions_pack.json'
-remote_pack_file = '/data/packages/sensenebula/pack/versions_pack.py'
+remote_pack_file = '/data/packages/sensenebula/pack/versions_pack.json'
 
 if __name__ == "__main__":
     # 1. get charts and images version to versions.json file
@@ -45,11 +45,16 @@ if __name__ == "__main__":
     scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, versions_pack_file, remote_pack_file)
     scp.exec_10_script(env_10_ip, port, env_10_username, env_10_passwd, remote_script_file)
 
-    # # 3. In 10.5.6.10 environment pull charts and images packages, and pack
-    # # pack = registry(standard_env_ip)
-    # # pack.run_docker_registry()
+    # 3. In 10.5.6.10 environment pull charts and images packages, and pack
+    # pack = registry(standard_env_ip)
+    # pack.run_docker_registry()
 
-# 待优化的点:
-# 1. 多次命名 versions.json文件变量，可以使用传参或者jinja2
-# 2. scp文件的remote file改为路径方式
-# 3. pack_charts_images.py 中还没有加上k8s_images的镜像拉取打包，且要放到单独的包里面
+# 剩余工作及待优化的点:
+# 1 剩余工作
+# 1.1 整体打成包 charts + images + k8s_images + json文件
+# 1.2 打包后 如何插入到数据库
+
+# 2. 优化方面
+# 2.1 多次命名 versions.json文件变量，可以使用传参或者jinja2
+# 2.2 scp文件的remote file改为路径方式
+# 3.3 优化执行pack_charts_images.py脚本后的信息反馈，显示的好看，且不要过多

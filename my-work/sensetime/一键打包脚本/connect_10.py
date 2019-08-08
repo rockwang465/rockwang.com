@@ -42,7 +42,7 @@ class scp_files:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(ip_10, port, username, passwd)
-            stdin, stdout, stderr = ssh.exec_command("python %s" % exec_script_file)
+            stdin, stdout, stderr = ssh.exec_command("/usr/bin/python %s" % exec_script_file)
             res, err = stdout.read().decode(), stderr.read().decode()
             if err:
                 print("Error : error data", err)
