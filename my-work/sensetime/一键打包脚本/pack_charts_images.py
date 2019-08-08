@@ -38,6 +38,7 @@ class define_dir:
         self.release_package_name = release_name + "-" + release_version + "+" + self.now_time
         self.mount_10_path = release_path + self.release_package_name + "/" + "images"  # docker registry挂载在10.5.6.10上的路径
         self.charts_pack_path = release_path + self.release_package_name + "/" + "charts"  # 下载charts包路径
+
     def create_dir(self):
         if os.path.isdir(self.mount_10_path):
             print("Error : Already exists [%s] directory" % self.mount_10_path)
@@ -51,7 +52,7 @@ class define_dir:
 class run_registry(define_dir):
     # run a docker registry
     def run_docker_registry(self):
-        print("------------------------- run registry ------------------------")
+        print("Info : Start running docker registry")
         # 判断 mapping_host_port 对应的端口是否已存在
         res_port = int(os.popen("ss -lntup |grep %s |wc -l" % self.mapping_host_port).read().replace("\n", ""))
 
@@ -61,9 +62,13 @@ class run_registry(define_dir):
                                                                                                                    ""))
 
         if res_port == 0 and res_name == 0:
-            os.system("docker run -d -p %s:%s --restart=always --name %s -v %s:%s %s" % (
+            res = os.popen("docker run -d -p %s:%s --restart=always --name %s -v %s:%s %s" % (
                 self.mapping_host_port, mapping_docker_port, self.registry_name, self.mount_10_path,
                 mount_registry_path, registry_image))
+            self.cont_id = res.read()
+            if not self.cont_id:
+                print("Error : Failure to run docker registry")
+                sys.exit(1)
         else:
             print("Error : Already exists [%s] port or [%s] container name, Please check " % (
                 self.mapping_host_port, self.registry_name))
@@ -71,6 +76,13 @@ class run_registry(define_dir):
         print("Info : Successful running registry")
         print("\n\n")
         # 示例 : os.system("docker run -d -p 8001:5000 --restart=always --name registry -v /data/packages/sensenebula/releases/SenseNebula_G-v1.2.0+20190807104744/images:/var/lib/registry 10.5.6.10/docker.io/registry:2")
+
+    def del_docker_registry(self):
+        res = os.system("docker rm -f %s" % self.cont_id)
+        if res == 0:
+            print("Info : Successful to stop docker registry ")
+        else:
+            print("Error : Failure to stop docker registry , id : [%s]" % self.cont_id)
 
 
 class get_version:
@@ -90,11 +102,9 @@ class get_version:
 
 class pack_images:
     def docker_operator(self, images_version):
-        print("------------------------- pack images ------------------------")
+        print("Info : Start packing images")
         # {u'tag': u'5.5.4', u'repository': u'elasticsearch/curator'},
-        # print(self.images_version)
         for i in images_version:
-            # print("------------------------->", i)
             print(i.get("tag"), i.get("repository"))
             tag = i.get("tag")
             repo = i.get("repository")
@@ -125,8 +135,7 @@ class pack_images:
 
 class pack_charts(define_dir):
     def helm_operator(self, charts_version):
-        print("------------------------- pack charts ------------------------")
-        print("helm update repo")
+        print("Info : Start packing charts")
         if os.path.isdir(self.charts_pack_path):
             print("Error : Already exists [%s] directory" % self.charts_pack_path)
             sys.exit(1)
@@ -134,32 +143,42 @@ class pack_charts(define_dir):
             os.makedirs(self.charts_pack_path)
             print("Info : Successful create [%s] of pack directory" % self.charts_pack_path)
             print("\n\n")
+
         os.chdir(self.charts_pack_path)
-        res = os.system("helm update repo")
         for i in charts_version:
             c_name = i.get("name")
             c_version = i.get("version")
             c_namespace = i.get("namespace")
-            print(c_name, c_version, c_namespace)
+            # print(c_name, c_version, c_namespace)
             # helm fetch http://10.5.6.10:8080/charts/elasticsearch-curator-5.5.4-master-ac9bae1.tgz
             complete_server_name = c_name + "-" + c_version
-            print("helm fetch http://%s:%s/charts/%s.tgz" % (env_10_ip, env_10_charts_port, complete_server_name))
-
+            res_fetch = os.system(
+                "helm fetch http://%s:%s/charts/%s.tgz" % (env_10_ip, env_10_charts_port, complete_server_name))
+            res_md5sum = os.system("md5sum %s.tgz > %s.tgz.md5" % (complete_server_name, complete_server_name))
+            if res_fetch != 0:
+                print("Error : Failure to [helm fetch http://%s:%s/charts/%s.tgz]" % (
+                    env_10_ip, env_10_charts_port, complete_server_name))
+                sys.exit(1)
+            elif res_md5sum != 0:
+                print("Error : Failure to [md5sum %s.tgz > %s.tgz.md5]" % (complete_server_name, complete_server_name))
+                sys.exit(1)
+        print("Info : Successful pack to [%s] directory" % self.charts_pack_path)
+        print("\n\n")
 
 
 # if __name__ == 'main':
-
 dir = define_dir()
 dir.create_dir()
 
 registry = run_registry()
-# registry.run_docker_registry()
+registry.run_docker_registry()
 
 version = get_version()
 version.get_version_data()
 
-# p_img = pack_images()
-# p_img.docker_operator(version.images_version)
+p_img = pack_images()
+p_img.docker_operator(version.images_version)
+registry.del_docker_registry()
 
 p_helm = pack_charts()
 p_helm.helm_operator(version.charts_version)

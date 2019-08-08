@@ -5,6 +5,7 @@ import re
 from kubernetes import client, config
 import sys
 import json
+import copy
 
 # standard_env_ip = '10.5.6.66'
 # port = 22
@@ -14,12 +15,28 @@ import json
 # repository_domain = 'www.sensetime.com'  # docker images domain name(以后docker镜像可能会定义一个域名开头的，而非IP开头的)
 kube_config_path = '/root/.kube/config'
 kube_config_file = './kubeconfig'
-new_json_file = './versions.json'
+json_file = './versions.json'
+versions_pack_file = './versions_pack.json'
 all_namespace = ['component', 'nebula', 'default', 'logging', 'monitoring']  # 未加: galaxias helm kube-public kube-system
 lack_images = [{'repository': 'elasticsearch/busybox', 'tag': 'latest'},
                {'repository': 'gitlabci/golang', 'tag': '1.9-cuda-gcc49-1'},
                {'repository': 'component/mc', 'tag': 'RELEASE.2019-02-13T19-48-27Z'},
                {'repository': 'external_storage/local-volume-provisioner', 'tag': 'v2.3.0'}]
+# kubernetes base images
+k8s_images = [{'repository': 'nvidia/k8s-device-plugin', 'tag': '1.10'},
+              {'repository': 'kubernetes/nginx-ingress-controller', 'tag': '0.21.0'},
+              {'repository': 'kubernetes/kube-scheduler', 'tag': 'v1.13.2'},
+              {'repository': 'kubernetes/kubernetes-dashboard-amd64', 'tag': 'v1.10.1'},
+              {'repository': 'kubernetes/kube-proxy', 'tag': 'v1.13.2'},
+              {'repository': 'kubernetes/kube-controller-manager', 'tag': 'v1.13.2'},
+              {'repository': 'kubernetes/kube-apiserver', 'tag': 'v1.13.2'},
+              {'repository': 'kubernetes/etcd', 'tag': '3.2.24'},
+              {'repository': 'kubernetes/defaultbackend', 'tag': '1.4'},
+              {'repository': 'kubernetes/coredns', 'tag': '1.2.6'},
+              {'repository': 'external_storage/local-volume-provisioner', 'tag': 'v2.3.0'},
+              {'repository': 'coreos/flannel', 'tag': 'v0.10.0-amd64'},
+              {'repository': 'kubernetes/tiller', 'tag': 'v2.13.1'}]
+
 ssh = paramiko.SSHClient()
 
 
@@ -187,21 +204,46 @@ class get_images_version:
 
 
 class merge_charts_images:
-    def __init__(self, charts, images):
-        self.charts = charts
-        self.images = images
+    # def __init__(self, charts, images):
+    #     self.charts = copy.deepcopy(charts)
+    #     self.images = copy.deepcopy(images)
 
-    def merge(self):
-        if not self.charts["charts"]:
+    # 生成的为所有的images+charts的versions.json文件，给于一键部署使用的。
+    def merge_to_versions(self, charts, images):
+        self.charts1 = copy.deepcopy(charts)
+        self.images1 = copy.deepcopy(images)
+        if not self.charts1["charts"]:
             print("Error: charts dict is empty")
             sys.exit(1)
-        elif not self.images["images"]:
+        elif not self.images1["images"]:
             print("Error: images dict is empty")
             sys.exit(1)
         else:
-            self.charts.update(self.images)
-            self.all_data = self.charts
-        # print(self.all_data)
-        with open(new_json_file, 'w') as fp:
-            json.dump(self.all_data, fp)
-        print("Info : Successful get of charts and images version to [%s] \n" % new_json_file)
+            # print(self.images)
+            # print("\n\n--------------------------\n\n")
+            for i in k8s_images:
+                self.images1['images'].append(i)
+            # print(self.images)
+
+            self.charts1.update(self.images1)
+            self.all_version = self.charts1
+        # print(self.all_version)
+        with open(json_file, 'w') as fp:
+            json.dump(self.all_version, fp)
+        print("Info : Successful get of charts and images version to [%s] \n" % json_file)
+
+    # 生成 versions_pack.json文件，用于一键打包使用的。
+    def merge_to_pack(self, charts, images):
+        self.charts2 = copy.deepcopy(charts)
+        self.images2 = copy.deepcopy(images)
+
+        self.k8s_images = {'k8s_images': []}
+        for i in k8s_images:
+            self.k8s_images['k8s_images'].append(i)
+        self.charts2.update(self.images2)
+        self.charts2.update(self.k8s_images)
+        self.all_pack_version = self.charts2
+        with open(versions_pack_file, 'w') as fp:
+            json.dump(self.all_pack_version, fp)
+        print("Info : Successful get of charts and images version to [%s] \n" % versions_pack_file)
+        print("\n\n")
