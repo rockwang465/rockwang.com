@@ -14,9 +14,9 @@ import copy
 # docker_repo_port = '5000'  # 在标准环境中的docker仓库端口
 # repository_domain = 'www.sensetime.com'  # docker images domain name(以后docker镜像可能会定义一个域名开头的，而非IP开头的)
 kube_config_path = '/root/.kube/config'
-kube_config_file = './kubeconfig'
-json_file = './versions.json'
-versions_pack_file = './versions_pack.json'
+kube_config_file = 'kubeconfig'
+json_file = 'versions.json'
+# versions_pack_file = './versions_pack.json'
 all_namespace = ['component', 'nebula', 'default', 'logging', 'monitoring']  # 未加: galaxias helm kube-public kube-system
 lack_images = [{'repository': 'elasticsearch/busybox', 'tag': 'latest'},
                {'repository': 'gitlabci/golang', 'tag': '1.9-cuda-gcc49-1'},
@@ -220,7 +220,6 @@ class merge_charts_images:
             sys.exit(1)
         else:
             # print(self.images)
-            # print("\n\n--------------------------\n\n")
             for i in k8s_images:
                 self.images1['images'].append(i)
             # print(self.images)
@@ -231,19 +230,3 @@ class merge_charts_images:
         with open(json_file, 'w') as fp:
             json.dump(self.all_version, fp)
         print("Info : Successful get of charts and images version to [%s] \n" % json_file)
-
-    # 生成 versions_pack.json文件，用于一键打包使用的。
-    def merge_to_pack(self, charts, images):
-        self.charts2 = copy.deepcopy(charts)
-        self.images2 = copy.deepcopy(images)
-
-        self.k8s_images = {'k8s_images': []}
-        for i in k8s_images:
-            self.k8s_images['k8s_images'].append(i)
-        self.charts2.update(self.images2)
-        self.charts2.update(self.k8s_images)
-        self.all_pack_version = self.charts2
-        with open(versions_pack_file, 'w') as fp:
-            json.dump(self.all_pack_version, fp)
-        print("Info : Successful get of charts and images version to [%s] \n" % versions_pack_file)
-        print("\n\n")

@@ -14,13 +14,18 @@ env_10_passwd = 'Sensetime12345'
 repository_domain = 'www.sensetime.com'  # docker images domain name(以后docker镜像可能会定义一个域名开头的，而非IP开头的)
 # docker_repo_port = '5000'  # 在标准环境中的docker仓库端口
 
-json_file = './versions.json'
+json_file = 'versions.json'
 remote_file = '/data/packages/sensenebula/pack/versions.json'
 remote_json_file = '/data/packages/sensenebula/pack/versions.json'
-script_file = './pack_charts_images.py'
-remote_script_file = '/data/packages/sensenebula/pack/pack_charts_images.py'
-versions_pack_file = './versions_pack.json'
-remote_pack_file = '/data/packages/sensenebula/pack/versions_pack.json'
+script_main_file = 'pack_main.py'
+remote_main_file = '/data/packages/sensenebula/pack/pack_main.py'
+script_server_file = 'pack_charts_images.py'
+remote_server_file = '/data/packages/sensenebula/pack/pack_charts_images.py'
+script_base_file = 'pack_base.py'
+remote_base_file = '/data/packages/sensenebula/pack/pack_base.py'
+
+# versions_pack_file = './versions_pack.json'
+# remote_pack_file = '/data/packages/sensenebula/pack/versions_pack.json'
 
 if __name__ == "__main__":
     # 1. get charts and images version to versions.json file
@@ -36,18 +41,15 @@ if __name__ == "__main__":
     merge_data = merge_charts_images()
     merge_data.merge_to_versions(charts.new_charts, images.new_images)
     # merge_data.all_version 是最终的json数据
-    merge_data.merge_to_pack(charts.new_charts, images.new_images)
+    # merge_data.merge_to_pack(charts.new_charts, images.new_images)
 
     # 2. send files to 10.5.6.10
     scp = scp_files()
-    scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, json_file, remote_json_file)
-    scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, script_file, remote_script_file)
-    scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, versions_pack_file, remote_pack_file)
-    scp.exec_10_script(env_10_ip, port, env_10_username, env_10_passwd, remote_script_file)
-
-    # 3. In 10.5.6.10 environment pull charts and images packages, and pack
-    # pack = registry(standard_env_ip)
-    # pack.run_docker_registry()
+    scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, json_file, remote_json_file)  # 临时注释
+    scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, script_main_file, remote_main_file)
+    scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, script_server_file, remote_server_file)
+    scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, script_base_file, remote_base_file)
+    scp.exec_10_script(env_10_ip, port, env_10_username, env_10_passwd, remote_main_file)
 
 # 剩余工作及待优化的点:
 # 1 剩余工作

@@ -42,13 +42,21 @@ class scp_files:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(ip_10, port, username, passwd)
-            stdin, stdout, stderr = ssh.exec_command("/usr/bin/python %s" % exec_script_file)
+            print("Info : Start packing, please wait, about 40 minutes. \n")
+            pack_path = os.path.split(exec_script_file)[0]
+            pack_py = os.path.split(exec_script_file)[-1]
+            # os.chdir(pack_path)
+            stdin, stdout, stderr = ssh.exec_command("cd %s && /usr/bin/python %s" % (pack_path, pack_py))
             res, err = stdout.read().decode(), stderr.read().decode()
             if err:
-                print("Error : error data", err)
+                print("Error : Execution failure , error log: ")
+                for i in err.split("\n"):
+                    print(i)
                 sys.exit(1)
             else:
-                print("Info : res data", res)
+                print("Info : Successful execution, printing log : ")
+                for i in res.split("\n"):
+                    print(i)
             ssh.close()
         except Exception as ex:
             print("Error : Failure to execute script : %s" % ex)
