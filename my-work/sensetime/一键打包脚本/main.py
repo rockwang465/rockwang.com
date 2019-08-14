@@ -53,10 +53,8 @@ if __name__ == "__main__":
 
 # 剩余工作及待优化的点:
 # 1 剩余工作
-# 1.1 整体打成包 charts + images + k8s_images + json文件
-# 1.2 打包后 如何插入到数据库
+# 1.1 打包后 如何插入到数据库
 
 # 2. 优化方面
 # 2.1 多次命名 versions.json文件变量，可以使用传参或者jinja2
 # 2.2 scp文件的remote file改为路径方式
-# 3.3 优化执行pack_charts_images.py脚本后的信息反馈，显示的好看，且不要过多

@@ -6,16 +6,6 @@ import datetime
 import json
 import time
 
-# 大概步骤描述
-#
-# 1.1 使用docker起一个docker仓库，挂载本地目录
-# 1.2 在docker仓库里，pull,tag,push到仓库里
-# 1.3 打包docker仓库目录
-# 2.1 拉取charts包
-# 3.1 创建base基础包
-# 3.2 拉取gitlab的infra-ansible 代码
-# 4   打包docker目录、charts目录、基础包
-
 standard_env_ip = '10.5.6.66'  # 后期jinja2优化
 mapping_host_port = 8001  # 主机访问registry端口
 mapping_docker_port = 5000  # 容器内部的registry端口
@@ -27,9 +17,10 @@ registry_image = '10.5.6.10/docker.io/registry:2'
 
 work_dir = '/data/packages/sensenebula/pack'  # 后期jinja2优化
 json_file = 'versions.json'  # 后期jinja2优化
-# versions_pack_file = './versions_pack.json'  # 后期jinja2优化
 env_10_ip = '10.5.6.10'  # 后期jinja2优化
 env_10_charts_port = '8080'
+
+
 # local_ip = '10.5.6.92'
 
 
@@ -57,7 +48,7 @@ class define_dir:
 
 
 class run_registry:
-    # run a docker registry
+    # 运行 docker registry
     def run_docker_registry(self, dire):
         print("Info : Start running docker registry")
         # 判断 mapping_host_port 对应的端口是否已存在
@@ -65,14 +56,13 @@ class run_registry:
 
         # 判断是否存在同名字的容器名字
         res_name = int(os.popen(
-            "docker ps | grep %s | grep %s | wc -l" % (dire.registry_name, mapping_host_port)).read().replace("\n",
-                                                                                                             ""))
-
+            "docker ps | grep %s | grep %s | wc -l" % (dire.registry_name, mapping_host_port)).read().replace("\n", ""))
         if res_port == 0 and res_name == 0:
+            # 示例 : os.popen("docker run -d -p 8001:5000 --restart=always --name registry -v /data/packages/sensenebula/releases/SenseNebula_G-v1.2.0+20190807104744/images:/var/lib/registry 10.5.6.10/docker.io/registry:2")
             res = os.popen("docker run -d -p %s:%s --restart=always --name %s -v %s:%s %s" % (
                 mapping_host_port, mapping_docker_port, dire.registry_name, dire.mount_10_path,
                 mount_registry_path, registry_image))
-            self.cont_id = res.read()
+            self.cont_id = res.read()  # 拿到容器的id
             if not self.cont_id:
                 print("Error : Failure to run docker registry")
                 sys.exit(1)
@@ -82,8 +72,8 @@ class run_registry:
             sys.exit(1)
         print("Info : Successful running registry")
         print("\n\n")
-        # 示例 : os.system("docker run -d -p 8001:5000 --restart=always --name registry -v /data/packages/sensenebula/releases/SenseNebula_G-v1.2.0+20190807104744/images:/var/lib/registry 10.5.6.10/docker.io/registry:2")
 
+    # 删除容器
     def del_docker_registry(self):
         res = os.system("docker rm -f %s" % self.cont_id)
         if res == 0:
@@ -109,16 +99,15 @@ class get_version:
 
 
 class pack_images:
+    # pull tag push 操作
     def docker_operator(self, images_version, dire, registry):
         print("Info : Start packing images")
         # {u'tag': u'5.5.4', u'repository': u'elasticsearch/curator'},
         for i in images_version:
-            # print(i.get("tag"), i.get("repository"))
             tag = i.get("tag")
             repo = i.get("repository")
 
             pull_image = "%s/%s:%s" % (env_10_ip, repo, tag)
-            # print("Info : docker pull %s" % pull_image)
             res1 = os.system("docker pull %s" % pull_image)
             time.sleep(1)
             if res1 != 0:
@@ -127,7 +116,6 @@ class pack_images:
                 sys.exit(1)
 
             tag_push_image = "%s:%s/%s:%s" % (env_10_ip, mapping_host_port, repo, tag)
-            # print("Info : docker tag %s %s" % (pull_image, tag_push_image))
             res2 = os.system("docker tag %s %s" % (pull_image, tag_push_image))
             time.sleep(2)
             if res2 != 0:
@@ -135,18 +123,17 @@ class pack_images:
                 registry.del_docker_registry()
                 sys.exit(1)
 
-            # print("Info : docker push %s" % tag_push_image)
             res3 = os.system("docker push %s" % tag_push_image)
             time.sleep(1)
             if res3 != 0:
                 print("Error : docker push [%s] failure" % tag_push_image)
                 registry.del_docker_registry()
                 sys.exit(1)
-            # time.sleep(1)
         print("Info : [%s] directory pack successful" % dire.release_package_name)
         print("\n")
 
 
+# 下载 chart 包
 class pack_charts:
     def helm_operator(self, charts_version, dire):
         print("Info : Start packing charts")
@@ -163,7 +150,6 @@ class pack_charts:
             c_name = i.get("name")
             c_version = i.get("version")
             c_namespace = i.get("namespace")
-            # print(c_name, c_version, c_namespace)
             # helm fetch http://10.5.6.10:8080/charts/elasticsearch-curator-5.5.4-master-ac9bae1.tgz
             complete_server_name = c_name + "-" + c_version
             res_fetch = os.system(

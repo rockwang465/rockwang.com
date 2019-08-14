@@ -16,6 +16,7 @@ class create_dir:
             sys.exit(1)
 
 
+# 拿到基础文件到 base 目录中
 class take_base_files:
     # source_path 为 /data/packages/sensenebula/src/
     # base_pack_path 为 /data/packages/sensenebula/releases/SenseNebula-G-v1.2.0+20190812103917/base,
@@ -36,6 +37,7 @@ class take_base_files:
             print("Info : [%s] directory copy successful" % desc_name)
 
 
+# 拿到 infra-ansible 脚本
 class take_ansbile_file:
     # git 拉取 infra-ansible 代码
     def git_clone(self, base_pack_path, ansible_git_addr, git_branch):
@@ -58,6 +60,7 @@ class take_ansbile_file:
             res2 = os.system("rm -rf %s/%s" % (base_pack_path, ansible_dir_name))
 
 
+# 整个release目录打包
 class pack_release:
     # 拷贝versions.json文件到 SenseNebula-G-xxx 中
     def copy_versions(self, work_dir, json_file, current_release_path):
@@ -65,7 +68,7 @@ class pack_release:
         if res != 0:
             print("Error : Copy operator [cp %s/%s %s] failure" % (work_dir, json_file, current_release_path))
 
-    # 打包 SenseNebula-G-xxx 为 tgz包
+    # 打包 SenseNebula-G-xxx 为 tgz 包
     def pack_all(self, release_path, release_package_name):
         os.chdir(release_path)
         res = os.system("tar -zcf %s.tgz %s" % (release_package_name, release_package_name))
