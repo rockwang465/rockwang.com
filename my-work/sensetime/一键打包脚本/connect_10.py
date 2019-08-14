@@ -37,7 +37,7 @@ class scp_files:
             sys.exit(1)
         print("\n")
 
-    def exec_10_script(self, ip_10, port, username, passwd, exec_script_file):
+    def exec_10_script(self, ip_10, port, username, passwd, exec_script_file, args):
         try:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -46,7 +46,10 @@ class scp_files:
             pack_path = os.path.split(exec_script_file)[0]
             pack_py = os.path.split(exec_script_file)[-1]
             # os.chdir(pack_path)
-            stdin, stdout, stderr = ssh.exec_command("cd %s && /usr/bin/python %s" % (pack_path, pack_py))
+            # stdin, stdout, stderr = ssh.exec_command("cd %s && /usr/bin/python %s" % (pack_path, pack_py))
+            stdin, stdout, stderr = ssh.exec_command(
+                "cd %s && /usr/bin/python %s  %s --version=%s" % (
+                    pack_path, pack_py, args.env_ip, args.version))
             res, err = stdout.read().decode(), stderr.read().decode()
             if err:
                 print("Error : Execution failure , error log: ")

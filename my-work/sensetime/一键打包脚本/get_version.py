@@ -7,16 +7,9 @@ import sys
 import json
 import copy
 
-# standard_env_ip = '10.5.6.66'
-# port = 22
-# username = 'root'
-# passwd = 'Nebula123$%^'
-# docker_repo_port = '5000'  # 在标准环境中的docker仓库端口
-# repository_domain = 'www.sensetime.com'  # docker images domain name(以后docker镜像可能会定义一个域名开头的，而非IP开头的)
 kube_config_path = '/root/.kube/config'
 kube_config_file = 'kubeconfig'
 json_file = 'versions.json'
-# versions_pack_file = './versions_pack.json'
 all_namespace = ['component', 'nebula', 'default', 'logging', 'monitoring']  # 未加: galaxias helm kube-public kube-system
 lack_images = [{'repository': 'elasticsearch/busybox', 'tag': 'latest'},
                {'repository': 'gitlabci/golang', 'tag': '1.9-cuda-gcc49-1'},
@@ -40,18 +33,14 @@ k8s_images = [{'repository': 'nvidia/k8s-device-plugin', 'tag': '1.10'},
 ssh = paramiko.SSHClient()
 
 
-# ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-# ssh.connect(standard_env_ip, port, username, passwd)
-
-
 class get_charts_version:
     # get helm charts version in standard environment
-    def get_helm_charts(self, standard_env_ip, port, username, passwd):
+    def get_helm_charts(self, args):
         # ssh = paramiko.SSHClient()
         cut_line = '{print $9" "$NF}'  # cut charts and namespace
         try:
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(standard_env_ip, port, username, passwd)
+            ssh.connect(args.env_ip, args.env_port, args.env_username, args.env_passwd)
             stdin, stdout, stderr = ssh.exec_command(
                 "helm list --col-width 200 | sed 1d | awk '%s' | sort -rn | uniq" % cut_line)
             # print(stdout.read().decode())
@@ -63,9 +52,7 @@ class get_charts_version:
                 if i == "":
                     pass
                 else:
-                    # self.helm_list.append(i.encode('utf-8'))
                     info = i.encode('utf-8').split()
-                    # self.helm_info["charts"].append(1)
                     self.helm_list["charts"].append({
                         "info": info[0],
                         "namespace": info[-1]
@@ -116,10 +103,10 @@ class get_charts_version:
 
 # get docker image version in standard environment(通过k8s api获取docker image版本号)
 class get_images_version:
-    def get_kube_config(self, standard_env_ip, port, username, passwd):
+    def get_kube_config(self, args):
         try:
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(standard_env_ip, port, username, passwd)
+            ssh.connect(args.env_ip, args.env_port, args.env_username, args.env_passwd)
             stdin, stdout, stderr = ssh.exec_command("cat %s" % kube_config_path)
             # print(stdout.read().decode())
             self.kube_config_body = stdout.read().decode()
@@ -204,10 +191,6 @@ class get_images_version:
 
 
 class merge_charts_images:
-    # def __init__(self, charts, images):
-    #     self.charts = copy.deepcopy(charts)
-    #     self.images = copy.deepcopy(images)
-
     # 生成的为所有的images+charts的versions.json文件，给于一键部署使用的。
     def merge_to_versions(self, charts, images):
         self.charts1 = copy.deepcopy(charts)
@@ -219,10 +202,8 @@ class merge_charts_images:
             print("Error: images dict is empty")
             sys.exit(1)
         else:
-            # print(self.images)
             for i in k8s_images:
                 self.images1['images'].append(i)
-            # print(self.images)
 
             self.charts1.update(self.images1)
             self.all_version = self.charts1
