@@ -44,11 +44,6 @@ def parse_args():
 if __name__ == "__main__":
     # 0. 传参操作
     args = parse_args()
-    print(args.env_ip)
-    print(args.env_username)
-    print(args.env_passwd)
-    print(args.env_port)
-    print(args.version)
 
     # 1. 获取 charts 和 images 版本信息到 versions.json 文件中
     charts = get_charts_version()
@@ -71,7 +66,7 @@ if __name__ == "__main__":
     scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, script_main_file, remote_main_file)
     scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, script_server_file, remote_server_file)
     scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, script_base_file, remote_base_file)
-    # scp.exec_10_script(env_10_ip, port, env_10_username, env_10_passwd, remote_main_file, args)
+    scp.exec_10_script(env_10_ip, port, env_10_username, env_10_passwd, remote_main_file, args)
 
 # 剩余工作及待优化的点:
 # 1 剩余工作

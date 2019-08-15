@@ -1,5 +1,7 @@
 ## 1. 执行脚本
-`python main.py`
++ 查看执行帮助: `python main.py -h`
++ 所有参数: `python main.py IP --env_username=root --env_passwd=123 --env_port=22 --version=v1.2.0`
++ 普通传参: `python main.py IP` ,可以只传一个ip，其他参数有默认参数，可以`-h`查看一下
 
 ## 2. 脚本作用与依赖关系
 ### 2.1 标准环境机器上

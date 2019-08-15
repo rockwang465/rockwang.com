@@ -109,7 +109,7 @@ class pack_images:
             repo = i.get("repository")
 
             pull_image = "%s/%s:%s" % (env_10_ip, repo, tag)
-            res1 = os.system("docker pull %s" % pull_image)
+            res1 = os.system("docker pull %s >/dev/null" % pull_image)
             time.sleep(1)
             if res1 != 0:
                 print("Error : docker pull [%s] failure" % pull_image)
@@ -117,14 +117,14 @@ class pack_images:
                 sys.exit(1)
 
             tag_push_image = "%s:%s/%s:%s" % (env_10_ip, mapping_host_port, repo, tag)
-            res2 = os.system("docker tag %s %s" % (pull_image, tag_push_image))
+            res2 = os.system("docker tag %s %s >/dev/null" % (pull_image, tag_push_image))
             time.sleep(2)
             if res2 != 0:
                 print("Error : docker tag [%s] [%s] failure" % (pull_image, tag_push_image))
                 registry.del_docker_registry()
                 sys.exit(1)
 
-            res3 = os.system("docker push %s" % tag_push_image)
+            res3 = os.system("docker push %s >/dev/null" % tag_push_image)
             time.sleep(1)
             if res3 != 0:
                 print("Error : docker push [%s] failure" % tag_push_image)
