@@ -4,9 +4,7 @@ import argparse
 from get_version import *
 from connect_10 import *
 
-# standard_env_ip = '10.5.6.66'
-# standard_env_username = 'root'
-# standard_env_passwd = 'Nebula123$%^'
+
 port = 22
 env_10_ip = '10.5.6.10'
 env_10_username = 'root'
@@ -32,12 +30,6 @@ def parse_args():
     parser.add_argument("--env_passwd", help="standard environment password", default="Nebula123$%^")
     parser.add_argument("--env_port", help="standard environment port", default="22")
     parser.add_argument("--version", help="pack release version, for example: v1.2.0", default="v1.2.0")
-
-    # parser.add_argument("repository", help="Docker image repository")
-    # parser.add_argument("tag", help="Docker image tag")
-    # parser.add_argument("--old_registry", help="Address of old docker registry server", default="10.5.6.10")
-    # parser.add_argument("--new_registry", help="Address of new docker registry server", default="127.0.0.1:5000")
-    # parser.add_argument("--workdir", help="Directory of images package(default: .)", default=".")
     return parser.parse_args()
 
 
@@ -67,12 +59,3 @@ if __name__ == "__main__":
     scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, script_server_file, remote_server_file)
     scp.ssh_scp_put(env_10_ip, port, env_10_username, env_10_passwd, script_base_file, remote_base_file)
     scp.exec_10_script(env_10_ip, port, env_10_username, env_10_passwd, remote_main_file, args)
-
-# 剩余工作及待优化的点:
-# 1 剩余工作
-# 1.1 打包后 如何插入到数据库
-# 1.2 通过脚本传参方式，定义 standard_env_ip  standard_env_username  standard_env_passwd
-
-# 2. 优化方面
-# 2.1 多次命名 versions.json文件变量，可以使用传参或者jinja2
-# 2.2 scp文件的remote file改为路径方式

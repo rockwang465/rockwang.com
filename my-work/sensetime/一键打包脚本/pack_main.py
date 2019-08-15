@@ -17,14 +17,10 @@ ansible_dir_name = 'infra-ansible'
 def parse_args():
     parser = argparse.ArgumentParser(description='Get charts and images version, and pack it')
     parser.add_argument("env_ip", help="standard environment ip address")
-    # parser.add_argument("--env_username", help="standard environment username", default="root")
-    # parser.add_argument("--env_passwd", help="standard environment password", default="Nebula123$%^")
-    # parser.add_argument("--env_port", help="standard environment port", default="22")
     parser.add_argument("--version", help="pack release version, for example: v1.2.0", default="v1.2.0")
     return parser.parse_args()
 
 
-# if __name__ == 'main':
 # 0. 传参
 args = parse_args()
 

@@ -6,27 +6,21 @@ import datetime
 import json
 import time
 
-# standard_env_ip = '10.5.6.66'  # 后期jinja2优化
 mapping_host_port = 8001  # 主机访问registry端口
 mapping_docker_port = 5000  # 容器内部的registry端口
 release_name = 'SenseNebula-G'
-# release_version = 'v1.2.0'
 release_path = '/data/packages/sensenebula/releases/'
 mount_registry_path = '/var/lib/registry'  # 默认registry的容器目录
 registry_image = '10.5.6.10/docker.io/registry:2'
 
-work_dir = '/data/packages/sensenebula/pack'  # 后期jinja2优化
-json_file = 'versions.json'  # 后期jinja2优化
-env_10_ip = '10.5.6.10'  # 后期jinja2优化
+work_dir = '/data/packages/sensenebula/pack'
+json_file = 'versions.json'
+env_10_ip = '10.5.6.10'
 env_10_charts_port = '8080'
-
-
-# local_ip = '10.5.6.92'
 
 
 class define_dir:
     def path_name(self, args):
-        # self.mapping_host_port = mapping_host_port
         self.tail_ip = args.env_ip.split(".")[-1]
         self.registry_name = "registry" + self.tail_ip  # docker容器命名，在结尾加上标准环境ip的尾部(如10.5.6.66则为 registry66)
         self.now_time = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
@@ -43,7 +37,6 @@ class define_dir:
             sys.exit(1)
         else:
             os.makedirs(self.mount_10_path)
-            # os.makedirs(self.charts_pack_path)
             print("Info : [%s] created successful" % self.mount_10_path)
             print("\n\n")
 
