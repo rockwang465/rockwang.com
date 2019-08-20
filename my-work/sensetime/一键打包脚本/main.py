@@ -40,12 +40,10 @@ if __name__ == "__main__":
     # 1. 获取 charts 和 images 版本信息到 versions.json 文件中
     charts = get_charts_version()
     charts.get_helm_charts(args)
-    # charts_info = charts.get_helm_charts(standard_env_ip, port, standard_env_username, standard_env_passwd)
     charts.convert_helm_charts()
 
     images = get_images_version()
     images.get_kube_config(args)
-    # images.get_kube_config(standard_env_ip, port, standard_env_username, standard_env_passwd)
     images.get_kube_images(repository_domain)
     images.convert_json()
 

@@ -3,6 +3,7 @@
 
 import os
 import sys
+import yaml
 
 
 class create_dir:
@@ -68,9 +69,27 @@ class pack_release:
         if res != 0:
             print("Error : Copy operator [cp %s/%s %s] failure" % (work_dir, json_file, current_release_path))
 
+    # 转换versions.json为 images.yaml 和 versions.yaml
+    def dump_images_charts(self, json_file, current_release_path):
+        os.chdir(current_release_path)
+        f = open(json_file, 'r')
+        data = yaml.full_load(f.read())
+        images_dic = data.get('images')
+        charts_dic = data.get('charts')
+
+        images_file = open('./images.yaml', 'w')
+        yaml.dump(images_dic, images_file)
+        charts_file = open('./versions.yaml', 'w')
+        yaml.dump(charts_dic, charts_file)
+        f.close()
+
     # 打包 SenseNebula-G-xxx 为 tgz 包
     def pack_all(self, release_path, release_package_name):
         os.chdir(release_path)
-        res = os.system("tar -zcf %s.tgz %s" % (release_package_name, release_package_name))
-        if res != 0:
+        res1 = os.system("tar -zcf %s.tgz %s" % (release_package_name, release_package_name))
+        if res1 != 0:
             print("Error : Failure to pack %s.tgz" % release_package_name)
+            sys.exit(1)
+        res2 = os.system("md5sum %s.tgz > %s.tgz.md5" % (release_package_name, release_package_name))
+        if res2 != 0:
+            print("Error : Failure to make md5")

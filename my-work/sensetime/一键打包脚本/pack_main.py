@@ -8,7 +8,8 @@ from pack_base import *
 base_source_path = '/data/packages/sensenebula/src/'
 base_dir = [{'name': 'license-ca', 'type': 'dir'},
             {'name': 'tools', 'type': 'dir'},
-            {'name': 'yum-data', 'type': 'dir'}]
+            {'name': 'yum-data', 'type': 'dir'},
+            {'name': 'init-new.sh', 'type': 'file'}]
 ansible_git_addr = 'git@gitlab.sz.sensetime.com:galaxias/infra-ansible.git'
 git_branch = 'dev'
 ansible_dir_name = 'infra-ansible'
@@ -56,4 +57,5 @@ take_ansbile.pack_ansible(ansible_dir_name, dire.base_pack_path)
 # 3. 打包 release
 p_release = pack_release()
 p_release.copy_versions(work_dir, json_file, dire.current_release_path)
+p_release.dump_images_charts(json_file, dire.current_release_path)
 p_release.pack_all(release_path, dire.release_package_name)

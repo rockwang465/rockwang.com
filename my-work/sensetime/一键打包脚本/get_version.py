@@ -28,7 +28,8 @@ k8s_images = [{'repository': 'nvidia/k8s-device-plugin', 'tag': '1.10'},
               {'repository': 'kubernetes/coredns', 'tag': '1.2.6'},
               {'repository': 'external_storage/local-volume-provisioner', 'tag': 'v2.3.0'},
               {'repository': 'coreos/flannel', 'tag': 'v0.10.0-amd64'},
-              {'repository': 'kubernetes/tiller', 'tag': 'v2.13.1'}]
+              {'repository': 'kubernetes/tiller', 'tag': 'v2.13.1'},
+              {'repository': 'kubernetes/pause', 'tag': '3.1'}]
 
 ssh = paramiko.SSHClient()
 

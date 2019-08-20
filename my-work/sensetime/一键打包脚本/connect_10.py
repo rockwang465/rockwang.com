@@ -48,7 +48,7 @@ class scp_files:
             # os.chdir(pack_path)
             # stdin, stdout, stderr = ssh.exec_command("cd %s && /usr/bin/python %s" % (pack_path, pack_py))
             stdin, stdout, stderr = ssh.exec_command(
-                "cd %s && /usr/bin/python %s  %s --version=%s" % (
+                "source /root/venv/bin/activate && cd %s && python %s  %s --version=%s" % (
                     pack_path, pack_py, args.env_ip, args.version))
             res, err = stdout.read().decode(), stderr.read().decode()
             if err:
