@@ -3,8 +3,8 @@
 import os
 import sys
 import datetime
-import json
 import time
+import yaml
 
 mapping_host_port = 8001  # 主机访问registry端口
 mapping_docker_port = 5000  # 容器内部的registry端口
@@ -65,7 +65,7 @@ class run_registry:
                 mapping_host_port, dire.registry_name))
             sys.exit(1)
         print("Info : Successful running registry")
-        print("\n\n")
+        print("\n")
 
     # 删除容器
     def del_docker_registry(self):
@@ -80,8 +80,8 @@ class get_version:
     # 拿到images版本信息
     def get_version_data(self):
         os.chdir(work_dir)
-        with open(json_file, 'r') as fp:
-            data = json.loads(fp.read())
+        with open(json_file, 'r') as f:
+            data = yaml.full_load(f.read())
         if data:
             pass
         else:
@@ -89,7 +89,8 @@ class get_version:
             sys.exit(1)
         self.images_version = data.get("images")
         # self.k8s_images_version = data.get("k8s_images")
-        self.charts_version = data.get("charts")
+        data.pop("images")
+        self.charts_version = data
 
 
 class pack_images:
@@ -140,21 +141,23 @@ class pack_charts:
             print("\n")
 
         os.chdir(dire.charts_pack_path)
-        for i in charts_version:
-            c_name = i.get("name")
-            c_version = i.get("version")
-            c_namespace = i.get("namespace")
-            # helm fetch http://10.5.6.10:8080/charts/elasticsearch-curator-5.5.4-master-ac9bae1.tgz
-            complete_server_name = c_name + "-" + c_version
-            res_fetch = os.system(
-                "helm fetch http://%s:%s/charts/%s.tgz" % (env_10_ip, env_10_charts_port, complete_server_name))
-            res_md5sum = os.system("md5sum %s.tgz > %s.tgz.md5" % (complete_server_name, complete_server_name))
-            if res_fetch != 0:
-                print("Error : Failure to [helm fetch http://%s:%s/charts/%s.tgz]" % (
-                    env_10_ip, env_10_charts_port, complete_server_name))
-                sys.exit(1)
-            elif res_md5sum != 0:
-                print("Error : Failure to [md5sum %s.tgz > %s.tgz.md5]" % (complete_server_name, complete_server_name))
-                sys.exit(1)
+        for proj in charts_version:
+            # print(charts_version.get(proj))
+            for i in (charts_version.get(proj)):
+                c_name = i.get("name")
+                c_version = i.get("version")
+                c_namespace = i.get("namespace")
+                # helm fetch http://10.5.6.10:8080/charts/elasticsearch-curator-5.5.4-master-ac9bae1.tgz
+                complete_server_name = c_name + "-" + c_version
+                res_fetch = os.system(
+                    "helm fetch http://%s:%s/charts/%s.tgz" % (env_10_ip, env_10_charts_port, complete_server_name))
+                res_md5sum = os.system("md5sum %s.tgz > %s.tgz.md5" % (complete_server_name, complete_server_name))
+                if res_fetch != 0:
+                    print("Error : Failure to [helm fetch http://%s:%s/charts/%s.tgz]" % (
+                        env_10_ip, env_10_charts_port, complete_server_name))
+                    sys.exit(1)
+                elif res_md5sum != 0:
+                    print("Error : Failure to [md5sum %s.tgz > %s.tgz.md5]" % (complete_server_name, complete_server_name))
+                    sys.exit(1)
         print("Info : [%s] directory pack successful" % dire.charts_pack_path)
         print("\n")

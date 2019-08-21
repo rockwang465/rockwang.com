@@ -75,13 +75,22 @@ class pack_release:
         f = open(json_file, 'r')
         data = yaml.full_load(f.read())
         images_dic = data.get('images')
-        charts_dic = data.get('charts')
+        data.pop('images')
+        charts_dic = data
 
         images_file = open('./images.yaml', 'w')
         yaml.dump(images_dic, images_file)
         charts_file = open('./versions.yaml', 'w')
         yaml.dump(charts_dic, charts_file)
         f.close()
+
+        # 删除versions.json文件，后期如果需要此文件再注释此行代码即可。
+        json_file_path = current_release_path + "/" + json_file
+        if os.path.exists(json_file_path):
+            os.remove(json_file_path)
+        else:
+            print("Error : Not found [%s] file" % json_file_path)
+            sys.exit(1)
 
     # 打包 SenseNebula-G-xxx 为 tgz 包
     def pack_all(self, release_path, release_package_name):

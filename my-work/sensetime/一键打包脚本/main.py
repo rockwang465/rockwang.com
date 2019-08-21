@@ -41,6 +41,7 @@ if __name__ == "__main__":
     charts = get_charts_version()
     charts.get_helm_charts(args)
     charts.convert_helm_charts()
+    charts.convert_common_charts()
 
     images = get_images_version()
     images.get_kube_config(args)

@@ -31,6 +31,13 @@ k8s_images = [{'repository': 'nvidia/k8s-device-plugin', 'tag': '1.10'},
               {'repository': 'kubernetes/tiller', 'tag': 'v2.13.1'},
               {'repository': 'kubernetes/pause', 'tag': '3.1'}]
 
+# custom version.yaml request template
+addons_charts = ['local-volume-provisioner', 'kubernetes-dashboard', 'nginx-ingress']
+component_charts = ['kafka', 'zookeeper', 'cassandra', 'minio', 'osg', 'seaweedfs', 'redisoperator', 'mysql', 'emqx']
+devops_charts = ['elasticsearch', 'elasticsearch-curator', 'filebeat', 'prometheus-operator', 'jaeger-operator']
+common_charts = {'addons_charts': [], 'devops_charts': [], 'component_charts': [], 'guard_charts': [],
+                 'nebula_charts': []}
+
 ssh = paramiko.SSHClient()
 
 
@@ -38,7 +45,7 @@ class get_charts_version:
     # get helm charts version in standard environment
     def get_helm_charts(self, args):
         # ssh = paramiko.SSHClient()
-        cut_line = '{print $9" "$NF}'  # cut charts and namespace
+        cut_line = '{print $8" "$9" "$NF}'  # cut charts and namespace
         try:
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(args.env_ip, args.env_port, args.env_username, args.env_passwd)
@@ -54,10 +61,14 @@ class get_charts_version:
                     pass
                 else:
                     info = i.encode('utf-8').split()
-                    self.helm_list["charts"].append({
-                        "info": info[0],
-                        "namespace": info[-1]
-                    })
+                    if info[0] == "FAILED":
+                        print("Error : Helm sever status is FAILED, server info is [%s]" % info[1])
+                        sys.exit(1)
+                    else:
+                        self.helm_list["charts"].append({
+                            "info": info[1],
+                            "namespace": info[-1]
+                        })
         except Exception as ex:
             print("Error : Failure to get helm charts version : %s" % ex)
             sys.exit(1)  # 获取异常，后面的都不用执行了
@@ -98,8 +109,31 @@ class get_charts_version:
                     "version": chart_version,
                     "namespace": i["namespace"]
                 })
-        self.new_charts = machine_charts
+        self.machine_charts = machine_charts
         # print(self.new_charts)  # 备用勿删
+
+    # convert to common charts
+    def convert_common_charts(self):
+        for k in self.machine_charts["charts"]:
+            name = k.get("name")
+            ns = k.get("namespace")
+            if name in addons_charts:
+                common_charts["addons_charts"].append(k)
+            elif name in devops_charts:
+                common_charts["devops_charts"].append(k)
+            elif name in component_charts:
+                common_charts["component_charts"].append(k)
+            else:
+                if ns == "nebula":
+                    common_charts["nebula_charts"].append(k)
+                elif "senseguard" in name or "aurora" in name:
+                    common_charts["guard_charts"].append(k)
+                else:
+                    print("Error: Have a error key [%s]" % k)
+                    sys.exit(1)
+        self.new_charts = common_charts
+        # print(self.new_charts)
+        # print("\n")
 
 
 # get docker image version in standard environment(通过k8s api获取docker image版本号)
@@ -172,7 +206,7 @@ class get_images_version:
             pass
         elif self.images_dict.get(self.name) and self.images_dict.get(self.name) != self.tag:  # 存在此key,但value不同
             print("Error : image [%s] has multiple version, old version [%s], new version [%s]" % (
-                self.images_dict.get(self.name), self.tag))
+                self.name, self.images_dict.get(self.name), self.tag))
         else:  # 说明正确，赋值
             self.images_dict[self.name] = self.tag
 
@@ -196,18 +230,12 @@ class merge_charts_images:
     def merge_to_versions(self, charts, images):
         self.charts1 = copy.deepcopy(charts)
         self.images1 = copy.deepcopy(images)
-        if not self.charts1["charts"]:
-            print("Error: charts dict is empty")
-            sys.exit(1)
-        elif not self.images1["images"]:
-            print("Error: images dict is empty")
-            sys.exit(1)
-        else:
-            for i in k8s_images:
-                self.images1['images'].append(i)
 
-            self.charts1.update(self.images1)
-            self.all_version = self.charts1
+        for i in k8s_images:
+            self.images1['images'].append(i)
+
+        self.charts1.update(self.images1)
+        self.all_version = self.charts1
         # print(self.all_version)
         with open(json_file, 'w') as fp:
             json.dump(self.all_version, fp)
