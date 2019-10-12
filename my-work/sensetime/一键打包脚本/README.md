@@ -1,7 +1,16 @@
 ## 1. 执行脚本
 + 查看执行帮助: `python main.py -h`
-+ 所有参数: `python main.py IP --env_username=root --env_passwd=123 --env_port=22 --version=v1.2.0`
++ 所有参数: `python main.py IP --env_username=root --env_passwd=123 --env_port=22 --version=v1.2.0 --infra_branch=qudao --tools_branch=dev`
 + 普通传参: `python main.py IP` ,可以只传一个ip，其他参数有默认参数，可以`-h`查看一下
++ 参数解释:
+  - IP : 为获取对应标准环境包的服务器的IP
+  - `--env_username` : 标准环境的用户名
+  - `--env_passwd` : 标准环境的密码
+  - `--env_port` : 标准环境的ssh端口
+  - `--version` : 打包的主版本号
+  - `--infra_branch` : 拉取gitlab上 `infra-ansible` 代码的分支
+  - `--tools_branch` : 拉取gitlab上 `tools` 代码的分支
+  
 
 ## 2. 脚本作用与依赖关系
 ### 2.1 标准环境机器上

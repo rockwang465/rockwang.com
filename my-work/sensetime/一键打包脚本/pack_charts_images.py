@@ -13,7 +13,6 @@ release_path = '/data/packages/sensenebula/releases/'
 mount_registry_path = '/var/lib/registry'  # 默认registry的容器目录
 registry_image = '10.5.6.10/docker.io/registry:2'
 
-work_dir = '/data/packages/sensenebula/pack'
 json_file = 'versions.json'
 env_10_ip = '10.5.6.10'
 env_10_charts_port = '8080'
@@ -42,28 +41,52 @@ class define_dir:
 
 
 class run_registry:
+    def __init__(self):
+        self.mapping_host_port = mapping_host_port
+        self.mapping_docker_port = mapping_docker_port
+        # self.mount_registry_path = mount_registry_path
+        # self.registry_image = registry_image
+        self.state_port = True
+
     # 运行 docker registry
     def run_docker_registry(self, dire):
-        print("Info : Start running docker registry")
-        # 判断 mapping_host_port 对应的端口是否已存在
-        res_port = int(os.popen("ss -lntup |grep %s |wc -l" % mapping_host_port).read().replace("\n", ""))
+        self.registry_name = dire.registry_name + "_" + str(self.mapping_host_port)  # 定义容器名称
 
-        # 判断是否存在同名字的容器名字
-        res_name = int(os.popen(
-            "docker ps | grep %s | grep %s | wc -l" % (dire.registry_name, mapping_host_port)).read().replace("\n", ""))
-        if res_port == 0 and res_name == 0:
-            # 示例 : os.popen("docker run -d -p 8001:5000 --restart=always --name registry -v /data/packages/sensenebula/releases/SenseNebula_G-v1.2.0+20190807104744/images:/var/lib/registry 10.5.6.10/docker.io/registry:2")
-            res = os.popen("docker run -d -p %s:%s --restart=always --name %s -v %s:%s %s" % (
-                mapping_host_port, mapping_docker_port, dire.registry_name, dire.mount_10_path,
-                mount_registry_path, registry_image))
-            self.cont_id = res.read()  # 拿到容器的id
-            if not self.cont_id:
-                print("Error : Failure to run docker registry")
-                sys.exit(1)
-        else:
-            print("Error : Already exists [%s] port or [%s] container name, Please check " % (
-                mapping_host_port, dire.registry_name))
-            sys.exit(1)
+        while self.state_port:
+            print("Info : Start running docker registry")
+            # 判断 mapping_host_port 对应的端口是否已存在
+            res_port = int(os.popen("ss -lntup |grep %s |wc -l" % self.mapping_host_port).read().replace("\n", ""))
+
+            # 判断是否存在同名字的容器名字
+            res_name = int(os.popen(
+                "docker ps | grep %s | grep %s | wc -l" % (self.registry_name, self.mapping_host_port)).read().replace(
+                "\n", ""))
+            if res_port == 0 and res_name == 0:
+                # 示例 : os.popen("docker run -d -p 8001:5000 --restart=always --name registry -v /data/packages/sensenebula/releases/SenseNebula_G-v1.2.0+20190807104744/images:/var/lib/registry 10.5.6.10/docker.io/registry:2")
+                res = os.popen("docker run -d -p %s:%s --restart=always --name %s -v %s:%s %s" % (
+                    self.mapping_host_port, self.mapping_docker_port, self.registry_name, dire.mount_10_path,
+                    mount_registry_path, registry_image))
+
+                self.state_port = False  # 结束while循环
+                self.cont_id = res.read()  # 拿到容器的id
+                if not self.cont_id:
+                    print("Error : Failure to run docker registry")
+                    sys.exit(1)
+            else:
+                if self.mapping_host_port > 8005:
+                    print("Error : Docker port size is greater than 8005")
+                    sys.exit(1)
+                elif 8000 < self.mapping_host_port < 8006:  # 最多允许同时进行5个打包的操作
+                    print("Warning : Already exists port [%s] or [%s] container name, Please check" % (
+                        self.mapping_host_port, self.registry_name))
+                    self.mapping_host_port = self.mapping_host_port + 1  # 加1
+                    self.registry_name = dire.registry_name + "_" + str(self.mapping_host_port)  # 定义容器名称
+                    print("Warning : Use new port [%s], new registry name [%s]" % (
+                        self.mapping_host_port, self.registry_name))
+                else:
+                    print(
+                        "Error : This docker port [%s] not allowed to be used, must be between 8001-8005" % self.mapping_host_port)
+                    sys.exit(1)
         print("Info : Successful running registry")
         print("\n")
 
@@ -71,15 +94,15 @@ class run_registry:
     def del_docker_registry(self):
         res = os.system("docker rm -f %s" % self.cont_id)
         if res == 0:
-            print("Info : Successful to stop docker registry ")
+            print("Info : Successful to stop docker registry")
         else:
             print("Error : Failure to stop docker registry , id : [%s]" % self.cont_id)
 
 
 class get_version:
     # 拿到images版本信息
-    def get_version_data(self):
-        os.chdir(work_dir)
+    def get_version_data(self, args):
+        os.chdir(args.work_dir)  # 示例: args.work_dir: /data/packages/sensenebula/pack/pack63_v1.2.0_20190929162510
         with open(json_file, 'r') as f:
             data = yaml.full_load(f.read())
         if data:
@@ -157,7 +180,8 @@ class pack_charts:
                         env_10_ip, env_10_charts_port, complete_server_name))
                     sys.exit(1)
                 elif res_md5sum != 0:
-                    print("Error : Failure to [md5sum %s.tgz > %s.tgz.md5]" % (complete_server_name, complete_server_name))
+                    print("Error : Failure to [md5sum %s.tgz > %s.tgz.md5]" % (
+                        complete_server_name, complete_server_name))
                     sys.exit(1)
         print("Info : [%s] directory pack successful" % dire.charts_pack_path)
         print("\n")

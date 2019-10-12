@@ -9,6 +9,7 @@ import copy
 
 kube_config_path = '/root/.kube/config'
 kube_config_file = 'kubeconfig'
+local_domain = '127.0.0.1'
 json_file = 'versions.json'
 all_namespace = ['component', 'nebula', 'default', 'logging', 'monitoring']  # 未加: galaxias helm kube-public kube-system
 lack_images = [{'repository': 'elasticsearch/busybox', 'tag': 'latest'},
@@ -146,8 +147,15 @@ class get_images_version:
             # print(stdout.read().decode())
             self.kube_config_body = stdout.read().decode()
             ssh.close()
+
+            # 当config中含有127.0.0.1时，替换为环境的ip。
+            if local_domain in self.kube_config_body:
+                kube_file = self.kube_config_body.replace(local_domain, args.env_ip)
+            else:
+                kube_file = self.kube_config_body
+
             with open(kube_config_file, 'w') as fp:
-                fp.write(self.kube_config_body)
+                fp.write(kube_file)
             # return stdout.read().decode()
         except Exception as ex:
             print("Error : Failure to get kube config : %s" % ex)
@@ -207,6 +215,7 @@ class get_images_version:
         elif self.images_dict.get(self.name) and self.images_dict.get(self.name) != self.tag:  # 存在此key,但value不同
             print("Error : image [%s] has multiple version, old version [%s], new version [%s]" % (
                 self.name, self.images_dict.get(self.name), self.tag))
+            sys.exit(1)
         else:  # 说明正确，赋值
             self.images_dict[self.name] = self.tag
 

@@ -41,24 +41,49 @@ class take_base_files:
 # 拿到 infra-ansible 脚本
 class take_ansbile_file:
     # git 拉取 infra-ansible 代码
-    def git_clone(self, base_pack_path, ansible_git_addr, git_branch):
-        os.chdir(base_pack_path)
-        res = os.system("git clone -b %s %s -q" % (git_branch, ansible_git_addr))
+    def git_clone_infra(self, current_release_path, git_infra_addr, git_infra_branch):
+        os.chdir(current_release_path)
+        res = os.system("git clone -b %s %s -q" % (git_infra_branch, git_infra_addr))
         if res != 0:
-            print("Error : Failure to git clone")
+            print("Error : Failure to git clone infra-ansible code")
+            sys.exit(1)
+
+        # 从infra-ansible目录中把install.sh脚本移出来
+        if os.path.exists('./infra-ansible/install.sh'):
+            res2 = os.system("mv ./infra-ansible/install.sh .")
+        else:
+            print("Error : Failure to move install.sh file")
+            # sys.exit(1)
 
     # 打包ansible代码包
-    def pack_ansible(self, ansible_dir_name, base_pack_path):
-        res1 = os.system("tar -zcf %s.tgz %s" % (ansible_dir_name, ansible_dir_name))
-        if res1 != 0:
-            print("Error : Failure to pack %s")
+    # def pack_ansible(self, args, dire, ansible_dir_name, base_pack_path):
+    #     res1 = os.system("tar -zcf %s-%s+%s.tgz %s" % (ansible_dir_name, args.version, dire.now_time, ansible_dir_name))
+    #     res2 = os.system("md5sum %s-%s+%s.tgz > %s-%s+%s.tgz.md5" % (
+    #         ansible_dir_name, args.version, dire.now_time, ansible_dir_name, args.version, dire.now_time))
+    #
+    #     if res1 != 0 or res2 != 0:
+    #         print("Error : Failure to pack %s")
+    #         sys.exit(1)
+    #     # 判断删除的文件路径不为/ 目录
+    #     if base_pack_path == "/":
+    #         print("Error : [%s] path error" % base_pack_path)
+    #         sys.exit(1)
+    #     else:
+    #         res3 = os.system("rm -rf %s/%s" % (base_pack_path, ansible_dir_name))
+
+    # git 拉取 tools 代码，并把deploy移出来，tools目录删除
+    def git_clone_tools(self, current_release_path, git_tools_addr, git_tools_branch):
+        os.chdir(current_release_path)
+        res = os.system("git clone -b %s %s -q" % (git_tools_branch, git_tools_addr))
+        if res != 0:
+            print("Error : Failure to git clone tools code")
             sys.exit(1)
-        # 判断删除的文件路径不为/ 目录
-        if base_pack_path == "/":
-            print("Error : [%s] path error" % base_pack_path)
+
+        # 从tools目录中把deploy目录移出来，并删除tools目录
+        res2 = os.system("mv ./tools/deploy . && rm -rf ./tools/")
+        if res2 != 0:
+            print("Error : Failure to move deploy or delete tools dir")
             sys.exit(1)
-        else:
-            res2 = os.system("rm -rf %s/%s" % (base_pack_path, ansible_dir_name))
 
 
 # 整个release目录打包
@@ -92,13 +117,13 @@ class pack_release:
             print("Error : Not found [%s] file" % json_file_path)
             sys.exit(1)
 
-    # 打包 SenseNebula-G-xxx 为 tgz 包
+    # 打包 SenseNebula-G-xxx 为 tar 包
     def pack_all(self, release_path, release_package_name):
         os.chdir(release_path)
-        res1 = os.system("tar -zcf %s.tgz %s" % (release_package_name, release_package_name))
+        res1 = os.system("tar -cf %s.tar %s" % (release_package_name, release_package_name))
         if res1 != 0:
-            print("Error : Failure to pack %s.tgz" % release_package_name)
+            print("Error : Failure to pack %s.tar" % release_package_name)
             sys.exit(1)
-        res2 = os.system("md5sum %s.tgz > %s.tgz.md5" % (release_package_name, release_package_name))
+        res2 = os.system("md5sum %s.tar > %s.tar.md5" % (release_package_name, release_package_name))
         if res2 != 0:
             print("Error : Failure to make md5")
