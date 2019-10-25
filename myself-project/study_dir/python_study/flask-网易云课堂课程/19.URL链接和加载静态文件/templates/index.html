@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入css文件-->
+    <!-- static表示链接的目录， filename为具体static下的文件路径-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
+</head>
+<body>
+<div>
+    <img src="{{ url_for('static', filename='images/知了课堂-logo.png')}}" alt="">
+</div>
+<!--<a href="/login/">登录</a>-->
+<a href="{{ url_for('login') }}">登录</a>
+<script src="{{ url_for('static', filename='js/index.js')}}">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过滤器</title>
+</head>
+<body>
+    <!-- 1. 通过过滤器，如果不存在变量，用后面的默认图片 (当用户不存在图片，则显示默认系统配的图片)-->
+    <img src="{{ img_url|default('https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1029438222,3343725378&fm=26&gp=0.jpg') }}" alt="">
+
+    <h3>总评论条数: ({{ comment | length }})</h3>  <!--2.通过过滤器 | (管道符)求长度-->
+
+    {%  for i in comment %}
+    <li>
+        <p>用户名: {{ i.name }}</p>
+        <p>评论内容: {{ i.comment }}</p>
+        <hr>
+    </li>
+    {%  endfor %}
+</body>
+</html>

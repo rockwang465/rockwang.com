@@ -9,6 +9,7 @@ tcp_client.connect(ip_port)
 
 while True:
     msg = input('>>>:').strip()
+    if not msg: continue  # 当输入空时不发送
     # 发信息:
     tcp_client.send(msg.encode('utf-8'))
     print('客户端已发送消息')

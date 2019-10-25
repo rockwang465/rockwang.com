@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Index</h1>
+<h5>{{k1}}</h5>
+<h5>{{k2}}</h5>
+<ul>
+    {% for item in k2%}
+        <li>{{item}}</li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for k,v in k3.items() %}
+        <li>{{k}}--{{v}}</li>
+    {%endfor%}
+</ul>
+
+<hr>
+
+<p>{{k4()|safe}}</p>  <!-- k4()为调用此函数，safe表示转义h1标签  -->
+
+</body>
+</html>
