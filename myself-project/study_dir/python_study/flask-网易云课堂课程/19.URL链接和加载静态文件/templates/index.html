@@ -4,15 +4,19 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!--引入css文件-->
-    <!-- static表示链接的目录， filename为具体static下的文件路径-->
+    <!-- 2. url_for 引用css文件，static表示链接的目录， filename为具体static下的文件路径-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
 </head>
 <body>
 <div>
+    <!--3. url_for 引用图片-->
     <img src="{{ url_for('static', filename='images/知了课堂-logo.png')}}" alt="">
 </div>
 <!--<a href="/login/">登录</a>-->
+<!--1. url_for后面引用login视图函数名，用于反转url-->
 <a href="{{ url_for('login') }}">登录</a>
+
+<!--4. url_for引用js文件-->
 <script src="{{ url_for('static', filename='js/index.js')}}">
 
 </script>

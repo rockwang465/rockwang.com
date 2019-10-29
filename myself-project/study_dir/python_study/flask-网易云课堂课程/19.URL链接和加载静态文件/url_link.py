@@ -2,7 +2,6 @@
 
 from flask import Flask
 from flask import render_template  # 模版渲染方法
-from flask import url_for
 
 app = Flask(__name__)
 
