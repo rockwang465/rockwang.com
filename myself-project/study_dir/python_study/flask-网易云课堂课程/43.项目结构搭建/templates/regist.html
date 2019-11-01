@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}注册{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/regist.css')}}">
+{% endblock %}
+
+{% block main %}
+<h3 class="page-title">注册</h3>
+<!--必须写POST，否则默认GET请求；action=""则表示当前页面-->
+<form action="" method="POST">
+    <div class="form-container">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="手机号码">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="用户名">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="密码">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="重复密码">
+        </div>
+        <!--<button type="submit" class="btn btn-default">Submit</button>-->
+        <button type="button" class="btn btn-primary btn-block">立即注册</button>
+    </div>
+</form>
+{% endblock %}

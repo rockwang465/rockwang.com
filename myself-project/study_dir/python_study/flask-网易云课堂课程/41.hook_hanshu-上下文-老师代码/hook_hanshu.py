@@ -1,6 +1,6 @@
-#encoding: utf-8
+# encoding: utf-8
 
-from flask import Flask,render_template,request,session,redirect,url_for,g
+from flask import Flask, render_template, request, session, redirect, url_for, g
 import os
 
 app = Flask(__name__)
@@ -9,12 +9,13 @@ app.config['SECRET_KEY'] = os.urandom(24)
 
 @app.route('/')
 def hello_world():
-    print 'index'
+    print('index')
     return render_template('index.html')
 
-@app.route('/login/',methods=['GET','POST'])
+
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
-    print 'login'
+    print('login')
     if request.method == 'GET':
         return render_template('login.html')
     else:
@@ -27,12 +28,12 @@ def login():
         else:
             return u'用户名或密码错误！'
 
+
 @app.route('/edit/')
 def edit():
     # user_id = session.get('user_id')
     # if user_id:
     #     user = User.query.filter(User.id == user_id).first()
-
 
     # if hasattr(g,'username'):
     #     return render_template('edit.html')
@@ -52,7 +53,7 @@ def my_before_request():
     # user = User.query.filter(User.id==user_id).first()
     # g.user = user
     if session.get('username'):
-        g.username = session.get('username',username='zhiliao')
+        g.username = session.get('username', username='zhiliao')
 
 
 @app.context_processor
@@ -60,7 +61,7 @@ def my_context_processor():
     # username = session.get('username')
     # if username:
     #     return {'username':username}
-    return {'username':'111111'}
+    return {'username': '111111'}
 
 
 if __name__ == '__main__':
