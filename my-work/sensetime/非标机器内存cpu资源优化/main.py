@@ -95,6 +95,7 @@ class get_charts_packages:
         # print(self.tmp_override_file)
 
 
+# 2. 定义修改需要优化服务的包中values.yaml及override文件中的request.memory request.cpu的大小，及configmap的jvm大小的函数方法
 class modify_request_values:
     # 修改/tmp 目录下的override文件中的cpu memory
     def modify_tmp_args(self, server_name, tmp_yaml_path):  # modify_file_path为需要修改cpu memory的文件
@@ -161,7 +162,7 @@ class modify_request_values:
             yaml.dump(data, f2)
 
 
-# 获取之前保存字典中的override文件路径，及各服务的values.yaml的路径
+# 3. 获取之前保存字典中的override文件路径，及各服务的values.yaml的路径
 class get_modify_file:
     # 修改/tmp/目录下override文件中request的memory及cpu的大小
     def modify_tmp_override(self, tmp_override_file):
@@ -189,7 +190,7 @@ class get_modify_file:
                 modify_values.modify_values_args(server_name, values_yaml_path)
 
 
-# 资源优化后，开始更新服务
+# 4. 资源优化后，开始更新服务
 class update_optimization_service:
     def upgrade_service(self):
         for key_ns in optimization_server_name:
