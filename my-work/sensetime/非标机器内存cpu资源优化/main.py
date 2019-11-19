@@ -37,9 +37,9 @@ tmp_override_file = {
 
 # 0. Welcome
 def Welcome():
-    print("+" * 20)
-    print("Welcome use source optimization scripts")
-    print("+" * 20)
+    print("+" * 45)
+    print("+ Welcome use source optimization scripts ! +")
+    print("+" * 45)
 
 
 # 1. helm list 获取版本号，并写入optimization_server.txt中
@@ -204,6 +204,9 @@ class update_optimization_service:
 
 
 if __name__ == '__main__':
+    # 0. 欢迎语
+    Welcome()
+
     # 1. 获取需要优化服务的版本信息、拉取对应版本的包、找到/tmp/ 目录下的override文件
     get_packages = get_charts_packages()
     get_packages.get_helm_version()  # A.获取需要优化服务的版本信息
