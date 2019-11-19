@@ -1,11 +1,17 @@
+#!/usr/bin/env python
 # encoding: utf-8
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# creater: Rock Wang                                             +
+# creation time: 2019-11-19                                      +
+# description: Memory and CPU resources for optimizing services  +
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 import os
 import sys
 import yaml
 import time
 
-ns = ['component', 'logging', 'monitoring', 'nebula']
 optimization_server_name = {
     'component': ['cassandra', 'kafka'],
     'logging': ['elasticsearch'],
@@ -29,11 +35,12 @@ tmp_override_file = {
 }
 
 
-# 获取charts包
-# A. 通过helm list | grep 'xxx' 获取版本号，写入到optimization_server.txt中，
-#    再从optimization_server.txt中读取版本号，然后通过10.151.3.75获取charts包。
-# B. 通过helm list | grep 'xxx' 获取版本号，并从本地/data/charts/获取charts包。 -- 不合适
-# C. 通过helm list | grep 'xxx' 获取版本号，并从10.151.3.75获取charts包。 -- 不合适
+# 0. Welcome
+def Welcome():
+    print("+" * 20)
+    print("Welcome use source optimization scripts")
+    print("+" * 20)
+
 
 # 1. helm list 获取版本号，并写入optimization_server.txt中
 class get_charts_packages:
@@ -185,16 +192,14 @@ class get_modify_file:
 # 资源优化后，开始更新服务
 class update_optimization_service:
     def upgrade_service(self):
-        print(1)
         for key_ns in optimization_server_name:
             for server_name in optimization_server_name.get(key_ns):
                 tmp_override_new_file = "/tmp/" + server_name + ".values.yaml"
-                # print(tmp_override_new_file)
                 os.chdir("%s/%s" % (packages_path, server_name))
-                # print("%s/%s" % (packages_path, server_name))
-                os.system("helm upgrade -i %s-%s --namespace=%s -f /tmp/%s.values.yaml ." % (
-                    server_name, key_ns, key_ns, server_name))
-                # print("helm upgrade -i %s-%s --namespace=%s -f /tmp/%s.values.yaml ." % (server_name, key_ns, key_ns, server_name))
+                os.system("helm upgrade -i %s-%s --namespace=%s -f %s . >/dev/null 2>&1" % (
+                    server_name, key_ns, key_ns, tmp_override_new_file))
+                print("Info : updated [%s] service, please check [kubectl get pods -n %s | grep %s]" % (
+                    server_name, key_ns, server_name))
                 time.sleep(2)
 
 
