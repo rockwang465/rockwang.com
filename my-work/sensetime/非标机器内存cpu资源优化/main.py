@@ -211,7 +211,7 @@ if __name__ == '__main__':
     # 1. 获取需要优化服务的版本信息、拉取对应版本的包、找到/tmp/ 目录下的override文件
     get_packages = get_charts_packages()
     get_packages.get_helm_version()  # A.获取需要优化服务的版本信息
-    # get_packages.fetch_helm_packages()  # B.拉取对应版本的包
+    get_packages.fetch_helm_packages()  # B.拉取对应版本的包
     get_packages.get_override_name()  # C.找到/tmp/ 目录下的override文件
 
     # 2. 定义修改需要优化服务的包中values.yaml及override文件中的request.memory request.cpu的大小，及configmap的jvm大小的函数方法
