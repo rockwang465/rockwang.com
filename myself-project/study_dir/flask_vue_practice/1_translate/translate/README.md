@@ -89,7 +89,6 @@ import Axios from 'axios'
 Vue.prototype.$axios = Axios;
 ```
 
-
 ### C.api使用
 + 在A中说了，有个[documentation](https://tech.yandex.com/translate/doc/dg/concepts/About-docpage)
 + 进去，点击`Translate text`
@@ -144,3 +143,28 @@ methoes:{
     }
 ```
 
+### D.多语言翻译
++ 这里有每个语言对应的ui code : `https://tech.yandex.com/translate/doc/dg/concepts/api-overview-docpage/#api-overview__languages`
++ 即传入的`lang=`后的code，例如:en为英语、ko为韩语、ja为日语...
++ 然后使用v-model绑定语言选项select标签，知道用户选择哪个语言，并放入子组件向父组件传参的函数中。
++ 如下，上面定义了v-model在select中，并传入了2个参数。
+```
+                <select v-model='lang'>  // 绑定了语言事件，用于传参选择语言
+                    <option value='en'>英语</option>
+                    <option value='ko'>韩语</option>
+                    <option value='ja'>日语</option>
+                    <option value='th'>泰语</option>
+                    <option value='fr'>法语</option>
+                    <option value='ru'>俄语</option>
+                </select>
+                <button class="translate_button" @click="translate_submit">翻译</button>
+                ... ...
+        methods: {
+            translate_submit() {
+                this.$emit('get_text', this.translate_text, this.lang); //给父组件传需要翻译的内容和语言，这里传了2个值哦
+
+            }
+        }
+```
+
++ ok,至此已全部完成基本框架，具体见代码。

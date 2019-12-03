@@ -22,15 +22,16 @@
                 translate_body: 'App default value',
                 translate_url: 'https://translate.yandex.net/api/v1.5/tr.json/translate',
                 translate_key: '?key=trnsl.1.1.20191202T081747Z.69aacfde7fc5e5c3.cd884f584fcd2b26954a68bbaeeb6ebf938008f1',
-                translate_lang: '&lang=en',
+                translate_lang: '&lang=',
                 translate_result: '欢迎使用在线翻译'
             }
         },
         methods: {
-            // 拿到子组件传来的用户输入的内容，通过api调用，进行翻译成英文，并发送给另一个显示翻译后内容的组件(translateOutput)
-            translate_text(value) {  /*定义方法，获取子组件传过来的值*/
+            // 拿到子组件传来的用户输入的内容，通过api调用，进行翻译成对应语言的内容，并发送给另一个显示翻译后内容的组件(translateOutput)
+            translate_text(text,lang) {  /*定义方法，获取子组件传过来的值*/
                 // console.log(this.translate_body)
-                this.translate_body = value;
+                this.translate_body = text;  //传入需要翻译的字符串
+                // this.translate_lang = this.translate_lang + lang;  // 传入需要翻译的语言
 
                 // // A.vue-resoure请求
                 // // console.log(this.translate_url + this.translate_key + '&text=' + this.translate_body + this.translate_lang);
@@ -41,7 +42,7 @@
                 //     })
 
                 // B.axios请求
-                this.$axios.get(this.translate_url + this.translate_key + '&text=' + this.translate_body + this.translate_lang)
+                this.$axios.get(this.translate_url + this.translate_key + '&text=' + this.translate_body + this.translate_lang + lang)
                     .then(res=>{
                         // console.log(res.data.text[0]); //拿到翻译结果的第一个内容
                         this.translate_result = res.data.text[0]

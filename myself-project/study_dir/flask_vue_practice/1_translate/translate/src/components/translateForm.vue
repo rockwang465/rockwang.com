@@ -3,9 +3,13 @@
         <div class='outside_info'>
             <div class='inner_info'>
                 <input type='text' v-model="translate_text" placeholder='请输入中文'>
-                <select>
-                    <option value='en'>English</option>
-                    <option value='tradition_cn'>中文繁体</option>
+                <select v-model='lang'>
+                    <option value='en'>英语</option>
+                    <option value='ko'>韩语</option>
+                    <option value='ja'>日语</option>
+                    <option value='th'>泰语</option>
+                    <option value='fr'>法语</option>
+                    <option value='ru'>俄语</option>
                 </select>
                 <button class="translate_button" @click="translate_submit">翻译</button>
             </div>
@@ -18,14 +22,15 @@
         name: 'translateForm',
         data: function () {
             return {
-                translate_text: ''
+                translate_text: '',
+                lang: 'en' //设置默认语言
             }
         },
         methods: {
             translate_submit() {
                 // alert(this.translate_text);
                 // e.preventDefault()  // 取消默认事件触发
-                this.$emit('get_text', this.translate_text); /*给父组件传需要翻译的内容*/
+                this.$emit('get_text', this.translate_text, this.lang); //给父组件传需要翻译的内容和语言，这里传了2个值哦
                 // this.translate_text = ''
             }
         }
