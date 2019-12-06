@@ -1,0 +1,18 @@
+{
+  "hero_detail_info": [
+    {
+      "id": 1,
+      "name": "暗裔剑魔",
+      "country": "china",
+      "comment": "physical",
+      "img": "http://192.168.137.128:6001/images/heros_detail_info/暗裔剑魔_亚托克斯.jpg"
+    },
+    {
+      "id": 2,
+      "name": "九尾妖狐",
+      "country": "china",
+      "comment": "magic",
+      "img": "http://192.168.137.128:6001/images/heros_detail_info/九尾妖狐_阿狸.jpg"
+    }
+  ]
+}
