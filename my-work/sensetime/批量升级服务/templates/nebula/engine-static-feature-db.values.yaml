@@ -1,0 +1,65 @@
+image:
+  repository: "{{ docker_registry }}/nebula-test/engine-static-feature-db"
+
+{% if deploy_mode == "standalone" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "127.0.0.1"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+proxy:
+  replicas: 1
+  service:
+    disperse: 1
+
+worker:
+  shardSets: 1
+  replicas: 1
+
+cassandra:
+  hosts:
+    - cassandra-default-0.component.svc.cluster.local
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "{{ license_ca.slave }}"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+minio:
+  bucket: snapshot-alert-feature-db
+
+proxy:
+  replicas: 3
+  resources:
+    requests:
+      cpu: "1"
+      memory: 2Gi
+    limits:
+      cpu: "2"
+      memory: 2Gi
+
+worker:
+  shardSets: 3
+  replicas: 2
+  nodeNames: [
+{%- for item in hosts -%}
+    "{{ item }}"
+    {%- if not loop.last %},{% endif -%}
+{%- endfor -%}
+  ]
+  resources:
+    requests:
+      cpu: "1"
+      memory: "4Gi"
+    limits:
+      cpu: "3"
+      memory: "4Gi"
+{% endif %}

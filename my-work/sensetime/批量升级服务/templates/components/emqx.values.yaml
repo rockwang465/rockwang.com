@@ -1,0 +1,12 @@
+namespace: component
+apiserver: https://{{ nodes[0]['ip'] }}:6443
+
+deployment:
+{% if deploy_mode == "standalone" %}
+  replicaCount: 1
+{% endif %}
+{% if deploy_mode == "distributed" %}
+  replicaCount: 3
+{% endif %}
+  image: "{{ docker_registry }}/component/emqx:v3.1.2-0.0.1"
+  imagePullPolicy: IfNotPresent

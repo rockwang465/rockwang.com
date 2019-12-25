@@ -1,0 +1,65 @@
+image:
+  repository: {{ docker_registry }}/nebula-test/engine-video-ingress-service
+
+{% if deploy_mode == "standalone" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "127.0.0.1"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+bs:
+  replicas: 1
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "1Gi"
+    limits:
+      cpu: "1.5"
+      memory: "1Gi"
+
+worker:
+  replicas: 1
+  resources:
+    requests:
+      cpu: "1"
+      memory: "1Gi"
+    limits:
+      cpu: "5"
+      memory: "1Gi"
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+bs:
+  replicas: 3
+
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "{{ license_ca.slave }}"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+bs:
+  replicas: 3
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "1Gi"
+    limits:
+      cpu: "1.5"
+      memory: "1Gi"
+
+worker:
+  replicas: 3
+  resources:
+    requests:
+      cpu: "1"
+      memory: "1Gi"
+    limits:
+      cpu: "5"
+      memory: "1Gi"
+{% endif %}

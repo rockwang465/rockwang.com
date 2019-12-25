@@ -1,0 +1,174 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: device-scheduled-cronjob
+  namespace: default
+spec:
+  failedJobsHistoryLimit: 0
+  successfulJobsHistoryLimit: 1
+  startingDeadlineSeconds: 3600
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+          - name: harbor 
+          containers:
+          - name: device-scheduled
+            image: {{ docker_registry }}/devops/centos:7.4.1708
+            command:
+            - /bin/bash
+            - -c 
+            - 'curl -v -X POST -k "https://nginx-ingress-controller.kube-system/senseguard-scheduled/api/v1/scheduled/device" -H "accept: */*"'
+          restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: export-scheduled-cronjob
+  namespace: default
+spec:
+  failedJobsHistoryLimit: 0
+  startingDeadlineSeconds: 3600
+  schedule: "0 1 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+          - name: harbor 
+          containers:
+          - name: export-scheduled
+            image: {{ docker_registry }}/devops/centos:7.4.1708
+            command:
+            - /bin/bash
+            - -c 
+            - 'curl -v -X DELETE -k "https://nginx-ingress-controller.kube-system/senseguard-scheduled/api/v1/scheduled/export/file?index=7" -H "accept: */*"'
+          restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: index-scheduled-cronjob
+  namespace: default
+spec:
+  failedJobsHistoryLimit: 0
+  startingDeadlineSeconds: 3600
+  schedule: "0 1 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+          - name: harbor 
+          containers:
+          - name: index-scheduled
+            image: {{ docker_registry }}/devops/centos:7.4.1708
+            command:
+            - /bin/bash
+            - -c 
+            - 'curl -v -X DELETE -k "https://nginx-ingress-controller.kube-system/senseguard-scheduled/api/v1/scheduled/es/index?index=90" -H "accept: */*"'
+          restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: target-scheduled-cronjob
+  namespace: default
+spec:
+  failedJobsHistoryLimit: 0
+  startingDeadlineSeconds: 3600
+  schedule: "0 0 */1 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+          - name: harbor 
+          containers:
+          - name: target-scheduled
+            image: {{ docker_registry }}/devops/centos:7.4.1708
+            command:
+            - /bin/bash
+            - -c 
+            - 'curl -v -X DELETE -k "https://nginx-ingress-controller.kube-system/senseguard-scheduled/api/v1/scheduled/target/expiration?index=7" -H "accept: */*"'
+          restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: attendance-scheduled-cronjob
+  namespace: default
+spec:
+  failedJobsHistoryLimit: 0
+  startingDeadlineSeconds: 3600
+  schedule: "30 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+          - name: harbor
+          containers:
+          - name: attendance-scheduled
+            image: {{ docker_registry }}/devops/centos:7.4.1708
+            command:
+            - /bin/bash
+            - -c
+            - 'curl -v -X GET -k "https://nginx-ingress-controller.kube-system/senseguard-attendance-management/api/v1/attendance/attendance" -H "accept: */*"'
+          restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: target-osg-scheduled-cronjob
+  namespace: default
+spec:
+  failedJobsHistoryLimit: 0
+  startingDeadlineSeconds: 3600
+  schedule: "0 0 */1 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+          - name: harbor
+          containers:
+          - name: target-osg-scheduled
+            image: {{ docker_registry }}/devops/centos:7.4.1708
+            command:
+            - /bin/bash
+            - -c
+            - 'curl -v -X DELETE -k "https://nginx-ingress-controller.kube-system/senseguard-scheduled/api/v1/scheduled/target/expirationTargetOSG?index=91" -H "accept: */*"'
+          restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: guest-scheduled-cronjob
+  namespace: default
+spec:
+  failedJobsHistoryLimit: 0
+  startingDeadlineSeconds: 3600
+  schedule: "0 0 */1 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+          - name: harbor
+          containers:
+          - name: guest-scheduled
+            image: {{ docker_registry }}/devops/centos:7.4.1708
+            command:
+            - /bin/bash
+            - -c
+            - 'curl -v -X DELETE -k "https://nginx-ingress-controller.kube-system/senseguard-scheduled/api/v1/scheduled/guest/index?index=90" -H "accept: */*"'
+          restartPolicy: OnFailure

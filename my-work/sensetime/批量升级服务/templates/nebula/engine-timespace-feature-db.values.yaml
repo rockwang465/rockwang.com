@@ -1,0 +1,153 @@
+image:
+  repository: {{ docker_registry }}/nebula-test/gpu-searcher
+
+{% if deploy_mode == "standalone" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "127.0.0.1"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+deployGroup:
+  count: 1
+  
+coordinator:
+  replicas: 1
+  resources:
+    requests:
+      cpu: "1"
+      memory: "2Gi"
+    limits:
+      cpu: "1"
+      memory: "2Gi"
+
+reducer:
+  replicas: 1
+  resources:
+    requests:
+      cpu: "1"
+      memory: "2Gi"
+    limits:
+      cpu: "1"
+      memory: "2Gi"
+
+worker:
+  replicas: 1
+  resources:
+    requests:
+      cpu: "2"
+      memory: "4Gi"
+    limits:
+      cpu: "2"
+      memory: "4Gi"
+      nvidia.com/gpu:
+  env:
+    - name: JAEGER_SERVICE_NAME
+      value: engine-timespace-feature-db-worker
+    - name: JAEGER_SAMPLER_TYPE
+      value: const
+    - name: JAEGER_SAMPLER_PARAM
+      value: "1"
+    - name: OMP_NUM_THREADS
+      value: "3"
+    - name: NVIDIA_VISIBLE_DEVICES
+      value: "0"
+
+cassandra:
+  keyspace: viper_test
+  hosts:
+    - cassandra-default-0.component.svc.cluster.local
+
+zookeeper:
+  endpoints:
+    - Address: zookeeper-default-0.component.svc.cluster.local
+      Port: 2181
+
+kafka:
+  brokers:
+    - Address: kafka-default-0.kafka-default.component.svc.cluster.local
+      Port: 9092
+
+extraArgs:
+  objectType: "face"
+  featureVersion: 24702
+  shardExpiredDays: 90
+
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "{{ license_ca.slave }}"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+cassandra:
+  keyspace: viper_test
+  hosts:
+    - cassandra-default-0.component.svc.cluster.local
+    - cassandra-default-1.component.svc.cluster.local
+    - cassandra-default-2.component.svc.cluster.local
+
+
+zookeeper:
+  endpoints:
+    - Address: zookeeper-default-0.component.svc.cluster.local
+      Port: 2181
+    - Address: zookeeper-default-1.component.svc.cluster.local
+      Port: 2181
+    - Address: zookeeper-default-2.component.svc.cluster.local
+      Port: 2181
+
+kafka:
+  brokers:
+    - Address: kafka-default-0.kafka-default.component.svc.cluster.local
+      Port: 9092
+    - Address: kafka-default-1.kafka-default.component.svc.cluster.local
+      Port: 9092
+    - Address: kafka-default-2.kafka-default.component.svc.cluster.local
+      Port: 9092
+
+minio:
+  bucket: snapshot-timespace-feature-db
+
+deployGroup:
+  count: 2
+  groupNodeSelectors:
+    - kubernetes.io/hostname: "{{ hosts[0] }}"
+    - kubernetes.io/hostname: "{{ hosts[1] }}"
+
+coordinator:
+  replicas: 1
+  resources:
+    requests:
+      cpu: "1"
+      memory: "1Gi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+
+reducer:
+  replicas: 1
+  resources:
+    requests:
+      cpu: "1"
+      memory: "2Gi"
+    limits:
+      cpu: "1"
+      memory: "2Gi"
+
+worker:
+  replicas: 1
+  resources:
+    requests:
+      cpu: "1"
+      memory: "4Gi"
+    limits:
+      cpu: "1"
+      memory: "4Gi"
+{% endif %}

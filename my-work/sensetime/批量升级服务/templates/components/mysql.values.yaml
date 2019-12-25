@@ -1,0 +1,41 @@
+imageRegistry: "{{ docker_registry }}"
+imagePullPolicy: IfNotPresent
+
+{% if deploy_mode == "standalone" %}
+cluster:
+  replicas: 1
+
+router:
+  replicas: 1
+
+mysqlHosts: {{ hosts|first }}
+
+mysqlInnodbNumMembers: "1"
+
+grSeedsInHostNetwork: "{{ hosts|first }}:33061"
+
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+cluster:
+  replicas: 3
+
+router:
+  replicas: 3
+
+mysqlHosts: "
+{%- for item in hosts -%}
+    {{ item }}
+    {%- if not loop.last %},{% endif -%}
+{%- endfor -%}
+"
+
+mysqlInnodbNumMembers: "2"
+
+grSeedsInHostNetwork: "
+{%- for item in hosts -%}
+    {{ item }}:33061
+    {%- if not loop.last %},{% endif -%}
+{%- endfor -%}
+"
+{% endif %}

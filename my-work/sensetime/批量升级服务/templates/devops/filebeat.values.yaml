@@ -1,0 +1,5 @@
+---
+image:
+  repository: {{ docker_registry }}/beats/filebeat-oss
+  tag: 6.5.4
+  pullPolicy: IfNotPresent

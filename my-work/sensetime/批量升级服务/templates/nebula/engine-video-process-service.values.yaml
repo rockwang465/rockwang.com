@@ -1,0 +1,52 @@
+image:
+  repository: {{ docker_registry }}/nebula-test/engine-video-process-service
+
+{% if deploy_mode == "standalone" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "127.0.0.1"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+manager:
+  replicas: 1
+
+worker:
+  replicas: {{ standalone_vps_pods_num }}
+  resources:
+    requests:
+      cpu: "1.5"
+      memory: "3.5Gi"
+    limits:
+      cpu: "2.5"
+      memory: "3.5Gi"
+      nvidia.com/gpu: 1
+  service:
+    verbose: true
+
+zookeeper:
+  endpoints:
+    - zookeeper-default-0.component.svc.cluster.local:2181
+
+kafka:
+  brokers:
+    - kafka-default-0.kafka-default.component.svc.cluster.local:9092
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "{{ license_ca.slave }}"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+master:
+  replicas: 3
+
+worker:
+  replicas: 6
+{% endif %}

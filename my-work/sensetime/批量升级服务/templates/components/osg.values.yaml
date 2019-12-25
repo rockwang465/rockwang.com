@@ -1,0 +1,33 @@
+image:
+  repository: "{{ docker_registry }}/nebula-test/infra-object-storage-gateway"
+  pullPolicy: IfNotPresent
+
+
+{% if deploy_mode == "standalone" %}
+zookeeper:
+  endpoints:
+    - zookeeper-default-0.component.svc.cluster.local
+
+seaweedfs:
+  masters:
+    - seaweedfs-master-0.seaweedfs-master.component.svc.cluster.local:9333
+
+
+{% endif %}
+
+
+{% if deploy_mode == "distributed" %}
+
+zookeeper:
+  endpoints:
+    - zookeeper-default-0.component.svc.cluster.local
+    - zookeeper-default-1.component.svc.cluster.local
+    - zookeeper-default-2.component.svc.cluster.local
+
+seaweedfs:
+  masters:
+    - seaweedfs-master-0.seaweedfs-master.component.svc.cluster.local:9333
+    - seaweedfs-master-1.seaweedfs-master.component.svc.cluster.local:9333
+    - seaweedfs-master-2.seaweedfs-master.component.svc.cluster.local:9333
+
+{% endif %}

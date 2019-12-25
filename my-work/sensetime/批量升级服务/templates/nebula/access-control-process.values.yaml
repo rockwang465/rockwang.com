@@ -1,0 +1,70 @@
+image:
+  repository: "{{ docker_registry }}/nebula-test/access-control-process-service"
+
+{% if deploy_mode == "standalone" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "127.0.0.1"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+master:
+  replicas: 1
+
+worker:
+  replicas: 1
+  protocol: https
+
+zookeeper:
+  endpoints:
+    - zookeeper-default-0.component.svc.cluster.local:2181
+
+kafka:
+  brokers:
+    - kafka-default-0.kafka-default.component.svc.cluster.local:9092
+
+extraArgs:
+  ipsAddress: dns:///engine-face-extract-service.nebula.svc.cluster.local:8077
+  sfdAddress: dns:///engine-alert-feature-db-proxy.nebula.svc.cluster.local:8030
+  osgAddress: dns:///osg-default.component.svc.cluster.local:8088
+  featureVersion: 24702
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "{{ license_ca.slave }}"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+master:
+  replicas: 3
+  resources:
+    requests:
+      cpu: "1"
+      memory: 0.5Gi
+    limits:
+      cpu: "1"
+      memory: 0.5Gi
+
+worker:
+  protocol: https
+  replicas: 3
+  resources:
+    requests:
+      cpu: "1"
+      memory: 0.5Gi
+    limits:
+      cpu: "1.5"
+      memory: 0.5Gi
+
+extraArgs:
+  ipsAddress: dns:///engine-face-extract-service.nebula.svc.cluster.local:8077
+  sfdAddress: dns:///engine-alert-feature-db-proxy.nebula.svc.cluster.local:8030
+  osgAddress: dns:///osg-default.component.svc.cluster.local:8088
+  featureVersion: 24702
+{% endif %}

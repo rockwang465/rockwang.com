@@ -1,0 +1,97 @@
+---
+image:
+  repository: {{ docker_registry }}/elasticsearch/curator
+  tag: 5.5.4
+  pullPolicy: IfNotPresent
+
+configMaps:
+  # Delete indices older than 90 days
+  action_file_yml: |-
+    ---
+    actions:
+      1:
+        action: delete_indices
+        description: "Clean up ES by deleting old indices"
+        options:
+          continue_if_exception: False
+          disable_action: False
+          ignore_empty_list: True
+        filters:
+        - filtertype: age
+          source: name
+          direction: older
+          timestring: '%Y-%m-%d'
+          unit: days
+          unit_count: 90
+          exclude: False
+{% if deploy_mode == "standalone" %}
+      2:
+        action: replicas
+        description: "Reduce the replica count to 0 for single node"
+        options:
+          count: 0
+          wait_for_completion: True
+          disable_action: False
+          ignore_empty_list: True
+        filters:
+        - filtertype: pattern
+          kind: timestring
+          value: '%Y-%m-%d'
+          exclude: False
+{% endif %}
+      3:
+        action: delete_indices
+        description: "Clean up ES by deleting old indices"
+        options:
+          continue_if_exception: False
+          disable_action: False
+          ignore_empty_list: True
+        filters:
+        - filtertype: age
+          source: name
+          direction: older
+          timestring: '%Y.%m.%d'
+          unit: days
+          unit_count: 7
+          exclude: False
+{% if deploy_mode == "standalone" %}
+      4:
+        action: replicas
+        description: "Reduce the replica count to 0 for single node"
+        options:
+          count: 0
+          wait_for_completion: True
+          disable_action: False
+          ignore_empty_list: True
+        filters:
+        - filtertype: pattern
+          kind: timestring
+          value: '%Y.%m.%d'
+          exclude: False
+{% endif %}
+      5:
+        action: delete_indices
+        description: "Clean up ES by deleting old indices"
+        options:
+          continue_if_exception: False
+          disable_action: False
+          ignore_empty_list: True
+        filters:
+        - filtertype: age
+          source: name
+          direction: older
+          timestring: '%Y-%m-%d'
+          unit: days
+          unit_count: 5
+          exclude: False
+        - filtertype: pattern
+          kind: regex
+          value: '^jaeger-.*$'
+          exclude: False
+  # Having config_yaml WILL override the other config
+  config_yml: |-
+    ---
+    client:
+      hosts:
+        - elasticsearch-client.logging
+      port: 9200

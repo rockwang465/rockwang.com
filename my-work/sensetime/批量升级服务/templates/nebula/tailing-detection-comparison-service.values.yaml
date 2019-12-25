@@ -1,0 +1,62 @@
+image:
+  repository: {{ docker_registry }}/nebula-test/tailing-detection-comparison-service
+
+{% if deploy_mode == "standalone" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "127.0.0.1"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+manager:
+  replicas: 1
+
+
+worker:
+  replicas: 1
+  extraArgs:
+    afdAddress: dns:///engine-alert-feature-db-proxy.nebula.svc.cluster.local:8030
+    
+zookeeper:
+  endpoints:
+    - zookeeper-default-0.component.svc.cluster.local:2181
+
+kafka:
+  brokers:
+    - kafka-default-0.kafka-default.component.svc.cluster.local:9092
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "{{ license_ca.slave }}"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+manager:
+  replicas: 3
+  resources:
+    requests:
+      cpu: "1"
+      memory: "200Mi"
+    limits:
+      cpu: "1"
+      memory: "200Mi"
+
+
+worker:
+  replicas: 3
+  resources:
+    requests:
+      cpu: "1"
+      memory: "800Mi"
+    limits:
+      cpu: "1500m"
+      memory: "800Mi"
+  extraArgs:
+    afdAddress: dns:///engine-alert-feature-db-proxy.nebula.svc.cluster.local:8030
+{% endif %}
