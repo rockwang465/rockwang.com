@@ -83,7 +83,7 @@ class get_charts_packages:
             # print(optimization_server_name.get(key_name))
             for server_name in optimization_server_name.get(key_name):
                 # print(server_name)
-                res = os.popen('ls /tmp/%s-%s*' % (server_name, key_name))
+                res = os.popen('ls /tmp/%s-%s* | head -1' % (server_name, key_name))
                 server_file = res.read().strip()
                 if server_file:
                     # 添加对应服务在/tmp/目录下的overrid文件名
