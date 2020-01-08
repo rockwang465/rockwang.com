@@ -1,0 +1,24 @@
+image: "{{ docker_registry }}/spotahome/redis-operator"
+imageRegistry: "{{ docker_registry }}"
+
+{% if deploy_mode == "standalone" %}
+
+sentinel:
+  replicas: 1
+
+redis:
+  replicas: 1
+
+
+{% endif %}
+
+
+{% if deploy_mode == "distributed" %}
+
+sentinel:
+  replicas: 3
+
+redis:
+  replicas: 3
+
+{% endif %}

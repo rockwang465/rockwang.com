@@ -1,0 +1,14 @@
+image:
+  repository: "{{ docker_registry }}/component/cassandra"
+  pullPolicy: IfNotPresent
+
+
+
+{% if deploy_mode == "standalone" %}
+replicas: 1
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+replicas: 3
+{% endif %}
+

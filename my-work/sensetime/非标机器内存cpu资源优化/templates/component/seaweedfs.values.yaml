@@ -1,0 +1,32 @@
+image:
+  repository: "{{ docker_registry }}/nebula-test/seaweedfs"
+  pullPolicy: IfNotPresent
+
+
+
+{% if deploy_mode == "standalone" %}
+master:
+  replicas: 1
+  peers: seaweedfs-master-0.seaweedfs-master:9333
+  defaultReplication: "000"
+
+volume:
+  replicas: 1
+  persistence:
+    size: "200Gi"
+
+{% endif %}
+
+
+{% if deploy_mode == "distributed" %}
+master:
+  replicas: 3
+  peers: seaweedfs-master-0.seaweedfs-master:9333,seaweedfs-master-1.seaweedfs-master:9333,seaweedfs-master-2.seaweedfs-master:9333
+  defaultReplication: "010"
+
+volume:
+  replicas: 3
+  persistence:
+    size: "200Gi"
+
+{% endif %}

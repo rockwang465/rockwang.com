@@ -1,0 +1,40 @@
+image:
+  repository: "{{ docker_registry }}/nebula-test/engine-image-process-service"
+
+{% if deploy_mode == "standalone" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "127.0.0.1"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+resources:
+  requests:
+    cpu: "2"
+    memory: "3Gi"
+  limits:
+    cpu: "16"
+    memory: "16Gi"
+    nvidia.com/gpu: 1
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "{{ license_ca.slave }}"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+resources:
+  requests:
+    cpu: "2"
+    memory: "3Gi"
+  limits:
+    cpu: "4"
+    memory: "12Gi"
+    nvidia.com/gpu: 1
+{% endif %}

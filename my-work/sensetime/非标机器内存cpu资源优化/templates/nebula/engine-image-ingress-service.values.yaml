@@ -1,0 +1,76 @@
+image:
+  repository: "{{ docker_registry }}/nebula-test/engine-image-ingress-service"
+
+{% if deploy_mode == "standalone" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "127.0.0.1"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+master:
+  replicas: 1
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "0.5G"
+    limits:
+      cpu: "0.5"
+      memory: "0.5G"
+
+active_worker:
+  replicas: 1
+  resources:
+    limits:
+      nvidia.com/gpu: 
+
+zookeeper:
+  endpoints:
+    - zookeeper-default-0.component.svc.cluster.local:2181
+
+kafka:
+  brokers:
+    - kafka-default-0.kafka-default.component.svc.cluster.local:9092
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+hostAliases:
+  - ip: "{{ license_ca.master }}"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "{{ license_ca.slave }}"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+master:
+  replicas: 3
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "0.5G"
+    limits:
+      cpu: "0.5"
+      memory: "0.5G"
+
+
+active_worker:
+  replicas: 3
+  resources:
+    limits:
+      nvidia.com/gpu: 
+
+zookeeper:
+  endpoints:
+    - zookeeper-default-0.component.svc.cluster.local:2181
+    - zookeeper-default-1.component.svc.cluster.local:2181
+    - zookeeper-default-2.component.svc.cluster.local:2181
+
+kafka:
+  brokers:
+    - kafka-default-0.kafka-default.component.svc.cluster.local:9092
+    - kafka-default-1.kafka-default.component.svc.cluster.local:9092
+    - kafka-default-2.kafka-default.component.svc.cluster.local:9092
+
+{% endif %}

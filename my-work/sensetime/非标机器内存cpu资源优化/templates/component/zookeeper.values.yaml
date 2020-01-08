@@ -1,0 +1,16 @@
+image:
+  repository: "{{ docker_registry }}/component/zookeeper"
+  pullPolicy: IfNotPresent
+
+{% if deploy_mode == "standalone" %}
+replicas: "1"
+extraArgs:
+  zkEnsemble: zookeeper-default-0
+
+{% endif %}
+
+{% if deploy_mode == "distributed" %}
+replicas: "3"
+extraArgs:
+  zkEnsemble: zookeeper-default-0;zookeeper-default-1;zookeeper-default-2
+{% endif %}
