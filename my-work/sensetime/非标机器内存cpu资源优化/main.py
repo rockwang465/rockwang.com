@@ -15,18 +15,14 @@ import socket
 from get_k8s_info import *
 from render_templates import *
 
+# 所有优化的服务名，如果您不需要对应服务的优化，请将对应列表值
 optimization_server_name = {
     'component': ['cassandra', 'kafka'],
     'logging': ['elasticsearch'],
     'monitoring': ['prometheus-operator'],
     'nebula': ['engine-timespace-feature-db']
 }
-charts_version = {
-    'component': [],
-    'logging': [],
-    'monitoring': [],
-    'nebula': []
-}
+
 packages_path = '/opt/optimization'
 
 
@@ -66,30 +62,29 @@ class get_modify_file:
                 modify_values.modify_override_args(server_name, override_yaml_path)  # 传入服务名，文件路径
 
     # 修改values.yaml中的cpu memory
-    def modify_values_yaml(self):
+    def modify_values_yaml(self, charts_version):
         # 解压所有fetch下来的charts包
         res = os.system("cd %s && for i in `ls *.tgz` ; do tar xf $i ; done" % packages_path)
         if res != 0:
             print("Error : failure to [cd %s && ls *.tgz | xargs tar xf]" % packages_path)
             sys.exit(1)
-        for key_name in optimization_server_name:
-            for name in optimization_server_name.get(key_name):
-                values_yaml_path = packages_path + "/" + name + "/values.yaml"
-                server_name = name
+        for ns in charts_version:
+            for server_name in charts_version.get(ns):
+                values_yaml_path = packages_path + "/" + server_name + "/values.yaml"
                 modify_values.modify_values_args(server_name, values_yaml_path)
 
 
 # 6. 资源优化后，开始更新服务
 class update_optimization_service:
-    def upgrade_service(self):
-        for key_ns in optimization_server_name:
-            for server_name in optimization_server_name.get(key_ns):
+    def upgrade_service(self, charts_version):
+        for ns in charts_version:
+            for server_name in charts_version.get(ns):
                 tmp_override_new_file = "/tmp/" + server_name + ".values.yaml"
                 os.chdir("%s/%s" % (packages_path, server_name))
                 os.system("helm upgrade -i %s-%s --namespace=%s -f %s . >/dev/null 2>&1" % (
-                    server_name, key_ns, key_ns, tmp_override_new_file))
+                    server_name, ns, ns, tmp_override_new_file))
                 print("Info : updated [%s] service, please check [kubectl get pods -n %s | grep %s]" % (
-                    server_name, key_ns, server_name))
+                    server_name, ns, server_name))
                 time.sleep(2)
 
 
@@ -106,7 +101,7 @@ if __name__ == '__main__':
     get_images_info.get_nodes_info()
 
     # 2. 执行get_k8s_info.py脚本，获取需要优化服务的版本信息、拉取对应版本的包
-    get_packages = get_charts_packages(charts_version, optimization_server_name, packages_path)
+    get_packages = get_charts_packages(optimization_server_name, packages_path)
     get_packages.get_helm_version()  # A.获取需要优化服务的版本信息
     get_packages.fetch_helm_packages()  # B.拉取对应版本的包
     # get_packages.get_override_name()  # C.找到/tmp/ 目录下的override文件 -- 此函数弃用
@@ -114,7 +109,7 @@ if __name__ == '__main__':
     # 3.执行render_templates.py脚本，使用jinja2将templates下的模板文件渲染后放入/opt/optimization/override_yaml/<namespace>下
     render = template_render(get_images_info.all_nodes, packages_path)
     render.init_args()
-    render.get_template_file(optimization_server_name)
+    render.get_template_file(get_packages.charts_version)
 
     # 4.执行render_templates.py脚本，定义修改需要优化服务的包中values.yaml及override文件中的request.memory request.cpu的大小，及configmap的jvm大小的函数方法
     modify_values = modify_request_values(render.override_file)
@@ -122,8 +117,8 @@ if __name__ == '__main__':
     # 5. 获取之前保存字典中的override文件路径，及各服务的values.yaml的路径
     get_file = get_modify_file()
     get_file.modify_override_yaml(render.override_file)  # 修改/opt/optimization/<namespace>目录下的override文件
-    get_file.modify_values_yaml()  # 修改服务中values.yaml文件
+    get_file.modify_values_yaml(get_packages.charts_version)  # 修改服务中values.yaml文件
 
     # 6. 资源优化后，开始更新服务
     update_service = update_optimization_service()
-    update_service.upgrade_service()
+    update_service.upgrade_service(get_packages.charts_version)

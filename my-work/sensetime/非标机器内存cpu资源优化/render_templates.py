@@ -81,15 +81,15 @@ class template_render:
         self.override_file[ns][server_name] = save_file_name
 
     # 获取模板文件名，传参给RenderConfig进行渲染
-    def get_template_file(self, optimization_server_name):
+    def get_template_file(self, charts_version):
         print("\n")
         time.sleep(1)
-        for i in optimization_server_name:
-            for j in optimization_server_name.get(i):
-                values_file_name = j + ".values.yaml"
-                ns = i
+        for ns in charts_version:
+            for server_name in charts_version.get(ns):
+                values_file_name = server_name + ".values.yaml"
+                # print(values_file_name)
                 self.template_file_name = self.templates_dir + ns + "/" + values_file_name
-                self.RenderConfig(self.template_file_name, self.render_vars, ns, values_file_name, j)
+                self.RenderConfig(self.template_file_name, self.render_vars, ns, values_file_name, server_name)
 
 
 # 4. 定义修改需要优化服务的包中values.yaml及override文件中的request.memory request.cpu的大小，及configmap的jvm大小的函数方法

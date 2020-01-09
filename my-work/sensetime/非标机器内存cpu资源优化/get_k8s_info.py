@@ -3,6 +3,7 @@
 
 import subprocess
 import os
+import sys
 from kubernetes import client, config
 from kubernetes.client import configuration
 
@@ -17,8 +18,11 @@ class get_kube_info:
     def get_kube_config(self, local_ip):
         cmdstr = "cat %s" % kube_config_file
         res = subprocess.Popen(cmdstr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        if res.stderr != 0:
+        if not res.stderr:
             self.kube_config_body = res.stdout.read()
+        else:
+            print("Error: failure to [%s]" % cmdstr)
+            sys.exit(1)
 
         # 当config中含有127.0.0.1时，替换为环境的ip。
         if local_domain in self.kube_config_body:
@@ -51,39 +55,52 @@ class get_kube_info:
 
 # 2. helm list 获取版本号，并写入optimization_server.txt中
 class get_charts_packages:
-    def __init__(self, charts_version, optimization_server_name, packages_path):
-        self.charts_version = charts_version
+    def __init__(self, optimization_server_name, packages_path):
+        self.charts_version = {}
         self.optimization_server_name = optimization_server_name
         self.packages_path = packages_path
 
     # 获取helm list 中的版本信息
     def get_helm_version(self):
+        n = 0
         for key_ns in self.optimization_server_name:
             for server_name in self.optimization_server_name.get(key_ns):
                 res = os.popen("helm list | grep %s | grep -v elasticsearch-curator | awk '{print $9}'" % server_name)
                 res_data = res.read().strip()
                 if res_data:
-                    self.charts_version[key_ns].append(res_data)
+                    if self.charts_version.get(key_ns):
+                        # self.charts_version[key_ns].append(res_data)
+                        self.charts_version[key_ns][server_name] = res_data
+                    else:
+                        # self.charts_version[key_ns] = []
+                        self.charts_version[key_ns] = {}
+                        # self.charts_version[key_ns].append(res_data)
+                        self.charts_version[key_ns][server_name] = res_data
+                    n += 1
                 else:
-                    print('Error : Not found server name : [%s]' % server_name)
-        # print("Info : Here is the chart information :")
-        # print(self.charts_version)
+                    print("Warning : not found server name : [%s]" % server_name)
+        if n == 0:
+            print("Error: not found any services, please check")
+            sys.exit(1)
         print("\n")
 
     # 通过上面获取的版本信息，这里进行fetch下载
     def fetch_helm_packages(self):
+        if not os.path.exists(self.packages_path):
+            print("Info : create directory %s" % self.packages_path)
+            os.mkdir(self.packages_path)
+
+        # self.charts_version = {'component': {'kafka': 'kafka-1.1.1-master-6ef5142'}, 'monitoring': {'prometheus-operator': 'prometheus-operator-0.26.0-master-407dd72'}}
         for key_ns in self.charts_version:
-            for charts_info in self.charts_version.get(key_ns):
-                if not os.path.exists(self.packages_path):
-                    print("Info : create directory %s" % self.packages_path)
-                    os.mkdir(self.packages_path)
-                print(
-                        "Info : [cd %s && helm fetch http://10.151.3.75:8080/charts/%s.tgz]" % (
-                    self.packages_path, charts_info))
-                res = os.system(
-                    "cd %s && helm fetch http://10.151.3.75:8080/charts/%s.tgz" % (self.packages_path, charts_info))
-                if res != 0:
-                    print("Error : failure to [helm fetch http://10.151.3.75:8080/charts/%s.tgz]")
+            charts_info = self.charts_version.get(key_ns)
+            for server_name in charts_info:
+                cmdstr = "cd %s && helm fetch http://10.151.3.75:8080/charts/%s.tgz]" % (
+                    self.packages_path, charts_info[server_name])
+                print("Info : %s" % cmdstr)
+
+                res = subprocess.Popen(cmdstr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                if res.stderr:
+                    print("Error : failure to [%s]" % cmdstr)
                     sys.exit(1)
 
     # # 获取 /tmp/下各服务的override.values.yaml文件名 -- 老版本用/tmp/下君宇生成的override文件，但容易被系统清理掉，所以弃用了。
