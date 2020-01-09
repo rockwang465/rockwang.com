@@ -1,5 +1,4 @@
 namespace: component
-apiserver: https://{{ nodes[0]['ip'] }}:6443
 
 deployment:
 {% if deploy_mode == "standalone" %}
