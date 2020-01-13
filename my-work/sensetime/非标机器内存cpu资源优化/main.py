@@ -43,9 +43,9 @@ class base_info:
         self.local_ip = socket.gethostbyname(myname)
         print("\n")
         print("Warning: Please confirm that the IP of master1 is: [%s] ,execute script in 5 seconds !" % self.local_ip)
-        time.sleep(1)
+        time.sleep(5)
         print("Start execution ...")
-        time.sleep(1)
+        time.sleep(2)
 
 
 # 5. 获取之前保存字典中的override文件路径，及各服务的values.yaml的路径

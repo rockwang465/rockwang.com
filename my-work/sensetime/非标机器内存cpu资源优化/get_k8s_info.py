@@ -94,12 +94,12 @@ class get_charts_packages:
         for key_ns in self.charts_version:
             charts_info = self.charts_version.get(key_ns)
             for server_name in charts_info:
-                cmdstr = "cd %s && helm fetch http://10.151.3.75:8080/charts/%s.tgz]" % (
+                cmdstr = "cd  %s && helm fetch http://10.151.3.75:8080/charts/%s.tgz" % (
                     self.packages_path, charts_info[server_name])
                 print("Info : %s" % cmdstr)
 
-                res = subprocess.Popen(cmdstr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                if res.stderr:
+                res = os.system(cmdstr)
+                if res != 0:
                     print("Error : failure to [%s]" % cmdstr)
                     sys.exit(1)
 
