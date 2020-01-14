@@ -17,10 +17,10 @@ from render_templates import *
 
 # 所有优化的服务名，如果您不需要对应服务的优化，请将对应列表值
 optimization_server_name = {
-    'component': ['cassandra', 'kafka'],
+    'component': ['cassandra', 'kafka', 'seaweedfs'],
     'logging': ['elasticsearch'],
     'monitoring': ['prometheus-operator'],
-    'nebula': ['engine-timespace-feature-db']
+    'nebula': ['engine-timespace-feature-db', 'access-control-process', 'engine-static-feature-db']
 }
 
 packages_path = '/opt/optimization'
@@ -83,8 +83,13 @@ class update_optimization_service:
                 os.chdir("%s/%s" % (packages_path, server_name))
                 os.system("helm upgrade -i %s-%s --namespace=%s -f %s . >/dev/null 2>&1" % (
                     server_name, ns, ns, tmp_override_new_file))
-                print("Info : updated [%s] service, please check [kubectl get pods -n %s | grep %s]" % (
-                    server_name, ns, server_name))
+                if server_name == "engine-static-feature-db":
+                    server_name = "engine-alert-feature-db"
+                    print("Info : updated [%s] service, please check [kubectl get pods -n %s | grep %s]" % (
+                        server_name, ns, server_name))
+                else:
+                    print("Info : updated [%s] service, please check [kubectl get pods -n %s | grep %s]" % (
+                        server_name, ns, server_name))
                 time.sleep(2)
 
 

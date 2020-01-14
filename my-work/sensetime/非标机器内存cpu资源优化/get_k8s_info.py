@@ -69,12 +69,9 @@ class get_charts_packages:
                 res_data = res.read().strip()
                 if res_data:
                     if self.charts_version.get(key_ns):
-                        # self.charts_version[key_ns].append(res_data)
                         self.charts_version[key_ns][server_name] = res_data
                     else:
-                        # self.charts_version[key_ns] = []
                         self.charts_version[key_ns] = {}
-                        # self.charts_version[key_ns].append(res_data)
                         self.charts_version[key_ns][server_name] = res_data
                     n += 1
                 else:

@@ -109,14 +109,14 @@ class modify_request_values:
         # B. 确认是否有request， 有则修改json中的:resources.requests.cpu 和 resources.requests.memory
         if 'data' in data:
             # print("data in yaml")
-            data["data"]["resources"]["requests"]["cpu"] = 0.5
-            data["data"]["resources"]["requests"]["memory"] = 0.5
+            data["data"]["resources"]["requests"]["cpu"] = 0.1
+            data["data"]["resources"]["requests"]["memory"] = 0.1
             with open(file, "w") as f:
                 yaml.dump(data, f)  # 保存json字符串到文件中
         elif "resources" in data:
             # print("resources in yaml")
-            data["resources"]["requests"]["cpu"] = 0.5
-            data["resources"]["requests"]["memory"] = 0.5
+            data["resources"]["requests"]["cpu"] = 0.1
+            data["resources"]["requests"]["memory"] = 0.1
             with open(file, "w") as f:
                 yaml.dump(data, f)  # 保存json字符串到文件中
         else:
@@ -131,30 +131,45 @@ class modify_request_values:
         with open(bak_values_yaml, "r") as f:
             data = yaml.load(f)
         if server_name == "prometheus-operator":  # prometheus-operator的values.yaml中requests字段定义不同
-            data["prometheus"]["prometheusSpec"]["resources"]["requests"]["cpu"] = 0.5
-            data["prometheus"]["prometheusSpec"]["resources"]["requests"]["memory"] = 0.5
+            data["prometheus"]["prometheusSpec"]["resources"]["requests"]["cpu"] = 0.1
+            data["prometheus"]["prometheusSpec"]["resources"]["requests"]["memory"] = 0.1
         elif server_name == "elasticsearch":
-            data["client"]["resources"]["requests"]["cpu"] = 0.5
-            data["client"]["resources"]["requests"]["memory"] = 0.5
-            data["data"]["resources"]["requests"]["memory"] = 0.5
-            data["data"]["resources"]["requests"]["memory"] = 0.5
+            data["client"]["resources"]["requests"]["cpu"] = 0.1
+            data["client"]["resources"]["requests"]["memory"] = 0.1
+            data["data"]["resources"]["requests"]["memory"] = 0.1
+            data["data"]["resources"]["requests"]["memory"] = 0.1
         elif server_name == "engine-timespace-feature-db":
-            data["worker"]["resources"]["requests"]["cpu"] = 0.5
-            data["worker"]["resources"]["requests"]["memory"] = 0.5
-            data["coordinator"]["resources"]["requests"]["cpu"] = 0.5
-            data["coordinator"]["resources"]["requests"]["memory"] = 0.5
-            data["reducer"]["resources"]["requests"]["cpu"] = 0.5
-            data["reducer"]["resources"]["requests"]["memory"] = 0.5
+            data["worker"]["resources"]["requests"]["cpu"] = 0.1
+            data["worker"]["resources"]["requests"]["memory"] = 0.1
+            data["coordinator"]["resources"]["requests"]["cpu"] = 0.1
+            data["coordinator"]["resources"]["requests"]["memory"] = 0.1
+            data["reducer"]["resources"]["requests"]["cpu"] = 0.1
+            data["reducer"]["resources"]["requests"]["memory"] = 0.1
         elif server_name == "cassandra":  # cassandra 有个configmap的jvm大小配置，这里单独拿出来
-            data["resources"]["requests"]["cpu"] = 0.5
-            data["resources"]["requests"]["memory"] = 0.5
+            data["resources"]["requests"]["cpu"] = 0.1
+            data["resources"]["requests"]["memory"] = 0.1
             path1 = os.path.dirname(values_yaml_path)  # 取路径
             configmap_path = path1 + "/templates/config.yml"  # 这个是jinja2模板文件，所以无法使用yaml转为json格式
             os.system("sed -i 's/-Xms31G/-Xms5G/g' %s" % configmap_path)
             os.system("sed -i 's/-Xmx31G/-Xmx5G/g' %s" % configmap_path)
         elif server_name == "kafka":  # resources.requests，待考虑其他文件从这里走
-            data["resources"]["requests"]["cpu"] = 0.5
-            data["resources"]["requests"]["memory"] = 0.5
+            data["resources"]["requests"]["cpu"] = 0.1
+            data["resources"]["requests"]["memory"] = 0.1
+        elif server_name == "seaweedfs":
+            data["master"]["resources"]["requests"]["cpu"] = 0.1
+            data["master"]["resources"]["requests"]["memory"] = 0.1
+            data["volume"]["resources"]["requests"]["cpu"] = 0.1
+            data["volume"]["resources"]["requests"]["memory"] = 0.1
+        elif server_name == "access-control-process":
+            data["master"]["resources"]["requests"]["cpu"] = 0.1
+            data["master"]["resources"]["requests"]["memory"] = 0.1
+            data["worker"]["resources"]["requests"]["cpu"] = 0.1
+            data["worker"]["resources"]["requests"]["memory"] = 0.1
+        elif server_name == "engine-static-feature-db":
+            data["worker"]["resources"]["requests"]["cpu"] = 0.1
+            data["worker"]["resources"]["requests"]["memory"] = 0.1
+            data["proxy"]["resources"]["requests"]["cpu"] = 0.1
+            data["proxy"]["resources"]["requests"]["memory"] = 0.1
         else:
             print("Error : [%s] This service is not defined, please define first." % server_name)
             sys.exit(1)
