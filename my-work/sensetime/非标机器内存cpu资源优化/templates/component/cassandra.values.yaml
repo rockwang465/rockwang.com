@@ -2,13 +2,14 @@ image:
   repository: "{{ docker_registry }}/component/cassandra"
   pullPolicy: IfNotPresent
 
-
-
 {% if deploy_mode == "standalone" %}
 replicas: 1
+extraArgs:
+  seeds: {{ nodes[0]['ip'] }}
 {% endif %}
 
 {% if deploy_mode == "distributed" %}
 replicas: 3
+extraArgs:
+  seeds: {{ nodes[0]['ip'] }},{{ nodes[1]['ip'] }},{{ nodes[2]['ip'] }}
 {% endif %}
-
