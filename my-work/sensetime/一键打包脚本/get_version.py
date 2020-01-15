@@ -79,37 +79,14 @@ class get_charts_version:
         # print(self.helm_list)
         machine_charts = {"charts": []}
         for i in self.helm_list["charts"]:
-            chart_name = re.findall(r"(.+?)-[0-9]|v[0-9]", i["info"])
+            chart_name = re.findall(r"(.+?)-([0-9]|v[0-9])", i["info"])[0][0]
 
-            # when chart_name == []:
-            if chart_name == []:
-                continue
-            # when '-v1' in chart_name[0]:
-            elif chart_name[0]:
-                if '-v1' in chart_name[0]:
-                    chart_name = re.findall(r"(.+?)-v[0-9]", i["info"])
-
-            # when chart_name == ['']:
-            if chart_name == ['']:
-                chart_name = re.findall(r"(.+?)-v[0-9]|[0-9]", i["info"])
-                chart_name = chart_name[0]
-                chart_version = re.split(r'%s-' % chart_name, i["info"])[-1]
-                # machine_charts[chart_name] = chart_version
-                machine_charts["charts"].append({
-                    "name": chart_name,
-                    "version": chart_version,
-                    "namespace": i["namespace"]
-                })
-            # else is correct value:
-            else:
-                chart_name = chart_name[0]
-                chart_version = re.split(r'%s-' % chart_name, i["info"])[-1]
-                # machine_charts[chart_name] = chart_version
-                machine_charts["charts"].append({
-                    "name": chart_name,
-                    "version": chart_version,
-                    "namespace": i["namespace"]
-                })
+            chart_version = re.split(r'%s-' % chart_name, i["info"])[-1]
+            machine_charts["charts"].append({
+                "name": chart_name,
+                "version": chart_version,
+                "namespace": i["namespace"]
+            })
         self.machine_charts = machine_charts
         # print(self.new_charts)  # 备用勿删
 
