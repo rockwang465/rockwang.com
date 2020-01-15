@@ -130,50 +130,67 @@ class modify_request_values:
         res = os.system("\cp %s %s" % (values_yaml_path, bak_values_yaml))
         with open(bak_values_yaml, "r") as f:
             data = yaml.load(f)
-        if server_name == "prometheus-operator":  # prometheus-operator的values.yaml中requests字段定义不同
+        n = 0
+        # print("\n")
+        # print(bak_values_yaml)
+        # print(data)
+        # if data.get("prometheus").get("prometheusSpec").get("resources").get("requests"):
+        if data.get("prometheus"):
             data["prometheus"]["prometheusSpec"]["resources"]["requests"]["cpu"] = 0.1
             data["prometheus"]["prometheusSpec"]["resources"]["requests"]["memory"] = 0.1
-        elif server_name == "elasticsearch":
+            n += 1
+        # if data.get("client").get("resources").get("requests"):
+        if data.get("client"):
             data["client"]["resources"]["requests"]["cpu"] = 0.1
             data["client"]["resources"]["requests"]["memory"] = 0.1
+            n += 1
+        # if data.get("data").get("resources").get("requests"):
+        if data.get("data"):
             data["data"]["resources"]["requests"]["memory"] = 0.1
             data["data"]["resources"]["requests"]["memory"] = 0.1
-        elif server_name == "engine-timespace-feature-db":
+            n += 1
+        # if data.get("worker").get("resources").get("requests"):
+        if data.get("worker"):
             data["worker"]["resources"]["requests"]["cpu"] = 0.1
             data["worker"]["resources"]["requests"]["memory"] = 0.1
+            n += 1
+        # if data.get("coordinator").get("resources").get("requests"):
+        if data.get("coordinator"):
             data["coordinator"]["resources"]["requests"]["cpu"] = 0.1
             data["coordinator"]["resources"]["requests"]["memory"] = 0.1
+            n += 1
+        # if data.get("reducer").get("resources").get("requests"):
+        if data.get("reducer"):
             data["reducer"]["resources"]["requests"]["cpu"] = 0.1
             data["reducer"]["resources"]["requests"]["memory"] = 0.1
-        elif server_name == "cassandra":  # cassandra 有个configmap的jvm大小配置，这里单独拿出来
+            n += 1
+        # if data.get("resources").get("requests"):
+        if data.get("resources"):
             data["resources"]["requests"]["cpu"] = 0.1
             data["resources"]["requests"]["memory"] = 0.1
+            n += 1
+        # if data.get("master").get("resources").get("requests"):
+        if data.get("master"):
+            data["master"]["resources"]["requests"]["cpu"] = 0.1
+            data["master"]["resources"]["requests"]["memory"] = 0.1
+            n += 1
+        # if data.get("volume").get("resources").get("requests"):
+        if data.get("volume"):
+            data["volume"]["resources"]["requests"]["cpu"] = 0.1
+            data["volume"]["resources"]["requests"]["memory"] = 0.1
+            n += 1
+        # if data.get("proxy").get("resources").get("requests"):
+        if data.get("proxy"):
+            data["proxy"]["resources"]["requests"]["cpu"] = 0.1
+            data["proxy"]["resources"]["requests"]["memory"] = 0.1
+            n += 1
+        if server_name == "cassandra":  # cassandra 有个configmap的jvm大小配置，这里单独拿出来
             path1 = os.path.dirname(values_yaml_path)  # 取路径
             configmap_path = path1 + "/templates/config.yml"  # 这个是jinja2模板文件，所以无法使用yaml转为json格式
             os.system("sed -i 's/-Xms31G/-Xms5G/g' %s" % configmap_path)
             os.system("sed -i 's/-Xmx31G/-Xmx5G/g' %s" % configmap_path)
-        elif server_name == "kafka":  # resources.requests，待考虑其他文件从这里走
-            data["resources"]["requests"]["cpu"] = 0.1
-            data["resources"]["requests"]["memory"] = 0.1
-        elif server_name == "seaweedfs":
-            data["master"]["resources"]["requests"]["cpu"] = 0.1
-            data["master"]["resources"]["requests"]["memory"] = 0.1
-            data["volume"]["resources"]["requests"]["cpu"] = 0.1
-            data["volume"]["resources"]["requests"]["memory"] = 0.1
-        elif server_name == "access-control-process":
-            data["master"]["resources"]["requests"]["cpu"] = 0.1
-            data["master"]["resources"]["requests"]["memory"] = 0.1
-            data["worker"]["resources"]["requests"]["cpu"] = 0.1
-            data["worker"]["resources"]["requests"]["memory"] = 0.1
-        elif server_name == "engine-static-feature-db":
-            data["worker"]["resources"]["requests"]["cpu"] = 0.1
-            data["worker"]["resources"]["requests"]["memory"] = 0.1
-            data["proxy"]["resources"]["requests"]["cpu"] = 0.1
-            data["proxy"]["resources"]["requests"]["memory"] = 0.1
-        else:
-            print("Error : [%s] This service is not defined, please define first." % server_name)
+        if n == 0:
+            print("Error : [%s] service not found resource define ." % server_name)
             sys.exit(1)
-            # 新的服务，需要修改 optimization_server_name字典，和 这里确定values.yaml的定义格式。最好上面/tmp/server_name 中也确认下。
-
         with open(values_yaml_path, "w") as f2:  # 保存修改好的data到的服务的values.yaml中
             yaml.dump(data, f2)
