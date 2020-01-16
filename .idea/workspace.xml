@@ -1,35 +1,285 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1256db16-73a6-4974-8f7a-54e1d0498eea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/rockwang.com.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/myself-project/study_dir/html+css_study/5.vue-code-黑马程序员/1_vue基本代码和mvvm之间的关系.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/myself-project/study_dir/html+css_study/5.vue-code-黑马程序员/2_v-cloak和v-text和v-html.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/myself-project/study_dir/html+css_study/5.vue-code-黑马程序员/lib/vue-2.4.0.js" afterDir="false" />
+    <list default="true" id="1256db16-73a6-4974-8f7a-54e1d0498eea" name="Default Changelist" comment="将seeds中的域名改为ip，为Cassandra的hostnetwork方式所用">
+      <change afterPath="$PROJECT_DIR$/../cassandra/.idea/cassandra.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../cassandra/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../cassandra/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../cassandra/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../cassandra/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/compare_charts_version.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/version_compare.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myself-project/study_dir/golang_study/go-网易云课堂/40_数组定义和使用/src/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myself-project/study_dir/golang_study/go-网易云课堂/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/rockwang.com.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rockwang.com.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
+    <ignored path="$PROJECT_DIR$/myself-project/study_dir/web_front_study/7.vue-code-黑马程序员-2018-better/day2/04_vue_router_start/node_modules/" />
+    <ignored path="$PROJECT_DIR$/myself-project/study_dir/web_front_study/7.vue-code-黑马程序员-2018-better/day2/Rock测试/node_modules/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="13" selection-start-line="13" selection-end-line="13" />
+              <folding>
+                <element signature="e#402#431#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/compare_charts_version.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="129">
+              <caret line="26" column="43" lean-forward="true" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/version_compare.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="18" column="42" lean-forward="true" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
+              <folding>
+                <element signature="e#41#58#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="161">
+                <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>global_vars</find>
+      <find>override</find>
+      <find>node</find>
+      <find>argparse</find>
+      <find>optimization_server_name</find>
+      <find>packages_path</find>
+      <find>templates_dir</find>
+      <find>Not found server name</find>
+      <find>charts_version</find>
+      <find>sub</find>
+      <find>get_template_file</find>
+      <find>modify_values_args</find>
+      <find>error</find>
+      <find>exec_10_script</find>
+      <find>Error : Execution failure</find>
+      <find>Error: image</find>
+      <find>define_dir</find>
+      <find>not found</find>
+      <find>get_charts_version</find>
+      <find>convert_common_charts</find>
+      <find>new_charts</find>
+      <find>os.chdir</find>
+      <find>get_charts_packages</find>
+      <find>modify_values_yaml</find>
+      <find>0.5</find>
+      <find>Info : updated</find>
+      <find>helm_info</find>
+      <find>self.charts_info</find>
+      <find>seawee</find>
+      <find>print</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>self.env_charts_info</replace>
+    </replaceStrings>
+  </component>
   <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../cassandra" value="dev" />
+        <entry key="$PROJECT_DIR$/../infra-ansible" value="k8s_v1.15.6" />
+        <entry key="$PROJECT_DIR$/../infra-frontend-service" value="sophon" />
+        <entry key="$PROJECT_DIR$/../infra-init-scripts" value="master" />
+        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$/../tools" value="v1.5.0" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/README.md" />
+        <option value="$PROJECT_DIR$/../tools/deploy/common/base.py" />
+        <option value="$PROJECT_DIR$/../tools/package/pack_charts_images.py" />
+        <option value="$PROJECT_DIR$/../tools/package/main.py" />
+        <option value="$PROJECT_DIR$/../tools/deploy/templates/components/emqx.values.yaml" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/templates/component/emqx.values.yaml" />
+        <option value="$PROJECT_DIR$/../tools/package/get_version.py" />
+        <option value="$PROJECT_DIR$/../tools/deploy/templates/nebula/engine-timespace-feature-db.values.yaml" />
+        <option value="$PROJECT_DIR$/../infra-ansible/init_local.yml" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/get_k8s_info.py" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/main.py" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/render_templates.py" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/一键打包脚本/get_version.py" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/templates/component/cassandra.values.yaml" />
+        <option value="$PROJECT_DIR$/../cassandra/values.yaml" />
+        <option value="$PROJECT_DIR$/../cassandra/templates/pod.yml" />
+        <option value="$PROJECT_DIR$/../cassandra/templates/service.yml" />
+        <option value="$PROJECT_DIR$/../cassandra/templates/config.yml" />
+        <option value="$PROJECT_DIR$/../tools/deploy/templates/components/cassandra.values.yaml" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/versions.txt" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/compare_charts_version.txt" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/version_compare.py" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/main.py" />
+        <option value="$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/README.md" />
+      </list>
+    </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-96" />
-    <option name="y" value="27" />
-    <option name="width" value="1400" />
-    <option name="height" value="961" />
+    <option name="x" value="479" />
+    <option name="y" value="58" />
+    <option name="width" value="1417" />
+    <option name="height" value="986" />
+  </component>
+  <component name="ProjectId" id="1VT7khqIPWkoBzWjaBjyWUMZFip" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="rockwang.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rockwang" type="9c53a853:ProjectViewModuleGroupNode" />
+            </path>
+            <path>
+              <item name="rockwang.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rockwang" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="rockwang.com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rockwang.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rockwang" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="rockwang.com" type="462c0819:PsiDirectoryNode" />
+              <item name="my-work" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rockwang.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rockwang" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="rockwang.com" type="462c0819:PsiDirectoryNode" />
+              <item name="my-work" type="462c0819:PsiDirectoryNode" />
+              <item name="sensetime" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rockwang.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rockwang" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="rockwang.com" type="462c0819:PsiDirectoryNode" />
+              <item name="my-work" type="462c0819:PsiDirectoryNode" />
+              <item name="sensetime" type="462c0819:PsiDirectoryNode" />
+              <item name="检查环境中charts版本是否匹配" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rockwang.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rockwang" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="rockwang.com" type="462c0819:PsiDirectoryNode" />
+              <item name="my-work" type="462c0819:PsiDirectoryNode" />
+              <item name="sensetime" type="462c0819:PsiDirectoryNode" />
+              <item name="非标机器内存cpu资源优化" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rockwang.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rockwang" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="rockwang.com" type="462c0819:PsiDirectoryNode" />
+              <item name="my-work" type="462c0819:PsiDirectoryNode" />
+              <item name="sensetime" type="462c0819:PsiDirectoryNode" />
+              <item name="非标机器内存cpu资源优化" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rockwang.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rockwang" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="rockwang.com" type="462c0819:PsiDirectoryNode" />
+              <item name="my-work" type="462c0819:PsiDirectoryNode" />
+              <item name="sensetime" type="462c0819:PsiDirectoryNode" />
+              <item name="非标机器内存cpu资源优化" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="component" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rockwang.com" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rockwang" type="9c53a853:ProjectViewModuleGroupNode" />
+              <item name="rockwang.com" type="462c0819:PsiDirectoryNode" />
+              <item name="my-work" type="462c0819:PsiDirectoryNode" />
+              <item name="sensetime" type="462c0819:PsiDirectoryNode" />
+              <item name="非标机器内存cpu资源优化" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="monitoring" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="DefaultGoTemplateProperty" value="Go Application" />
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../infra-frontend-service" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\3.常用代码目录\rockwang.com\my-work\sensetime\非标机器内存cpu资源优化" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\3.常用代码目录\rockwang.com\my-work\sensetime\非标机器内存cpu资源优化\templates\monitoring" />
+      <recent name="E:\3.常用代码目录\rockwang.com\myself-project\study_dir\golang_study\go-网易云课堂\40_数组定义和使用\src" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -43,35 +293,256 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="rockwang.com" />
+      <go_parameters value="-i" />
+      <kind value="FILE" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="rockwang.com" />
+      <go_parameters value="-i" />
+      <framework value="gotest" />
+      <kind value="DIRECTORY" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build 40_数组定义和使用/ (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <working_directory value="$PROJECT_DIR$/" />
+      <go_parameters value="-i" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$/myself-project/study_dir/golang_study/go-网易云课堂/40_数组定义和使用" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build 40_数组定义和使用/" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <working_directory value="$PROJECT_DIR$/" />
+      <go_parameters value="-i" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$/myself-project/study_dir/golang_study/go-网易云课堂/40_数组定义和使用" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build src/ (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <working_directory value="$PROJECT_DIR$/" />
+      <go_parameters value="-i" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$/myself-project/study_dir/golang_study/go-网易云课堂/40_数组定义和使用/src" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build src/" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
+      <working_directory value="$PROJECT_DIR$/" />
+      <go_parameters value="-i" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$/myself-project/study_dir/golang_study/go-网易云课堂/40_数组定义和使用/src" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build src/" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <working_directory value="$PROJECT_DIR$/" />
+      <go_parameters value="-i" />
+      <kind value="DIRECTORY" />
+      <directory value="$PROJECT_DIR$/myself-project/study_dir/golang_study/go-网易云课堂/40_数组定义和使用/src" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1256db16-73a6-4974-8f7a-54e1d0498eea" name="Default Changelist" comment="" />
-      <created>1557823307935</created>
+      <changelist id="1256db16-73a6-4974-8f7a-54e1d0498eea" name="Default Changelist" comment="change attendance cronjob execute time" />
+      <created>1577265375188</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1557823307935</updated>
-      <workItem from="1557823309075" duration="4000" />
+      <updated>1577265375188</updated>
+      <workItem from="1577361536424" duration="914000" />
+      <workItem from="1577691329106" duration="4353000" />
+      <workItem from="1578362936695" duration="78959000" />
+      <workItem from="1579053907014" duration="29892000" />
     </task>
+    <task id="LOCAL-00001" summary="增加模板渲染功能">
+      <created>1578479715529</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1578479715529</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update function">
+      <created>1578550022723</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1578550022723</updated>
+    </task>
+    <task id="LOCAL-00003" summary="delete apiserver configuration">
+      <created>1578563652642</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1578563652642</updated>
+    </task>
+    <task id="LOCAL-00004" summary="delete apiserver configuration">
+      <created>1578563722154</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1578563722154</updated>
+    </task>
+    <task id="LOCAL-00005" summary="delete apiserver configuration">
+      <created>1578563825887</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1578563825887</updated>
+    </task>
+    <task id="LOCAL-00006" summary="delete apiserver configuration">
+      <created>1578563868925</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1578563868925</updated>
+    </task>
+    <task id="LOCAL-00007" summary="delete apiserver configuration">
+      <created>1578563905275</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1578563905275</updated>
+    </task>
+    <task id="LOCAL-00008" summary="delete apiserver configuration">
+      <created>1578564058325</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1578564058325</updated>
+    </task>
+    <task id="LOCAL-00009" summary="update convert_helm_charts function">
+      <created>1578621709344</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1578621709344</updated>
+    </task>
+    <task id="LOCAL-00010" summary="update convert_helm_charts function">
+      <created>1578621842933</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1578621842933</updated>
+    </task>
+    <task id="LOCAL-00011" summary="modify tfd 24702 to 24802">
+      <created>1578637324256</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1578637324256</updated>
+    </task>
+    <task id="LOCAL-00012" summary="ignore selinux disabled error">
+      <created>1578642214291</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1578642214291</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fix error code">
+      <created>1578882663052</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1578882663054</updated>
+    </task>
+    <task id="LOCAL-00014" summary="update convert_helm_charts function">
+      <created>1578897853265</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1578897853265</updated>
+    </task>
+    <task id="LOCAL-00015" summary="update convert_helm_charts function">
+      <created>1578897932436</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1578897932436</updated>
+    </task>
+    <task id="LOCAL-00016" summary="update convert_helm_charts function">
+      <created>1578900373159</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1578900373159</updated>
+    </task>
+    <task id="LOCAL-00017" summary="temporary commit, code will be improved in next commit">
+      <created>1578973460502</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1578973460503</updated>
+    </task>
+    <task id="LOCAL-00018" summary="修改判断方式，不确定判断是否完整，测试正常">
+      <created>1579055314285</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1579055314285</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fix re regular code">
+      <created>1579067626749</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1579067626750</updated>
+    </task>
+    <task id="LOCAL-00020" summary="change cassandra seeds to ip">
+      <created>1579080134939</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1579080134940</updated>
+    </task>
+    <task id="LOCAL-00021" summary="为了解决gocql不会重解析域名问题，将cassandra改为hostNetwork方式,所以这里用ip方式体现">
+      <created>1579080768160</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1579080768160</updated>
+    </task>
+    <task id="LOCAL-00022" summary="为了解决gocql不会重解析域名问题，将cassandra改为hostNetwork方式,且seeds要用ip方式体现">
+      <created>1579081767320</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1579081767320</updated>
+    </task>
+    <task id="LOCAL-00023" summary="为了解决gocql不会重解析域名问题，将cassandra改为hostNetwork方式,且seeds用ip方式体现">
+      <created>1579082151024</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1579082151024</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4000" />
+    <option name="totallyTimeSpent" value="116626000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18550107" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -79,15 +550,409 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Remote Host" />
-      <window_info anchor="right" id="SciView" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.34624413" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32915717" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.36233613" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25644806" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.34624413" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32915717" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.36233613" />
+      <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="2" />
+                  <option value="1" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="增加模板渲染功能" />
+    <MESSAGE value="update function" />
+    <MESSAGE value="delete apiserver configuration" />
+    <MESSAGE value="modify tfd 24702 to 24802" />
+    <MESSAGE value="ignore selinux disabled error" />
+    <MESSAGE value="fix error code" />
+    <MESSAGE value="update convert_helm_charts function" />
+    <MESSAGE value="temporary commit, code will be improved in next commit" />
+    <MESSAGE value="修改判断方式，不确定判断是否完整，测试正常" />
+    <MESSAGE value="fix re regular code" />
+    <MESSAGE value="change cassandra seeds to ip" />
+    <MESSAGE value="为了解决gocql不会重解析域名问题，将cassandra改为hostNetwork方式,所以这里用ip方式体现" />
+    <MESSAGE value="为了解决gocql不会重解析域名问题，将cassandra改为hostNetwork方式,且seeds要用ip方式体现" />
+    <MESSAGE value="为了解决gocql不会重解析域名问题，将cassandra改为hostNetwork方式,且seeds用ip方式体现" />
+    <option name="LAST_COMMIT_MESSAGE" value="为了解决gocql不会重解析域名问题，将cassandra改为hostNetwork方式,且seeds用ip方式体现" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="520" y="197" key="#Notifications" />
+    <state x="520" y="197" key="#Notifications/0.0.1920.1040@0.0.1920.1040" />
+    <state x="583" y="255" width="584" height="714" key="#go_build_40_数组定义和使用/" />
+    <state x="583" y="255" width="584" height="714" key="#go_build_40_数组定义和使用//0.0.1920.1040@0.0.1920.1040" />
+    <state x="483" y="305" key="#go_build_40_数组定义和使用/_(1)" />
+    <state x="483" y="305" key="#go_build_40_数组定义和使用/_(1)/0.0.1920.1040@0.0.1920.1040" />
+    <state x="1253" y="149" key="#go_build_src/" />
+    <state x="1253" y="149" key="#go_build_src//0.0.1920.1040@0.0.1920.1040" />
+    <state x="1253" y="149" key="#go_build_src/_(1)" />
+    <state x="1253" y="149" key="#go_build_src/_(1)/0.0.1920.1040@0.0.1920.1040" />
+    <state x="1253" y="149" key="#go_build_src/_(2)" />
+    <state x="1253" y="149" key="#go_build_src/_(2)/0.0.1920.1040@0.0.1920.1040" />
+    <state x="1253" y="143" key="#go_test_40_数组定义和使用" />
+    <state x="1253" y="143" key="#go_test_40_数组定义和使用/0.0.1920.1040@0.0.1920.1040" />
+    <state x="1325" y="271" key="FileChooserDialogImpl" />
+    <state x="1325" y="271" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" />
+    <state x="591" y="258" width="672" height="678" key="search.everywhere.popup" />
+    <state x="591" y="258" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/templates/cronjob.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-276" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/templates/guard/override.values.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/deploy/components/zookeeper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="16" column="39" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/templates/component/emqx.values.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="184">
+            <caret line="8" column="27" lean-forward="true" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../infra-ansible/roles/bootstrap/tasks/repository.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="17" column="15" lean-forward="true" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../infra-ansible/roles/bootstrap/tasks/main.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/deploy/templates/nebula/engine-timespace-feature-db.values.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="137" column="14" lean-forward="true" selection-start-line="137" selection-start-column="14" selection-end-line="137" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../infra-ansible/init_local.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/package/connect_10.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1058">
+          <caret line="48" column="63" selection-start-line="48" selection-start-column="63" selection-end-line="48" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/package/pack_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="36" column="17" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+          <folding>
+            <element signature="e#47#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/package/pack_charts_images.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2116">
+          <caret line="96" column="22" selection-start-line="96" selection-start-column="22" selection-end-line="96" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/package/pack_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2622">
+          <caret line="116" column="36" selection-start-line="116" selection-start-column="27" selection-end-line="116" selection-end-column="36" />
+          <folding>
+            <element signature="e#47#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/package/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="920">
+          <caret line="42" column="31" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="31" />
+          <folding>
+            <element signature="e#46#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/deploy/templates/guard/override.values.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="14" lean-forward="true" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/deploy/templates/components/emqx.values.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/templates/component/seaweedfs.values.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/package/get_version.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="67" column="25" lean-forward="true" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
+          <folding>
+            <element signature="e#46#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/一键打包脚本/get_version.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7">
+          <caret line="82" lean-forward="true" selection-start-line="82" selection-end-line="82" />
+          <folding>
+            <element signature="e#46#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/deploy/templates/cronjob.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/deploy/templates/nebula/access-control-process.values.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-897" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/deploy/templates/nebula/engine-image-ingress-service.values.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/deploy/common/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="701">
+          <caret line="31" column="25" lean-forward="true" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
+          <folding>
+            <element signature="e#42#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/deploy/install.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="41">
+          <caret line="113" column="67" selection-start-line="113" selection-start-column="53" selection-end-line="113" selection-end-column="67" />
+          <folding>
+            <element signature="e#42#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/render_templates.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="180" column="18" lean-forward="true" selection-start-line="180" selection-start-column="18" selection-end-line="180" selection-end-column="18" />
+          <folding>
+            <element signature="e#41#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/get_k8s_info.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="e#47#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../cassandra/templates/pod.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2392">
+          <caret line="122" lean-forward="true" selection-start-line="122" selection-end-line="122" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../cassandra/delete.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../cassandra/install.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../cassandra/templates/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="359" column="26" selection-start-line="359" selection-start-column="26" selection-end-line="359" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../cassandra/templates/service.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../cassandra/values.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../tools/deploy/templates/components/cassandra.values.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="14" column="11" lean-forward="true" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/templates/component/cassandra.values.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="11" lean-forward="true" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/非标机器内存cpu资源优化/templates/monitoring/jaeger-operator.values.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="10" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/compare_charts_version.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="26" column="43" lean-forward="true" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/version_compare.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="18" column="42" lean-forward="true" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
+          <folding>
+            <element signature="e#41#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="e#402#431#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/my-work/sensetime/检查环境中charts版本是否匹配/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="161">
+            <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

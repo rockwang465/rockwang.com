@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../cassandra/.idea/cassandra.iml" filepath="$PROJECT_DIR$/../cassandra/.idea/cassandra.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../infra-ansible/.idea/infra-ansible.iml" filepath="$PROJECT_DIR$/../infra-ansible/.idea/infra-ansible.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../infra-frontend-service/.idea/infra-frontend-service.iml" filepath="$PROJECT_DIR$/../infra-frontend-service/.idea/infra-frontend-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../infra-init-scripts/.idea/infra-init-scripts.iml" filepath="$PROJECT_DIR$/../infra-init-scripts/.idea/infra-init-scripts.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/rockwang.com.iml" filepath="$PROJECT_DIR$/.idea/rockwang.com.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tools/.idea/tools.iml" filepath="$PROJECT_DIR$/../tools/.idea/tools.iml" />
     </modules>
   </component>
 </project>
