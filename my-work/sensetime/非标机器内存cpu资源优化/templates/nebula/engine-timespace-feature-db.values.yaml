@@ -72,7 +72,7 @@ kafka:
 
 extraArgs:
   objectType: "face"
-  featureVersion: 24702
+  featureVersion: 24802
   shardExpiredDays: 90
 
 {% endif %}

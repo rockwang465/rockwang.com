@@ -29,7 +29,7 @@ extraArgs:
   ipsAddress: dns:///engine-face-extract-service.nebula.svc.cluster.local:8077
   sfdAddress: dns:///engine-alert-feature-db-proxy.nebula.svc.cluster.local:8030
   osgAddress: dns:///osg-default.component.svc.cluster.local:8088
-  featureVersion: 24702
+  featureVersion: 24802
 {% endif %}
 
 {% if deploy_mode == "distributed" %}
