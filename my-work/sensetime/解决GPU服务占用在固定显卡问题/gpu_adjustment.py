@@ -31,16 +31,20 @@ def _get_instances(gpu_nu, server_name):
                 cfg = item.get('config')
                 # print(cfg)
                 if cfg == '{}\n':
-                    _print_error("not found engine-image-process-service-nebula server override.yaml configuration .", cfg)
+                    _print_error("not found engine-image-process-service-nebula server override.yaml configuration .",
+                                 cfg)
                 else:
-                    item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu), cfg)
+                    item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu),
+                                            cfg)
             for item in results2:
                 cfg = item.get('config')
                 # print(cfg)
                 if cfg == '{}\n':
-                    _print_error("not found engine-image-process-service-nebula server override.yaml configuration .", cfg)
+                    _print_error("not found engine-image-process-service-nebula server override.yaml configuration .",
+                                 cfg)
                 else:
-                    item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu), cfg)
+                    item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu),
+                                            cfg)
         else:
             _print_error("get instance list failed!!!", resp.text)
         results.append(results1[0])
@@ -55,9 +59,11 @@ def _get_instances(gpu_nu, server_name):
                 cfg = item.get('config')
 
                 if cfg == '{}\n':
-                    _print_error("not found engine-image-process-service-nebula server override.yaml configuration .", cfg)
+                    _print_error("not found engine-image-process-service-nebula server override.yaml configuration .",
+                                 cfg)
                 else:
-                    item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu), cfg)
+                    item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu),
+                                            cfg)
         else:
             _print_error("get instance list failed!!!", resp.text)
     return results
@@ -142,6 +148,7 @@ def check_gpu():
         )
     # print(gpu_list)  # [{'gpu': 0, 'ips': 0, 'vps': 1, 'tfd': 0}, {'gpu': 1, 'ips': 1, 'vps': 0, 'tfd': 2}, {'gpu': 2, 'ips': 0, 'vps': 1, 'tfd': 0}, {'gpu': 3, 'ips': 0, 'vps': 1, 'tfd': 0}]
     return gpu_list
+
 
 if __name__ == '__main__':
     upgrade_instance()
