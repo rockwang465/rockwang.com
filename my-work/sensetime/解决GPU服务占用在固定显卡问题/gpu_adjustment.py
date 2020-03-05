@@ -5,7 +5,6 @@ import requests
 import json
 import re
 import sys
-import time
 
 gpu_list = []
 SERVER = "http://127.0.0.1:8000"
