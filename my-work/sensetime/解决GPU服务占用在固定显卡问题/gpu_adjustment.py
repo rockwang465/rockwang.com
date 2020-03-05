@@ -5,6 +5,7 @@ import requests
 import json
 import re
 import sys
+import time
 
 gpu_list = []
 SERVER = "http://127.0.0.1:8000"
@@ -29,10 +30,18 @@ def _get_instances(gpu_nu, server_name):
             results2 = [item for item in items if item.get("name") in ["engine-struct-timespace-feature-db-nebula"]]
             for item in results1:
                 cfg = item.get('config')
-                item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu), cfg)
+                # print(cfg)
+                if cfg == '{}\n':
+                    _print_error("not found engine-image-process-service-nebula server override.yaml configuration .", cfg)
+                else:
+                    item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu), cfg)
             for item in results2:
                 cfg = item.get('config')
-                item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu), cfg)
+                # print(cfg)
+                if cfg == '{}\n':
+                    _print_error("not found engine-image-process-service-nebula server override.yaml configuration .", cfg)
+                else:
+                    item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu), cfg)
         else:
             _print_error("get instance list failed!!!", resp.text)
         results.append(results1[0])
@@ -42,10 +51,14 @@ def _get_instances(gpu_nu, server_name):
             items = resp.json().get("instances", [])
             if not items:
                 _print_error("instance list empty!!!", resp.text)
-            results = [item for item in items if item.get("name") in ["engine-image-ingress-service-nebula"]]
+            results = [item for item in items if item.get("name") in ["engine-image-process-service-nebula"]]
             for item in results:
                 cfg = item.get('config')
-                item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu), cfg)
+
+                if cfg == '{}\n':
+                    _print_error("not found engine-image-process-service-nebula server override.yaml configuration .", cfg)
+                else:
+                    item['config'] = re.sub(r'(NVIDIA_VISIBLE_DEVICES\s*value:\s*)"\d*"', r'\g<1>"{}"'.format(gpu_nu), cfg)
         else:
             _print_error("get instance list failed!!!", resp.text)
     return results
@@ -55,6 +68,7 @@ def _print_error(title, message):
     print("#################-ERROR-#################\n")
     print("%s\n%s\n" % (title, message))
     print("#################-ERROR-#################\n")
+    sys.exit(1)
 
 
 def _deploy_instance(instance):
@@ -75,27 +89,24 @@ def _deploy_instance(instance):
 def upgrade_instance():
     tag = False
     gpus = check_gpu()
-    # usable_card = get_usable_gpu(gpus)
-    # print("usable gpu card id : %s" % usable_card)
-    gpu_nu = gpu_without_vps()  # 找到适合非vps服务占用的显卡(即tfd 和 struct-tfd 和 ips 3个服务使用的显卡)
-    # print("gpu_nu value: %s" % gpu_nu)
+    gpu_nu = gpu_without_vps(gpus)  # 找到适合非vps服务占用的显卡(即tfd 和 struct-tfd 和 ips 3个服务使用的显卡)
     for item in gpus:
-        if item.get('gpu') == gpu_nu:
+        if item.get('gpu') == gpu_nu:  # 如果是合适安装tfd ips struct-tfd的gpu，则pass
             pass
-        else:
-            print("else")
+        else:  # 检查在不合适的gpu上是否有不合适的服务占用，有则修改配置重新安装服务
             if item.get('ips') != 0:
-                print("准备重新部署ips")
-                # instances = _get_instances(gpu_nu, 'ips')
-                # for instance in instances:
-                #     _deploy_instance(instance)
-                # tag = True
+                instances = _get_instances(gpu_nu, 'ips')
+                for instance in instances:
+                    _deploy_instance(instance)
+                tag = True
+
             if item.get('tfd') != 0:
-                print("准备重新部署tfd")
-                # instances = _get_instances(gpu_nu, 'tfd')
-                # for instance in instances:
-                #     _deploy_instance(instance)
-                # tag = True
+                print("开始重新部署tfd")
+                instances = _get_instances(gpu_nu, 'tfd')
+                for instance in instances:
+                    _deploy_instance(instance)
+                tag = True
+
     if tag:
         print('vps has been adjusted')
     else:
@@ -103,9 +114,7 @@ def upgrade_instance():
 
 
 # 找到适合非vps服务占用的显卡(即tfd 和 struct-tfd 和 ips 3个服务使用的显卡)
-def gpu_without_vps():
-    gpus = check_gpu()
-    print(gpus)
+def gpu_without_vps(gpus):
     for item in gpus:
         if item.get('vps') != 1:
             return item.get('gpu')
@@ -115,14 +124,13 @@ def check_gpu():
     gpu_nu = os.popen('nvidia-smi -L|wc -l')  # 4张卡，数字为4
     nu = int(gpu_nu.read().split()[0])  # 4
     for num in range(nu):
-        tfd_nu = os.popen('nvidia-smi -i %d | grep -w %d | grep -w "C"|grep "search-worker"|wc -l' % (num, num))
+        tfd_nu = os.popen('nvidia-smi -i %d | grep -w %d | grep -w "C" | grep "search-worker" | wc -l' % (num, num))
         tfd = int(tfd_nu.read().split()[0])
         vps_nu = os.popen(
-            'nvidia-smi -i %d | grep -w %d | grep -w "C"| grep "video-process-service-worker"|wc -l' % (num, num))
+            'nvidia-smi -i %d | grep -w %d | grep -w "C"| grep "video-process-service-worker" | wc -l' % (num, num))
         vps = int(vps_nu.read().split()[0])
-
         ips_nu = os.popen(
-            'nvidia-smi -i %d | grep -w %d | grep -w "C"| grep "engine-image-process-service"|wc -l' % (num, num))
+            'nvidia-smi -i %d | grep -w %d | grep -w "C"| grep "engine-image-process-service" | wc -l' % (num, num))
         ips = int(ips_nu.read().split()[0])
 
         gpu_list.append(
@@ -133,26 +141,8 @@ def check_gpu():
                 'ips': ips
             }
         )
-    # print(gpu_list)  [{'gpu': 0, 'vps': 0, 'tfd': 2}, {'gpu': 1, 'vps': 1, 'tfd': 0}, {'gpu': 2, 'vps': 1, 'tfd': 0}, {'gpu': 3, 'vps': 1, 'tfd': 0}]
+    # print(gpu_list)  # [{'gpu': 0, 'ips': 0, 'vps': 1, 'tfd': 0}, {'gpu': 1, 'ips': 1, 'vps': 0, 'tfd': 2}, {'gpu': 2, 'ips': 0, 'vps': 1, 'tfd': 0}, {'gpu': 3, 'ips': 0, 'vps': 1, 'tfd': 0}]
     return gpu_list
-
-
-# # 找到适合非vps服务占用的显卡(即tfd 和 struct-tfd 和 ips 3个服务使用的显卡)
-# def get_usable_gpu(gpus):
-#     usable_gpu = []
-#     for item in gpus:
-#         if item.get('vps') == 0:
-#             usable_gpu.append(item.get('gpu'))
-#
-#     if len(usable_gpu) == 1:
-#         usable_gpu_id = usable_gpu[0]
-#     elif len(usable_gpu) == 0:
-#         _print_error("Not found usable gpu card", "")
-#         sys.exit(1)
-#     else:
-#         usable_gpu_id = usable_gpu[0]
-#     return usable_gpu_id
-
 
 if __name__ == '__main__':
     upgrade_instance()
