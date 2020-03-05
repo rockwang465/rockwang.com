@@ -22,7 +22,7 @@ from minio.error import ResponseError
 ingress_http_port = "30080"
 # es_nodeport = "32111"
 license_bin = "/usr/local/bin/license_client"
-host_domain = "registry.sensenebula.io"
+# host_domain = "registry.sensenebula.io"
 minio_nodeport = "31900"
 
 # ns = ["addons","component","default","helm","ingress","kube-public","kube-system","logging","monitoring","mysql-operator"]
@@ -102,14 +102,24 @@ def check_pods_state():
 
 def check_license_state():
     print("\n3. 检查加密狗状态")
-    recode = os.system('%s status >/dev/null 2>&1' % license_bin)
-    if recode == 0:
-        state1 = os.popen("%s status | grep 'status is' | awk -F: '{print $2}'" % license_bin)
-        state2 = state1.read()
-        if "alive" in state2:
-            print("加密狗正常")
+    license_res1 = os.system("%s status >/dev/null 2>&1" % license_bin)
+    if license_res1 == 0:
+        nodes_res = os.popen("kubectl get nodes | sed 1d | wc -l")
+        license_state1 = os.popen("%s status | grep 'Status' | awk -F: '{print $2}'" % license_bin)
+        nodes_num = nodes_res.read()
+        license_state2 = license_state1.read()
+        if int(nodes_num) == 1:
+            if "alive" in license_state2 or "alone" in license_state2:
+                print("加密狗正常")
+            else:
+                print("Error : 加密狗未激活，请解决")
+        elif int(nodes_num) == 3:
+            if "alive" in license_state2:
+                print("加密狗正常")
+            else:  # 集群不为alive则为异常，alone是不行的
+                print("Error : 集群加密狗状态异常，请检查")
         else:
-            print("Error : 加密狗未激活，请解决")
+            print("Error : 加密狗状态异常，请检查")
     else:
         print("Error : 未找到 %s 命令" % license_bin)
     # print("\n".rjust(80, '*'))
@@ -144,8 +154,8 @@ def check_topic_state():
     time.sleep(2)
 
 
-def check_bucket_state():
-    print("\n5. 检查bucket状态")
+def check_osg_bucket():
+    print("\n5. 检查osg bucket状态")
     try:
         url1 = "http://" + local_host_ip + ':' + ingress_http_port + "/components/osg-default/v1"
         # print(url1)
@@ -166,29 +176,30 @@ def check_bucket_state():
                 count = 0
                 for i in bucket:
                     if i not in url_bucket:
-                        print("Error : 缺少bucket,请创建 : %s" % i)
+                        print("Error : 缺少osg bucket,请创建 : %s" % i)
                         count += 1
                     # else:
                     #     print("存在bucket : %s" % i)
             else:
                 count += 1
-                print("Error : 无任何buckets，请全部创建")
+                print("Error : 无任何osg bucket，请全部创建")
             if count == 0:
-                print("Bucket 正常")
+                print("osg bucket 正常")
                 time.sleep(1)
         else:
-            print("Error : 无任何buckets，请全部创建")
-    except  Exception:
+            print("Error : 无任何osg bucket，请全部创建")
+    except Exception:
         print("Error : 查询失败!")
     # print("\n".rjust(80, '*'))
     time.sleep(2)
 
 
-def check_minio_bucket():
+def check_minio_bucket(local_host_ip):
     print("\n6. 检查minio bucket状态")
     count = 0
     get_buckets_list = []
-    minio_domain = host_domain + ":" + minio_nodeport
+    # minio_domain = host_domain + ":" + minio_nodeport
+    minio_domain = local_host_ip + ":" + minio_nodeport
     minioClient = Minio(minio_domain,
                         access_key='minio',
                         secret_key='minio123',
@@ -235,7 +246,7 @@ def check_es_state():
                         print("当前状态为 : %s" % state2)
                 else:
                     print("Error : elasticsearch 状态异常，请及时处理")
-            except  Exception:
+            except Exception:
                 print("Error : 查询失败!")
         else:
             print("Error : 未发现 elasticsearch-client pod")
@@ -286,7 +297,7 @@ def check_mysql_state():
             if user_num == 0:
                 print("user已授权")
 
-        except  Exception:
+        except Exception:
             print("Error : 查询失败!")
     else:
         print("Error : 未找到 /usr/bin/mysql 命令 ")
@@ -301,7 +312,7 @@ if __name__ == '__main__':
     check_pods_state()
     check_license_state()
     check_topic_state()
-    check_bucket_state()
-    check_minio_bucket()
+    check_osg_bucket()
+    check_minio_bucket(local_host_ip)
     check_es_state()
     check_mysql_state()
