@@ -121,7 +121,10 @@ def check_license_state():
         else:
             print("Error : 加密狗状态异常，请检查")
     else:
-        print("Error : 未找到 %s 命令" % license_bin)
+        if not os.path.isfile(license_bin):
+            print("Error : 未找到 %s 命令" % license_bin)
+        else:
+            print("Error : 加密狗状态异常，请确认是否已插入加密狗，请检查")
     # print("\n".rjust(80, '*'))
     time.sleep(2)
 
@@ -147,7 +150,8 @@ def check_topic_state():
             count += 1
             print("Error : 无任何topic,请创建")
     else:
-        print("Error : 无任何topic,请创建")
+        count += 1
+        print("Error : kafka pod异常，请检查")
     if count == 0:
         print("Topic 正常")
     # print("\n".rjust(80, '*'))
