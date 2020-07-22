@@ -1,0 +1,84 @@
+image:
+  repository: registry.sensenebula.io:5000/nebula-test/engine-video-process-service
+
+
+hostAliases:
+  - ip: "10.9.244.167"
+    hostnames:
+      - "private.ca.sensetime.com"
+  - ip: "127.0.0.1"
+    hostnames:
+      - "slave.private.ca.sensetime.com"
+
+manager:
+  repository: registry.sensenebula.io:5000/nebula-test/engine-video-crowd-oversea-process-service
+  replicas: 1
+
+pach_worker:
+  repository: registry.sensenebula.io:5000/nebula-test/engine-video-process-service
+  replicas: 1
+  # new
+  env:
+  - name: NVIDIA_VISIBLE_DEVICES
+    value: "1"
+
+headshoulder_worker:
+  repository: registry.sensenebula.io:5000/nebula-test/engine-video-process-service
+  replicas: 1
+  # new
+  env:
+  - name: NVIDIA_VISIBLE_DEVICES
+    value: "3"
+
+worker:
+  replicas: 1
+  repository: registry.sensenebula.io:5000/nebula-test/engine-video-process-service
+  # update
+  env:
+  - name: NVIDIA_VISIBLE_DEVICES
+    value: "2"
+#  resources:
+#    limits:
+#      nvidia.com/gpu: 1
+  service:
+    verbose: true
+
+crowd_oversea_worker:
+  repository: registry.sensenebula.io:5000/nebula-test/engine-video-crowd-oversea-process-service
+  replicas: 1
+  # new
+  env:
+  - name: NVIDIA_VISIBLE_DEVICES
+    value: "0"
+
+headshoulder_worker:
+  repository: registry.sensenebula.io:5000/nebula-test/engine-video-process-service
+  replicas: 1
+  # new
+  env:
+  - name: NVIDIA_VISIBLE_DEVICES
+    value: "3"
+
+worker:
+  replicas: 1
+  repository: registry.sensenebula.io:5000/nebula-test/engine-video-process-service
+  # update
+  env:
+  - name: NVIDIA_VISIBLE_DEVICES
+    value: "2"
+  service:
+    verbose: true
+
+zookeeper:
+  endpoints:
+    - zookeeper-default-0.component.svc.cluster.local:2181
+
+kafka:
+  brokers:
+    - kafka-default-0.kafka-default.component.svc.cluster.local:9092
+extraArgs:
+  featureVersion: 24901
+  detectModelPath: models/kestrel_detect/KM_Hunter_SmallFace_Gray_4.10.29.model
+  decodeInterval: 1
+  customSelect: true
+
