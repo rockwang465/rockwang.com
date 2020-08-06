@@ -1,0 +1,60 @@
+[2020-06-16 17:31:30 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:30 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:30 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:30 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:30 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:30 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:30 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:30 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:30 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:30 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:30 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:30 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:30 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:30 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:30 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:30 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:30 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:30 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:30 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:30 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:31 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:31 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:31 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:31 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:31 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:31 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:31 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:31 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:31 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:31 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:31 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:31 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:31 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:31 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:31 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:31 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:31 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:31 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:31 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:31 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:31 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:31 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:31 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:31 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:31 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:31 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:31 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:31 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:31 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:31 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:31 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:31 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:31 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:31 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:31 Info] [server.go:main:39] : Restart Server
+[2020-06-16 17:31:31 Debug] [server.go:main:28] : Welcome use myLogger module
+[2020-06-16 17:31:31 Info] [server.go:main:30] : Server is running
+[2020-06-16 17:31:31 Error] [server.go:main:35] : Not found /etc/nginx/conf.d directory, error account: id:10086, user:Rock
+[2020-06-16 17:31:31 Fatal] [server.go:main:37] : Server is down , bye bye ...
+[2020-06-16 17:31:31 Info] [server.go:main:39] : Restart Server
