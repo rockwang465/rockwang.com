@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 git_branch=`git branch| awk '{print $NF}'`  # master
 commit_id=`git rev-parse --short HEAD`  # f6e8886
 SERVER_NAME="senseguard-td-result-consume-sxyc2"
