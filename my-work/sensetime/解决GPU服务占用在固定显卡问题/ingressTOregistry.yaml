@@ -1,0 +1,78 @@
+---
+# docker-registry/templates/ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 10240m
+  labels:
+    app: docker-registry
+    chart: docker-registry-1.0.0-master-7a64474
+    heritage: Tiller
+    release: docker-registry-galaxias
+  name: docker-registry-galaxias
+  namespace: galaxias
+spec:
+  rules:
+  - host: rws3.registry.sensetime.com
+    http:
+      paths:
+      - backend:
+          serviceName: docker-registry-galaxias
+          servicePort: 5000
+        path: /
+  tls:
+  - hosts:
+    - rws3.registry.sensetime.com
+status:
+  loadBalancer:
+    ingress:
+    - {}
+---
+# docker-registry/templates/services.yaml  # 这里service是找的k8s的registry pod,顺义那边用的k8s起的registry
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: docker-registry
+    chart: docker-registry-1.0.0-master-7a64474
+    heritage: Tiller
+    release: docker-registry-galaxias
+  name: docker-registry-galaxias
+  namespace: galaxias
+spec:
+  clusterIP: 10.96.37.67
+  ports:
+  - name: registry
+    port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: docker-registry
+    release: docker-registry-galaxias
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+kind: Service  # 我们这里是宿主机的registry，所以要弄service+endpoint
+apiVersion: v1
+metadata:
+  name: registry-service
+spec:
+  ports:
+    - protocol: registry
+      port: 5000
+      targetPort: 5000
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: registry-service
+subsets:
+  - addresses:
+      - ip: 本机ip
+    ports:
+      - port: 5000
