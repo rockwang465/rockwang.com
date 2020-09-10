@@ -1,0 +1,12 @@
+server:
+  port: 8088  # default port 8080
+  token_expire: 60 # default 30 minutes
+databaseSource:
+  username: root
+  password: UVlY88m9suHLsthK
+  ip: 10.151.3.79
+  port: 3306
+  database: go
+  driver: mysql
+  charset: utf8mb4
+  loc: Asia/Shanghai

@@ -1,56 +1,56 @@
 package model
 
 import (
-	"fmt"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	uuid "github.com/satori/go.uuid"
 )
 
 // db username password address etc .. information
 type DBInfo struct {
-	user     string
+	username string
 	password string
 	ip       string
 	port     int
 	database string
 	driver   string
+	charset  string
+	loc      string
 }
 
-// define table structure
-type Demo struct {
+// define user table
+type User struct {
 	gorm.Model
 	Name      string `gorm:"type:varchar(20);not null"` // 字段必须大写，否则无法创建字段
-	Password  string `gorm:"size:255;not null"`
+	Password  string `gorm:"size:255;not null"`         // 密码要加密的，所以很长
 	Telephone string `gorm:"type:varchar(11);unique;not null"`
 }
 
-// Init database
-func InitDB() (*gorm.DB, error) {
-	// connect database
-	// db, err := gorm.Open("mysql", "root:UVlY88m9suHLsthK@tcp(10.151.3.79:6446)/userinfo?charset=utf8mb4&parseTime=True&loc=Local")
-	// 这里可以做成配置文件来读取配置
-	dbInfo := DBInfo{
-		user:     "root",
-		password: "UVlY88m9suHLsthK",
-		ip:       "10.151.3.79",
-		port:     30446,
-		database: "go",
-		driver:   "mysql",
-	}
-	dbInfoStr := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", dbInfo.user, dbInfo.password, dbInfo.ip, dbInfo.port, dbInfo.database)
-	DB, err := gorm.Open(dbInfo.driver, dbInfoStr)
-	if err != nil {
-		return nil, err
-	}
-
-	// enable singular table name and create table
-	DB.SingularTable(true)
-	DB.AutoMigrate(&Demo{})
-
-	return DB, nil
+// define article category table 文章分类表
+type Category struct {
+	ID        uint      `json:"id" gorm:"primary_key"` // ID会自增的
+	Name      string    `json:"name" gorm:"type:varchar(50);not null;unique"`
+	CreatedAt LocalTime `json:"create_at" gorm:"type:timestamp"`
+	//CreatedAt time.Time `json:"create_at" gorm:"type:timestamp"`
+	UpdatedAt LocalTime `json:"update_at" gorm:"type timestamp"`
+	//UpdatedAt time.Time `json:"update_at" gorm:"type timestamp"`
 }
 
-// close db connection
-func DBClose(DB *gorm.DB) {
-	DB.Close()
+// define article info table 单篇文章信息表
+type Post struct {
+	ID         uuid.UUID `json:"id" gorm:"type:char(36); primary_key"`
+	UserID     uint      `json:"user_id" gorm:"not null"`
+	CategoryID uint      `json:"category_id" gorm:"not null"`
+	Category   *Category
+	Title      string    `json:"title" gorm:"type:char(50); not null"`
+	HeadImage  string    `json:"head_image"`
+	Content    string    `json:"content" gorm:"type:text;not null"`
+	CreatedAt  LocalTime `json:"created_at" gorm:"type:timestamp"`
+	UpdatedAt  LocalTime `json:"updated_at" gorm:"type:timestamp"`
+}
+
+// https://studygolang.com/articles/25636
+// http://gorm.book.jasperxu.com/changelog.html
+// 在调用之前，先生成uuid
+func (post *Post) BeforeCreate(scope *gorm.Scope) error {
+	return scope.SetColumn("ID", uuid.NewV4()) // 将uuid.NewV4生成的值赋值给 ID
 }

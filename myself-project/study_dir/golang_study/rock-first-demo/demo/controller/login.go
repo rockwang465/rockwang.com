@@ -3,78 +3,76 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
+	"golang.org/x/crypto/bcrypt"
 	"net/http"
+	"rockwang.com/rock-first-demo/demo/middlerware"
 	"rockwang.com/rock-first-demo/demo/model"
-	"rockwang.com/rock-first-demo/demo/util"
 	"strconv"
 )
 
 func LoginHandler(ctx *gin.Context) {
-	// get DB client
-	DB, err := model.InitDB()
-	if err != nil {
-		glog.Fatal(err)
-	}
-	// get name
-	//ctx := new(gin.Context)
-	name := ctx.PostForm("name")
+	// bind request data to &user
+	//var user model.User
+	//err := ctx.Bind(&user)
+	//if err != nil {
+	//	glog.Fatal("Context bind failed : ", err)
+	//}
+
 	telephone := ctx.PostForm("telephone")
 	password := ctx.PostForm("password")
-	// when name is empty
-	//if name == "" {
-	if len(name) == 0 {
-		// get a random string, length is 10
-		name = util.GetRandStr(10)
-	}
 
 	// when telephone can not transfer to int type
-	_, err = strconv.Atoi(telephone)
+	_, err := strconv.Atoi(telephone)
 	if err != nil {
-		// StatusUnprocessableEntity, 422: 请求格式正确，但是由于含有语义错误，无法响应
 		ctx.JSON(http.StatusUnprocessableEntity, gin.H{
-			"code": "810", "msg": "手机号中含有非数字内容", "current_length": len(telephone),
+			"code": "422001", "msg": "手机号中含有非数字内容",
 		})
-		return // 这里要用return返回用户信息，属于用户问题。 如果用panic、glog.Fatal是属于server端报错，是不该用的。
+		return
 	}
 
 	// when telephone number length not equal 11
 	if len(telephone) != 11 {
-		// StatusUnprocessableEntity, 422: 请求格式正确，但是由于含有语义错误，无法响应
 		ctx.JSON(http.StatusUnprocessableEntity, gin.H{
-			"code": "811", "msg": "手机号不是11位", "current_length": len(telephone),
+			"code": "422002", "msg": "手机号不是11位",
 		})
-		return // exit
+		return
 	}
 
-	// when telephone number has been registry
-	// RecordNotFound表示查询结果为空，则返回true
-	dbFind := DB.Where("telephone=?", telephone).First(&model.Demo{}).RecordNotFound()
-	if !dbFind { // when not empty
+	// get DB client
+	var user model.User
+	DB := model.GetDB()
+	DB.Where("telephone=?", telephone).First(&user)
+	if user.ID == 0 {
 		ctx.JSON(http.StatusUnprocessableEntity, gin.H{
-			"code": "812", "msg": "该手机号已注册",
+			"code": "422005", "msg": "该手机号不存在",
 		})
-		return // exit
+		return
 	}
 
-	// when password length less than 10
-	if len(password) < 10 {
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{
-			"code": "813", "msg": "密码不足10位", "current_length": len(password),
+	// compare password
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"code": "400001", "msg": "密码错误",
 		})
-		return // exit
+		return
 	}
 
-	// save registry info to mysql table
-	u := model.Demo{
-		Name:      name,
-		Password:  password,
-		Telephone: telephone,
+	// create token
+	token, err := middlerware.GenerateToken(user.ID)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"code": "500002", "msg": "系统异常",
+		})
+		glog.Fatal("token generate failed: ", err)
+		return
 	}
-	DB.Create(&u)
-	//fmt.Println("resCre 创建结果:", resCre)
 
-	// successful login
+	// successful login, return token
 	ctx.JSON(http.StatusOK, gin.H{
-		"code": "800", "msg": "注册成功", "name": name, "telephone": telephone, "password": password,
+		"code":          "200010",
+		"msg":           "登录成功",
+		"name":          user.Name,
+		"telephone":     telephone,
+		"Authorization": token,
 	})
 }
