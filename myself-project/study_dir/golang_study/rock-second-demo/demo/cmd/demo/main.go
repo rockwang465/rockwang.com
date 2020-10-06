@@ -73,7 +73,8 @@ func startDemoServer(cmd *cobra.Command, args []string) {
 	}
 
 	go func() {
-		if err := server.ListenAndServe(); err != nil {
+		// if err := server.ListenAndServe(); err != nil {
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			glog.Fatal("Demo serve listen failed , err = ", err)
 		}
 	}()
