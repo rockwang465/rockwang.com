@@ -47,9 +47,9 @@ func main() {
 
 	//   执行db.Debug().First(&u)，则为: SELECT * FROM `user`  WHERE `user`.`deleted_at` IS NULL AND `user`.`id` = 1
 	// 不执行db.Debug().First(&u)，则为: SELECT * FROM `user`  WHERE `user`.`deleted_at` IS NULL
-	db.Debug().Find(&u)  // 不执行db.Debug().First(&u)，貌似不会影响第一条数据，不知道为啥。(测试时只有两条数据)
-	fmt.Printf("u: %v\n",u)
-	fmt.Printf("u: %#v\n",u)
+	db.Debug().Find(&u) // 不执行db.Debug().First(&u)，貌似不会影响第一条数据，不知道为啥。(测试时只有两条数据)
+	fmt.Printf("u: %v\n", u)
+	fmt.Printf("u: %#v\n", u)
 
 	// 7.更新
 	//  UPDATE `user` SET `hobby` = '羽毛球', `updated_at` = '2020-07-14 16:13:35'  WHERE `user`.`deleted_at` IS NULL
