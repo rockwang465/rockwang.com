@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# ---------------------------- #
+# version | 1.0.0              #
+# ---------------------------- #
+
 import platform
 import psutil
 import os
@@ -10,24 +14,19 @@ import re
 import sys
 import yaml
 
-# 需求
-# 1. helm chart版本
-# 2. 系统及k8s版本
-# 3. 算法仓模型版本
-# 4. SDK版本
-
 engine_namespace = 'engine'
 addons_charts = ['local-volume-provisioner', 'kubernetes-dashboard', 'nginx-ingress']
 guard_charts = ['gateway', 'aurora', 'coral', 'device-manager-service', 'auth']
 component_charts = ['kafka', 'zookeeper', 'cassandra', 'minio', 'infra-object-storage-gateway', 'seaweedfs', 'redis',
                     'mysql', 'emqx', 'haproxy', 'infra-model-manager', 'nacos', 'etcd', 'elasticsearch-curator']
 devops_charts = ['logstash', 'kibana', 'filebeat', 'prometheus-operator', 'apm-server',
-                 'jaeger-operator']
+                 'jaeger-operator', 'infra-console-service', 'infra-frontend-service']
 all_charts = {'addons_charts': [], 'devops_charts': [], 'component_charts': [], 'guard_charts': [],
               'engine_charts': []}
 charts_version_name = 'charts_version.yaml'
 vps_worker_name = ['engine-video-crowd-max-process-service-worker', 'engine-video-es-pach-process-service-worker',
                    'engine-video-es-process-service-worker']
+model_object_type = ['crowd', 'face', 'pach']
 
 
 # input arguments
@@ -39,7 +38,7 @@ def parse_args():
 
 def print_info():
     print("+---------------------------------------+")
-    print("+ support version: E-V1.x.0 version +")
+    print("+ support version: E-V1.x.0 version     +")
     print("+---------------------------------------+\n")
 
 
@@ -134,8 +133,8 @@ class ChartsVersion:
     # get helm charts version in standard environment
     def get_helm_charts(self):
         cut_line = '{print $8" "$9" "$NF}'  # cut charts and namespace
-        cmdstr = "helm list --col-width 200 | sed 1d | awk '%s' | sort -rn | uniq" % cut_line
-        res = subprocess.Popen(cmdstr, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        cmd_str = "helm list --col-width 200 | sed 1d | awk '%s' | sort -rn | uniq" % cut_line
+        res = subprocess.Popen(cmd_str, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         stdout, stderr = res.communicate()
         if res.returncode != 0:
             print("Error: get helm info failed, %s" % stderr)
@@ -208,32 +207,76 @@ class ChartsVersion:
 class GetEngineInfo:
     @staticmethod
     def sdk_version():
-        for worker_name in vps_worker_name:
-            pod_name_str = "kubectl get pods -n %s | grep %s | grep Running | awk '{print $1}' | head -1" % (
-                engine_namespace, worker_name)
-            res = subprocess.Popen(pod_name_str, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            stdout, stderr = res.communicate()
-            if res.returncode != 0:
+        for object_type in model_object_type:
+            # get pod name
+            pod_cmd_str = "kubectl get pods -n %s | grep -e 'video.*worker' | grep Running | grep %s | awk '{print $1}'" % (
+                engine_namespace, object_type)
+            # print(pod_cmd_str)
+            pod_res = subprocess.Popen(pod_cmd_str, shell=True, stdout=subprocess.PIPE,
+                                       stderr=subprocess.STDOUT)
+            stdout, stderr = pod_res.communicate()
+            if pod_res.returncode != 0:
+                print("Error: get pod failed, %s" % stderr)
+                sys.exit(1)
+            pod_name = stdout.decode('utf-8').split("\n")[0]
+            # print(pod_name)
+            if pod_name == "":
+                print("Warning: not found %s object type" % object_type)
+                continue
+
+            # get sdk version
+            sdk_object_type = ""
+            if object_type == "pach":
+                sdk_object_type = "structural"
+
+            if sdk_object_type != "":
+                sdk_cmd_str = "kubectl exec -it -n %s %s -- ls libs/kestrel -hl | grep %s | sed 's/.*\(lib.*so[.0-9]\{3\}\)/\1/' | tail -1" % (
+                    engine_namespace, pod_name, sdk_object_type)
+            else:
+                sdk_cmd_str = "kubectl exec -it -n %s %s -- ls libs/kestrel -hl | grep %s | sed 's/.*\(lib.*so[.0-9]\{3\}\)/\1/' | tail -1" % (
+                    engine_namespace, pod_name, object_type)
+            # print(sdk_cmd_str)
+            sdk_res = subprocess.Popen(sdk_cmd_str, shell=True, stdout=subprocess.PIPE,
+                                       stderr=subprocess.STDOUT)
+            stdout, stderr = sdk_res.communicate()
+            if sdk_res.returncode != 0:
                 print("Error: get sdk failed, %s" % stderr)
                 sys.exit(1)
-            pod_names = stdout.decode('utf-8')
-            if pod_names != "":
-                for pod_name in pod_names.split("\n"):
-                    if pod_name != "":
-                        sdk_version_str = "kubectl exec -n %s -it %s -- ls -hl /engine-video-process-service/libs/kestrel | grep crowd | awk '{print $NF}'" % (
-                            engine_namespace, pod_name)
-                        res = subprocess.Popen(sdk_version_str, shell=True, stdout=subprocess.PIPE,
-                                               stderr=subprocess.STDOUT)
-                        stdout, stderr = res.communicate()
-                        if res.returncode != 0:
-                            print("Error: get sdk failed, %s" % stderr)
-                            sys.exit(1)
-                        sdk_version = stdout.decode('utf-8')
-                        print("+------------------------sdk    info------------------------+")
-                        for sdk in sdk_version.split("\n"):
-                            if sdk != "":
-                                print("pod name: [%s], sdk version: %s" % (pod_name, sdk))
-                        print("+------------------------sdk    info------------------------+\n")
+            sdk_version = stdout.decode('utf-8')
+            print("+------------------------engine info------------------------+")
+            print("object type: [%s]" % object_type)
+            print("sdk version: %s" % sdk_version)
+
+            # get model
+            #  pipeline_config=`kubectl exec -it -n ${namespace} ${pod} -- ls -hl /config | grep ${ot} | grep pipeline | awk '{print $9}'`
+            #  models=`kubectl exec -it -n ${namespace} ${pod} -- cat /config/${pipeline_config} | grep "\"model\"" | sed 's/.*\(KM_.*model\).*/\1/'`
+            # a. get pipeline config name
+            config_cmd_str = "kubectl exec -it -n %s %s -- ls -hl /config | grep %s | grep pipeline | awk '{print $9}'" % (
+                engine_namespace, pod_name, object_type)
+            # print(config_cmd_str)
+            config_res = subprocess.Popen(config_cmd_str, shell=True, stdout=subprocess.PIPE,
+                                          stderr=subprocess.STDOUT)
+            stdout, stderr = config_res.communicate()
+            if config_res.returncode != 0:
+                print("Error: get pipeline config failed, %s" % stderr)
+                sys.exit(1)
+            config_name = stdout.decode('utf-8').split("\n")[0]
+
+            # b. get model name by pipeline config name
+            # shell command: kubectl exec -it -n engine <pod_name> -- cat /config/%s | grep '\"model\"' | sed 's/.*\(KM_.*model\).*/\1/'
+            model_cmd_str = "kubectl exec -it -n %s %s -- cat /config/%s | grep '\"model\"' | sed 's/.*\(KM_.*model\).*/\\1/'" % (
+                engine_namespace, pod_name, config_name)
+            # print(model_cmd_str)
+            model_res = subprocess.Popen(model_cmd_str, shell=True, stdout=subprocess.PIPE,
+                                         stderr=subprocess.STDOUT)
+            stdout, stderr = model_res.communicate()
+            if model_res.returncode != 0:
+                print("Error: get model failed, %s" % stderr)
+                sys.exit(1)
+            model_name = stdout.decode('utf-8')
+            print("model version: ")
+            print(model_name)
+            print("+------------------------engine info------------------------+\n")
 
     @staticmethod
     def algo_version():
@@ -252,9 +295,6 @@ class GetEngineInfo:
                     print(info)
             print("+------------------------algo   info------------------------+\n")
 
-
-# kubectl exec -n engine -it engine-video-crowd-max-process-service-worker-d55cd7b84-qhw9f -- ls -hl /engine-video-process-service/libs/kestrel | grep crowd
-# kubectl describe configmap -n engine engine-video-process-service-config  | grep "com\.sensetime" | grep ref
 
 if __name__ == '__main__':
     # 0. input arguments and print info
