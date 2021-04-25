@@ -54,5 +54,3 @@ func main() {
 	db.Debug().Where("name = ?", "rock").Delete(User4{})
 	// UPDATE `user4` SET `deleted_at`='2020-07-15 20:05:47'  WHERE `user4`.`deleted_at` IS NULL AND ((name = 'rock'))
 }
-
-

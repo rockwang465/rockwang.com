@@ -16,13 +16,13 @@ func regexConfig(option string, config string, replicasNum int) {
 
 	for k, v := range tmpMap {
 		switch v2 := v.(type) {
-		case  map[interface {}]interface {}:
-			fmt.Println(k,v2["replicas"])
-			if k == option{
+		case map[interface{}]interface{}:
+			fmt.Println(k, v2["replicas"])
+			if k == option {
 				v2["replicas"] = replicasNum
 				//tmpMap["crowd_oversea_worker"] = v2
 			}
-		case []interface {}:
+		case []interface{}:
 			fmt.Println("[]interface {}+++++++>", v2)
 		default:
 			fmt.Printf("i dont know~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~,  %T\n", v2)

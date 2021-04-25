@@ -7,11 +7,11 @@ import (
 	"os/exec"
 )
 
-func ExecLinuxCommand(strCmd string)(string, error){
+func ExecLinuxCommand(strCmd string) (string, error) {
 	cmd := exec.Command("/bin/bash", "-c", strCmd)
 
 	stdout, _ := cmd.StdoutPipe()
-	if err := cmd.Start(); err != nil{
+	if err := cmd.Start(); err != nil {
 		//glog.Fatal("Execute failed when Start:" + err.Error())
 		return "", err
 	}
@@ -25,7 +25,6 @@ func ExecLinuxCommand(strCmd string)(string, error){
 	}
 	return string(outBytes), nil
 }
-
 
 func main() {
 	//// 获取显卡的卡数
@@ -43,7 +42,7 @@ func main() {
 	vpsProcess := "video-process-service-worker"
 	cmdStrNo := "/usr/bin/nvidia-smi | grep " + vpsProcess + "| awk '{print $2}'"
 	cmdStrWc := "/usr/bin/nvidia-smi | grep " + vpsProcess + "| wc -l"
-	getVpsNo, err := ExecLinuxCommand(cmdStrNo) // get nvidia serial number
+	getVpsNo, err := ExecLinuxCommand(cmdStrNo)     // get nvidia serial number
 	getVpsCardWc, err := ExecLinuxCommand(cmdStrWc) // get nvidia card total
 	fmt.Println(getVpsNo)
 	fmt.Println(getVpsCardWc)

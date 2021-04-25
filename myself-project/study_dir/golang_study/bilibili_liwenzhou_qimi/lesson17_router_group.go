@@ -13,17 +13,17 @@ func main() {
 	{
 		userGroup.GET("/index", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
-				"user":"/user/index",
+				"user": "/user/index",
 			})
 		})
 		userGroup.GET("/list", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
-				"user":"/user/list",
+				"user": "/user/list",
 			})
 		})
 		userGroup.GET("/info", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
-				"user":"/user/info",
+				"user": "/user/info",
 			})
 		})
 	}
@@ -32,17 +32,17 @@ func main() {
 	{
 		shopGroup.GET("/index", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
-				"shop":"/shop/index",
+				"shop": "/shop/index",
 			})
 		})
 		shopGroup.GET("/list", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
-				"shop":"/shop/list",
+				"shop": "/shop/list",
 			})
 		})
 		shopGroup.GET("/info", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
-				"shop":"/shop/info",
+				"shop": "/shop/info",
 			})
 		})
 	}
