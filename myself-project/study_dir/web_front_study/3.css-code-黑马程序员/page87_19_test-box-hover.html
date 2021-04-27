@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap {
+            height: 200px;
+            width: 600px;
+            border: 1px solid red;
+        }
+
+        #wrap li {
+            float: left;
+            list-style-type: none;
+            display: block;
+            height: 100px;
+            width: 100px;
+            border: 1px solid green;
+            margin-left: -1px; /*让盒子往做移动1px，这样盒子都是连着的*/
+        }
+
+        #wrap li:hover {
+            border: 1px solid pink;
+            position: relative; /*让当前盒子浮动起来*/
+            cursor: pointer; /*鼠标样子变化*/
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</div>
+</body>
+</html>

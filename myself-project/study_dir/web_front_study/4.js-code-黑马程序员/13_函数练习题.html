@@ -41,20 +41,33 @@
 
     // 第10讲: 求一个数字的阶乘的和
     // 例如: 5的阶乘 = 5！+4！+3！+2！+1！
-    function getJieChengSum(num) {
-        var sum = 1;
-        var val = 1;
-        // for (var j=1; j< num; j++) {
-        for (var i = 1; i < num; i++) {
-            val = val * (i + 1);  //val每次保存上一次阶乘的结果，在乘以新的数字。
-            sum = sum + val;
-            // sum += getJieChengSum(i);  //老师写的，一行解决，太高深了。
-        }
-        // }
-        return sum;
-    }
+    // function getJieChengSum(num) {
+    //     var sum = 1;
+    //     var val = 1;
+    //     // for (var j=1; j< num; j++) {
+    //     for (var i = 1; i < num; i++) {
+    //         val = val * (i + 1);  //val每次保存上一次阶乘的结果，在乘以新的数字。
+    //         sum = sum + val;
+    //         // sum += getJieChengSum(i);  //老师写的，一行解决，太高深了。
+    //     }
+    //     // }
+    //     return sum;
+    // }
+    //
+    // alert(getJieChengSum(5))
 
-    alert(getJieChengSum(5))
+    // 这个阶乘的答案才是对的
+    // 5! = 5 x 4 x 3 x 2 x 1 = 120
+    function jc(n) {
+        // return n * jieCheng(n - 1);
+        var res = 1;
+        if (n <= 1) {
+            return res;
+        } else {
+            return n * jc(n - 1);
+        }
+    }
+    alert(jc(5))
 
 
 </script>
