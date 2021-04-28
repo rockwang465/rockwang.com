@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>class属性绑定</title>
+  <script src="lib/vue-2.4.0.js"></script>
+  <style>
+    .red {
+      color: #9965e2;
+    }
+
+    .thin {
+      font-weight: bold;
+      font-size: larger;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <h5 :class="['red', 'thin']">这是一个h5</h5>
+</div>
+
+<script>
+  const app = new Vue({
+    el: "#app",
+  })
+</script>
+</body>
+</html>

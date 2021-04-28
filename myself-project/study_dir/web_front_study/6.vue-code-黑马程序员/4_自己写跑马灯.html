@@ -16,7 +16,7 @@
     var vm = new Vue({
         el: '#app',
         data: {
-            msg: '猥琐发育，别浪~~！',
+            msg: '我跑起来了！~~',
             intervalId: null
         },
         methods: {
@@ -36,8 +36,12 @@
                 if (this.intervalId != null) return;  //这里忘记加this
                 this.intervalId = setInterval(() => {  //这里忘记加this
                     var start = this.msg.substring(0, 1);
+                    console.log(start);
                     var end = this.msg.substring(1);
+                    console.log(end);
                     this.msg = end + start;  //这里忘记加this
+                    console.log(this.msg);
+                    console.log(this.intervalId);
                 }, 400)
             },
 

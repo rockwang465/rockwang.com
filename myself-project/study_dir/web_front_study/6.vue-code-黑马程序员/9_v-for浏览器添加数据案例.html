@@ -49,6 +49,8 @@
             add() {
                 // this.list.push({id: this.userId,name: this.userName});
                 this.list.unshift({id: this.userId, name: this.userName});
+                this.userId = "";
+                this.userName = "";
             }
         }
     })

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>点击当前的内容时变色</title>
+  <script src="lib/vue-2.4.0.js"></script>
+  <style>
+    .isActive {
+      color: red;
+      /*display: block;*/
+      border: 1px dashed green;
+    }
+  </style>
+
+</head>
+<body>
+<div id="app">
+  <ul>
+    <li v-for="(item, index) in fruits" :key="index" @click="changeColor(index)" :class="{isActive: isActive == index}">
+      {{ item }}
+    </li>
+  </ul>
+</div>
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      fruits: ['苹果', '哈密瓜', '香蕉', '橘子'],
+      isActive: 0,
+    },
+    methods: {
+      changeColor: function (index) {
+        this.isActive = index;
+        console.log(index);
+      }
+    }
+  })
+</script>
+</body>
+</html>

@@ -37,6 +37,7 @@
                 // var _this = this;
                 // setInterval( function() {  //里面套函数，下面一行是简写.
                 // setInterval(() => {  //嵌套函数的方法，最佳。解决this只想问题，让内部this是外部的this。
+                // setInterval 是一个定时器
                 this.intervalId = setInterval(() => {  //嵌套函数的方法，最佳。解决this指向问题，让内部this是外部的this。
                     // console.log(this.msg1);  //通过this.msg1 的 this拿到data或者methods方法
                     // 获取头的第一个字符，再获取后面的字符串，然后头尾拼接
@@ -49,7 +50,7 @@
                     // 注意: vm实例，会监听自己身上 data 中所有数据的改变，只要数据以发生变化，
                     //      就会自动把最新的数据，从data上同步到页面中取;
                     // 【好处: 程序员只需要关心数据，不需要考虑如何重新渲染DOM页面】
-                }, 400)
+                }, 400)  // 400是间隔时间， 400ms
             },
             stop() {  //清除定时器的id
                 clearInterval(this.intervalId); //这是停下来的按钮，清空intervalId
