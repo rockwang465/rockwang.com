@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  // 对象的字面量写法
+  // 情况1: 对象创建简写
+  // const obj = new Object()  // 第一种写法
+  const obj1 = {}; // 第二种写法
+
+  // 情况2: 赋值简写
+  const name = 'rock';
+  const age = 18;
+  const height = 1.88;
+  const obj2 = {  // es6的写法
+    name,  // 相当于: name: name,
+    age,
+    height
+  };
+
+  // 情况3: 函数简写，不用关键字function了
+  const obj3 = {
+    run(){
+
+    },
+    eat(){
+
+    }
+  }
+</script>
+</body>
+</html>

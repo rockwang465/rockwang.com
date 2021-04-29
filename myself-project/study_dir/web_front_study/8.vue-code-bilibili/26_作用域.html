@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>es5与6的作用域</title>
+</head>
+<body>
+<div id="app">
+  <button>按钮</button>
+  <button>按钮</button>
+  <button>按钮</button>
+  <button>按钮</button>
+  <button>按钮</button>
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+  const btns = document.getElementsByTagName('button');
+  for (let i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function () {
+          console.log('第' + i + '个按钮');
+        }
+    );
+  }
+
+  // 闭包
+  // const btns = document.getElementsByTagName('button');
+  // const aaa = 1;
+  // for (let i = 0; i < btns.length; i++) {
+  //   (function (i) {
+  //     btns[i].addEventListener('click', function () {
+  //       console.log('第' + i + '个按钮');
+  //     })
+  //   })(aaa)
+  // }
+
+
+</script>
+</body>
+</html>

@@ -34,12 +34,12 @@
         .bd div {
             width: 100%;
             height: 100%;
-            display: none;
+            display: none; /*隐藏所有div盒子*/
         }
 
         .bd .current {
             background-color: purple;
-            display: block;
+            display: block;  /*让当前的div盒子显示出来*/
         }
 
         .hd .current {
@@ -75,22 +75,24 @@
     var divList = bdObj.getElementsByTagName("div");
 
     for (var i = 0; i < spanList.length; i++) {
-        // 为每个span添加新的属性 index,赋值为当前的i值
+        // 第一步: 为每个span添加新的属性 index,赋值为当前的i值
         spanList[i].setAttribute("index", i);
+        console.log("i:",i);
 
         // 添加每个span的点击事件
         spanList[i].onclick = function () {
             for (var j = 0; j < spanList.length; j++) {
-                // 移除每个span的class样式(背景效果)
+                // 第二步: 移除每个span的class样式(背景效果)
                 spanList[j].removeAttribute("class");
                 // 移除bd下面每个div的class样式
                 divList[j].removeAttribute("class");
             }
-            // 设置当前点击的span 的背景效果
+            // 第三步: 设置当前点击的span 的背景效果
             this.setAttribute("class", "current");
-            // 获取当前点击的span的索引值
+            // 第四步: 获取当前点击的span的索引值，然后设置div内容
             currentIndex = this.getAttribute("index");
             divList[currentIndex].className = "current";
+            console.log("current index: ", currentIndex);
         }
     }
 </script>

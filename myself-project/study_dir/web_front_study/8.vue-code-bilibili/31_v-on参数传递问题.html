@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>v-on参数传递问题</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <button @click="btnClick('rock ')">button1</button> <!--hello rock-->
+  <button @click="btn2Click">button2</button> <!--hello rock-->
+  <button @click="btn3Click">button3</button> <!--hello rock-->
+</div>
+
+<script>
+  const app = new Vue({
+    el: '#app',
+    methods: {
+      btnClick(name) {
+        console.log("hello ", name)
+      },
+      btn2Click() {
+        console.log("hello")
+      },
+      btn3Click(abc, event) {
+        // abc变成event， 而实际的event没有传入值则为undefined
+        console.log(abc, event)  // 返回结果: MouseEvent {isTrusted: true, screenX: 174, screenY: 129, clientX: 162, clientY: 15, …} undefined
+      }
+    }
+  })
+</script>
+</body>
+</html>
