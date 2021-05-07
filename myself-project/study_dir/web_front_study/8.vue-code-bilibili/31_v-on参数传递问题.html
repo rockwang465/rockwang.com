@@ -8,13 +8,17 @@
 <body>
 <div id="app">
   <button @click="btnClick('rock ')">button1</button> <!--hello rock-->
-  <button @click="btn2Click">button2</button> <!--hello rock-->
-  <button @click="btn3Click">button3</button> <!--hello rock-->
+  <button @click="btn2Click">button2</button>
+  <button @click="btn3Click">button3</button>
+  <button @click="btn4Click(abc, $event)">button4</button>
 </div>
 
 <script>
   const app = new Vue({
     el: '#app',
+    data: {
+      // abc: 123,
+    },
     methods: {
       btnClick(name) {
         console.log("hello ", name)
@@ -25,6 +29,9 @@
       btn3Click(abc, event) {
         // abc变成event， 而实际的event没有传入值则为undefined
         console.log(abc, event)  // 返回结果: MouseEvent {isTrusted: true, screenX: 174, screenY: 129, clientX: 162, clientY: 15, …} undefined
+      },
+      btn4Click(abc, event) {  // abc需要在data中定义，否则为undefined，且报错没有abc这个值
+        console.log(abc, event)  // $event为作为参数传值，结果则为event时间内容: MouseEvent {isTrusted: true, screenX: 264, screenY: 151, clientX: 231, clientY: 28, …}
       }
     }
   })
