@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for key绑定</title>
+</head>
+<body>
+
+<div id="app">
+    <ul>
+        <li v-for="item in letters" :key="item">{{ item }}</li>
+    </ul>
+    <button @click="btnClick">测试</button>
+</div>
+
+<script src="../js/vue.js"></script>
+
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            letters: ['a', 'b', 'c', 'd']
+        },
+        methods: {
+            btnClick() {
+                // 1.push尾部追加一个元素 -- 是响应式的(点击按钮，就触发了实际效果)
+                // this.letters.push("aaa") // 响应式的，每次点击按钮，后面都会增加内容的
+                // this.letters.push("aaa", "bbb", "ccc")
+
+                // 2.通过索引值修改数组中的元素 -- 不是响应式的(点击效果没有翻译，但F12 console查看，实际值已经修改了)
+                // this.letters[0] = "bbb" // 点击按钮，0索引的元素值并没有改变；通过F12 app.letters 查看数据确实改了 ["bbb", "b", "c", "d", __ob__: Observer]
+                // 结论: 并不是所有方法都可以做到响应式
+                // 原因: vue没有监听这种方式进行响应。
+                // 解决方法1: 用splice() 这种替换的方式去解决
+                //  this.letters.splice(0, 1, "bbb")  //这种替换的方式去解决，因为splice是响应式的
+                // 解决方法2: 用set() 这是Vue自带的方法
+                Vue.set(this.letters, 0 , 'bbb')
+
+                // 3.pop() 删除最后一个元素 -- 是响应式的
+                // this.letters.pop()
+
+                // 4.shift() 删除第一个元素 -- 是响应式的
+                // this.letters.shift()
+
+                // 5.unshift() 在数组最前面增加1个或多个元素(支持增加多个) -- 是响应式的
+                // this.letters.unshift("aa","bb","cc")
+
+                // 6.splice(开始位置, 个数, ) -- 是响应式的
+                // splice有3个功能: 可以删除、可以插入、可以替换
+                // 删除元素: 第二个参数传入你要删除的几个元素(如果灭有传，就删除后面所有的元素)
+                // 插入元素: 第一个参数为开始位置，第二个参数必须为0，后面的参数为插入的元素
+                // 替换元素: 第二个参数表示你要替换几个元素，第三个到后面的元素是用于替换前面的元素
+                // this.letters.splice(1,2) // 删除: 从第1个索引开始，删除2个元素。 ['a', 'd']
+                // this.letters.splice(1, 0, 'x', 'y', 'z')  // 插入: 从第1个索引开始插入3个元素。 ["a", "x", "y", "z", "b", "c", "d"]
+                // this.letters.splice(1, 2, 'x', 'y')  // 替换: 从第1个索引开始替换2个元素为x y。 ["a", "x", "y", "d"]
+
+                // 7.sort() 排序
+                // this.letters.sort() // ["a", "b", "c", "d"]
+
+                // 8.reverse() 反转
+                // this.letters.reverse() // ["d", "c", "b", "a"]
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
