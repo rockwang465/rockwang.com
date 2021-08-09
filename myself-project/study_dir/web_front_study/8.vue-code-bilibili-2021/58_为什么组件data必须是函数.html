@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>为什么组件data必须是函数</title>
+</head>
+<body>
+<div id="app">
+    <!--4.这里引用组件-->
+    <cpn1></cpn1>
+</div>
+<!--1.这里创建模板，id为template的名称 -->
+<template id="mycpn1">
+    <div>
+        <!--5.这里引用数据-->
+        <h2>cpn1标题:{{title}}</h2>
+        <p>cpn1内容:{{content}}</p>
+    </div>
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+    // 2.这里注册全局组件
+    Vue.component('cpn1', {
+        template: '#mycpn1',
+        // 3.这里保存数据，注意data是函数类型，且是return一个对象的(返回一个值)
+        data() {
+            return {
+                title: "学习组件的template数据定义",
+                content: "数据展示"
+            }
+        }
+    })
+
+    const app = new Vue({
+        el: "#app"
+    })
+</script>
+</body>
+</html>

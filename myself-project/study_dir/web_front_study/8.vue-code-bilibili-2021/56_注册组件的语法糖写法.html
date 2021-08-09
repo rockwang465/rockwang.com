@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件化的基本使用过程</title>
+</head>
+<body>
+<div id="app">
+    <!--3.使用组件(以标签的方式使用)-->
+    <cpn1></cpn1>
+    <cpn2></cpn2>
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    // 复杂写法
+    // // 1.创建组件构造器，并制作template模板
+    // const cpn1 = Vue.extend({ // 名字随便起
+    //     // ``是ES6语法
+    //     template: `
+    // <div>
+    //     <h2>我是cpn1</h2>
+    //     <p>cpn1内容1</p>
+    //     <p>cpn1内容2</p>
+    // </div>
+    // `
+    // })
+    // // 2.注册组件(全局组件)
+    // // Vue.component('组件的标签名', 组件构造器)
+    // Vue.component('cpn1', cpn1)
+
+    // 语法糖简写(创建构造器及注册全局组件)--这个是全局组件的语法糖
+    // 其实底层还是要经过Vue.extend()的,只是我们看不到而已
+    const cpn1 = Vue.component('cpn1', {
+        // ES6语法
+        template: `
+        <div>
+            <h2>我是cpn1</h2>
+            <p>cpn1内容1</p>
+            <p>cpn1内容2</p>
+        </div>
+        `
+    })
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            message: "hello"
+        },
+        components: {
+            // 语法糖简写(创建构造器及注册局部组件)--这个是局部组件的语法糖
+            cpn2: {
+                template: `
+        <div>
+            <h2>我是cpn2</h2>
+            <p>cpn2内容1</p>
+            <p>cpn2内容2</p>
+        </div>
+        `
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计数器组件案例</title>
+</head>
+<body>
+<div id="app">
+    <cpn></cpn>
+    <cpn></cpn>
+    <cpn></cpn>
+</div>
+
+<template id="mycpn">
+    <div>
+        <h2>{{title}}</h2>
+        <h3>结果: {{count}}</h3>
+        <button @click="sum">+</button>
+        <button @click="sub">-</button>
+    </div>
+
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+    // 定义全局组件
+    Vue.component("cpn", {
+        template: "#mycpn",
+        data() {
+            return {
+                title: "组件案例学习",
+                count: 0
+            }
+        },
+        // 组件内的methods，这样组件和Vue实例就分来了
+        methods: {
+            sum() {
+                this.count ++
+            },
+            sub() {
+                this.count--
+            }
+        }
+    })
+
+    const app = new Vue({
+        el: "#app"
+    })
+</script>
+
+</body>
+</html>

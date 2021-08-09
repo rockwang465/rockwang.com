@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-model结合checkbox类型使用</title>
+</head>
+<body>
+<div id="app">
+    <!--1.checkbox单选框情况:-->
+    <!--label的好处是:点击文字也可以选中当前的按钮 -->
+    <label for="agree">
+        <input type="checkbox" id="agree" value="agree" v-model="isAgree">同意协议
+    </label>
+    <br>
+    <h4>isAgree状态: {{isAgree}}</h4>
+    <button :disabled="!isAgree">下一步</button>
+    <hr>
+
+    <!--2.checkbox多选框情况:-->
+    <input type="checkbox" value="乒乓球" v-model="hobbies">乒乓球
+    <input type="checkbox" value="羽毛球" v-model="hobbies">羽毛球
+    <input type="checkbox" value="篮球" v-model="hobbies">篮球
+    <input type="checkbox" value="足球" v-model="hobbies">足球
+    <h4>您的爱好是: {{hobbies}}</h4>
+    <br>
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            isAgree: false,
+            hobbies: []
+        }
+    })
+</script>
+</body>
+</html>

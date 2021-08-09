@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车案例</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+    <div v-if="books.length">
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th>书籍名称</th>
+                <th>出版日期</th>
+                <th>价格</th>
+                <th>购买数量</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item,index) in books" :key="index">
+                <td>{{ item.id}}</td>
+                <td>{{ item.name}}</td>
+                <td>{{ item.date}}</td>
+                <!--方法1: 使用函数显示价格-->
+                <!--<td>{{ getPrice1(item.price) }}</td>-->
+                <!--方法2: 使用过滤器显示价格-->
+                <td>{{ item.price | getPrice2(item.price) }}</td>
+                <!--<td><button>-</button>{{ item.count}}<button>+</button></td>-->
+                <td>
+                    <button @click="subOne(index)" v-bind:disabled="item.count <= 1">-</button>
+                    {{ item.count}}
+                    <button @click="addOne(index)">+</button>
+                </td>
+                <td>
+                    <button @click="removeRecord(index)">移除</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h2>总价格: {{ totalPrice | getPrice2 }}</h2>
+    </div>
+    <div v-else><h2 style="color: red;">购物车为空</h2></div>
+</div>
+
+
+<script src="../../js/vue.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

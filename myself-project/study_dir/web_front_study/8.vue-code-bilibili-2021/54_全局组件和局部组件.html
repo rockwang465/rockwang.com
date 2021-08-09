@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件化的基本使用过程</title>
+</head>
+<body>
+<div id="app">
+    <!--3.使用组件(以标签的方式使用)-->
+    <!--全局组件,任意Vue实例中都可以使用-->
+    <rock></rock>
+    <rock></rock>
+</div>
+<div id="app2">
+    <!--全局组件,任意Vue实例中都可以使用-->
+    <rock></rock>
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    // 1.创建组件构造器，并制作template模板
+    const componentStruct = Vue.extend({ // 名字随便起
+        // ``是ES6语法
+        template: `
+    <div>
+        <h2>我是标签</h2>
+        <p>内容1</p>
+        <p>内容2</p>
+    </div>
+    `
+    })
+    // 2.注册组件(全局组件)
+    // Vue.component('组件的标签名', 组件构造器)
+    Vue.component('rock', componentStruct)  //
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            message: "hello"
+        },
+        // 3.局部组件定义(放在vue实例中定义的为局部组件)
+        components: {
+            prock: componentStruct,
+        }
+    })
+    const app2 = new Vue({
+        el: "#app2",
+        data: {
+            message: "hello2"
+        }
+    })
+</script>
+</body>
+</html>

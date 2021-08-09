@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件模板抽离的写法</title>
+</head>
+<body>
+<div id="app">
+    <!--3.这里引用组件-->
+    <cpn1></cpn1>
+</div>
+
+<!--第一种写模板的方法-->
+<!--1.[不推荐使用] 这里创建模板，并给一个id -->
+<!--<script type="text/x-template" id="mycpn1">-->
+<!--<div>-->
+<!--    <h2>cpn1标题</h2>-->
+<!--    <p>cpn1内容</p>-->
+<!--</div>-->
+<!--</script>-->
+
+<!--第二种写模板的方法-->
+<!--1.[推荐使用] 这里创建模板，也要给一个id -->
+<template id="mycpn1">
+    <div>
+        <h2>cpn1标题</h2>
+        <p>cpn1内容</p>
+    </div>
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+    // 2.这里注册全局组件
+    Vue.component('cpn1', {
+        template: '#mycpn1'
+    })
+
+    const app = new Vue({
+        el: "#app"
+    })
+</script>
+</body>
+</html>

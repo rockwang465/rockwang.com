@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-model修饰符的使用</title>
+</head>
+<body>
+<div id="app">
+    <!--1.lazy 懒加载 修饰符-->
+    <input type="text" v-model.lazy="message">
+    <h4>message: {{message}}</h4>
+
+    <!--2.number 转数字类型 修饰符-->
+    <input type="number" v-model.number="age">
+    <h4>age: {{age}}</h4>
+    <h4>type: {{typeof age}}</h4>
+
+    <!--3.trim 去除前后空格 修饰符-->
+    <input type="text" v-model.trim="info">
+    <h4>info: {{info}}</h4>
+</div>
+<script src="../js/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            message: "hello",
+            age: 18,
+            info: "test info"
+        }
+    })
+</script>
+</body>
+</html>

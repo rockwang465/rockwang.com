@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件通信-父传子props</title>
+</head>
+<body>
+<div id="app">
+    <!--4.将app实例中的数据拿来，然后绑定到cpn组件中的props变量上-->
+    <cpn :mymovies="movies" :mymsg="message"></cpn>
+</div>
+
+<!--2.制作组件模板-->
+<template id="cpn">
+    <!--5.使用绑定后的变量-->
+    <div>
+        <h2>{{mymovies}}</h2>
+        <ul v-for="item in mymovies">
+            <li>{{item}}</li>
+        </ul>
+        <p>{{mymsg}}</p>
+    </div>
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            movies: ['海贼王', '复仇者联盟', '海王'],
+            message: "hello"
+        },
+        components: {
+            // 1.注册一个局部组件 cpn
+            cpn: {
+                template: '#cpn',
+                // 3.定义好要使用的变量的名称,用来绑定vue中的data变量
+                // 3.1 方法1:常用写法
+                // props: ["mymovies", "mymsg"]
+
+                // 3.2 方法2:类型固定
+                // props: {
+                //     mymovies: Array,
+                //     mymsg: String,
+                // }
+
+                // 3.3 方法3:提供默认值
+                props: {
+                    mymovies: {
+                        type: Array,
+                        // default: []  // 默认值: vue2.5.3版本以下可以写[], 但后期的版本必须写成一个函数返回数组[]
+                        default() {  // 新版本必须这样写
+                            return []
+                        }
+                    },
+                    mymsg: {
+                        type: String,
+                        default: "",  // 默认值
+                        required: true // 表示必须在div的cpn中要传入该值,否则console报错
+                    }
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

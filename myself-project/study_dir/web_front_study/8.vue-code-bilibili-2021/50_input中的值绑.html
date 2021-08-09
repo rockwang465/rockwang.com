@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>input中的值绑</title>
+</head>
+<body>
+<div id="app">
+    <input type="checkbox" value="羽毛球" v-model="hobbies">羽毛球
+    <input type="checkbox" value="乒乓球" v-model="hobbies">乒乓球
+    <input type="checkbox" value="篮球" v-model="hobbies">篮球
+    <input type="checkbox" value="足球" v-model="hobbies">足球
+    <hr>
+
+    <label :for="item" v-for="(item,id) in hobbies" :key="id">
+        <input type="checkbox" :id="item" :value="item" v-model="hobbies">{{item}}
+    </label>
+    <h2>您选择的爱好是: {{hobbies}}</h2>
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            hobbies: ["羽毛球", "乒乓球", "篮球", "足球", "台球", "棒球", "橄榄球"]
+        }
+    })
+</script>
+</body>
+</html>
